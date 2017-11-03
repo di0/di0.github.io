@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://di0.github.io/sitemap.xml 
