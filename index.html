@@ -508,32 +508,56 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
   </header>
 
 
-  <div class="entry-content"><p>Configurando plugin Jetty
-Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
+  <div class="entry-content"><h3>Configurando plugin Jetty</h3>
 
-<p><build>
-    <plugins>
-         <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.6.8.v20121106</version>
-                <configuration>
-                        <scanIntervalSeconds>10</scanIntervalSeconds>
-                        <webApp>
-                                <contextPath>/test</contextPath>
-                        </webApp>
-                        <webAppConfig>
-                                <jettyEnvXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
-                                <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                        </webAppConfig>
-                </configuration>
-         </plugin>
-     <plugins>
-</build>
-Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
 
-<p>Adicionando dependências dos artefatos para o ActiveMQ
-Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;build&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;groupId&gt;</span>org.mortbay.jetty<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;artifactId&gt;</span>jetty-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;version&gt;</span>7.6.8.v20121106<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>           <span class="nt">&lt;scanIntervalSeconds&gt;</span>10<span class="nt">&lt;/scanIntervalSeconds&gt;</span>
+</span><span class='line'>           <span class="nt">&lt;webApp&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;contextPath&gt;</span>/test<span class="nt">&lt;/contextPath&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;/webApp&gt;</span>
+</span><span class='line'>                 <span class="nt">&lt;webAppConfig&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;jettyEnvXml&gt;</span>src/main/webapp/WEB-INF/jetty-env.xml<span class="nt">&lt;/jettyEnvXml&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;webXml&gt;</span>src/main/webapp/WEB-INF/web.xml<span class="nt">&lt;/webXml&gt;</span>
+</span><span class='line'>                 <span class="nt">&lt;/webAppConfig&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;/plugin&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+
+<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
+
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:</p>
 
 <p><dependency>
        <groupId>org.apache.activemq</groupId>
@@ -637,29 +661,112 @@ No caminho especificado nas configurações do Plugin do Jetty, no arquivo pom, 
 
 <p>E onde:</p>
 
-<p><New class="org.apache.activemq.command.ActiveMQQueue">
-        <Arg>FOO.QUEUE</Arg>
-</New>
-É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.command.ActiveMQQueue&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>FOO.QUEUE<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'><span class="nt">&lt;/New&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
 
 <p>Mapeando os recursos do ActiveMQ dentro do Container
-No arquivo de configuração web.xml, dentro do WEB-INF da aplicação, deverá ser mapeado referências para
+No arquivo de configuração web.xml, dentro do <strong>WEB-INF</strong> da aplicação, deverá ser mapeado referências para
 utilização do ActiveMQ:</p>
 
-<p><resource-ref id="ResourceRef_1291169365479">
-        <description>JMS Connection</description>
-        <res-ref-name>jms/ConnectionFactory</res-ref-name>
-        <res-type>javax.jms.ConnectionFactory</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-</resource-ref></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;resource-ref</span> <span class="na">id=</span><span class="s">&quot;ResourceRef_1291169365479&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;description&gt;</span>JMS Connection<span class="nt">&lt;/description&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-ref-name&gt;</span>jms/ConnectionFactory<span class="nt">&lt;/res-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-type&gt;</span>javax.jms.ConnectionFactory<span class="nt">&lt;/res-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-auth&gt;</span>Container<span class="nt">&lt;/res-auth&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-sharing-scope&gt;</span>Shareable<span class="nt">&lt;/res-sharing-scope&gt;</span>
+</span><span class='line'><span class="nt">&lt;/resource-ref&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;message-destination-ref&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-ref-name&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-type&gt;</span>javax.jms.Queue<span class="nt">&lt;/message-destination-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-usage&gt;</span>Produces<span class="nt">&lt;/message-destination-usage&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-link&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-link&gt;</span>
+</span><span class='line'><span class="nt">&lt;/message-destination-ref&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><message-destination-ref>
-        <message-destination-ref-name>jms/FooQueue</message-destination-ref-name>
-        <message-destination-type>javax.jms.Queue</message-destination-type>
-        <message-destination-usage>Produces</message-destination-usage>
-        <message-destination-link>jms/FooQueue</message-destination-link>
-</message-destination-ref></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-23T23:26:40-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:</p>
+
+<p>1) Remover o .git</br>
+2) Recriar o artefato do banco de dados git, conforme comandos abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
+</span><span class='line'><span class="nv">$ </span>git init
+</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m ‘Initial commit’
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
+</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -706,6 +813,10 @@ utilização do ActiveMQ:</p>
         <a href="/blog/2017/11/06/maven/">Maven-jetty-and-activemq</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -720,6 +831,10 @@ utilização do ActiveMQ:</p>
     
       <li class="post">
         <a href="/blog/2017/11/06/maven/">Maven-jetty-and-activemq</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a>
       </li>
     
   </ul>

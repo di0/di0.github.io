@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Octopress | Dio's Blog]]></title>
-  <link href="http://di0.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Maven | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/maven/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-07T23:52:02-02:00</updated>
+  <updated>2017-11-08T01:21:16-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pereira Pinto]]></name>
@@ -18,32 +18,36 @@
     <link href="http://di0.github.io/blog/2017/11/06/maven/"/>
     <updated>2017-11-06T00:36:41-02:00</updated>
     <id>http://di0.github.io/blog/2017/11/06/maven</id>
-    <content type="html"><![CDATA[<p>Configurando plugin Jetty
-Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
+    <content type="html"><![CDATA[<h3>Configurando plugin Jetty</h3>
 
-<p><build>
-    <plugins>
-         <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.6.8.v20121106</version>
-                <configuration>
-                        <scanIntervalSeconds>10</scanIntervalSeconds>
-                        <webApp>
-                                <contextPath>/test</contextPath>
-                        </webApp>
-                        <webAppConfig>
-                                <jettyEnvXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
-                                <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                        </webAppConfig>
-                </configuration>
-         </plugin>
-     <plugins>
-</build>
-Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
 
-<p>Adicionando dependências dos artefatos para o ActiveMQ
-Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:</p>
+<pre><code class="xml">&lt;build&gt;
+  &lt;plugins&gt;
+     &lt;plugin&gt;
+        &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+        &lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;7.6.8.v20121106&lt;/version&gt;
+        &lt;configuration&gt;
+           &lt;scanIntervalSeconds&gt;10&lt;/scanIntervalSeconds&gt;
+           &lt;webApp&gt;
+              &lt;contextPath&gt;/test&lt;/contextPath&gt;
+              &lt;/webApp&gt;
+                 &lt;webAppConfig&gt;
+                    &lt;jettyEnvXml&gt;src/main/webapp/WEB-INF/jetty-env.xml&lt;/jettyEnvXml&gt;
+                    &lt;webXml&gt;src/main/webapp/WEB-INF/web.xml&lt;/webXml&gt;
+                 &lt;/webAppConfig&gt;
+        &lt;/configuration&gt;
+     &lt;/plugin&gt;
+  &lt;plugins&gt;
+&lt;/build&gt;
+</code></pre>
+
+<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+
+<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
+
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:</p>
 
 <p><dependency>
        <groupId>org.apache.activemq</groupId>
@@ -111,29 +115,32 @@ No caminho especificado nas configurações do Plugin do Jetty, no arquivo pom, 
 
 <p>E onde:</p>
 
-<p><New class="org.apache.activemq.command.ActiveMQQueue">
-        <Arg>FOO.QUEUE</Arg>
-</New>
-É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
+<pre><code class="xml">&lt;New class="org.apache.activemq.command.ActiveMQQueue"&gt;
+        &lt;Arg&gt;FOO.QUEUE&lt;/Arg&gt;
+&lt;/New&gt;
+</code></pre>
+
+<p>É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
 
 <p>Mapeando os recursos do ActiveMQ dentro do Container
-No arquivo de configuração web.xml, dentro do WEB-INF da aplicação, deverá ser mapeado referências para
+No arquivo de configuração web.xml, dentro do <strong>WEB-INF</strong> da aplicação, deverá ser mapeado referências para
 utilização do ActiveMQ:</p>
 
-<p><resource-ref id="ResourceRef_1291169365479">
-        <description>JMS Connection</description>
-        <res-ref-name>jms/ConnectionFactory</res-ref-name>
-        <res-type>javax.jms.ConnectionFactory</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-</resource-ref></p>
+<pre><code class="xml">&lt;resource-ref id="ResourceRef_1291169365479"&gt;
+        &lt;description&gt;JMS Connection&lt;/description&gt;
+        &lt;res-ref-name&gt;jms/ConnectionFactory&lt;/res-ref-name&gt;
+        &lt;res-type&gt;javax.jms.ConnectionFactory&lt;/res-type&gt;
+        &lt;res-auth&gt;Container&lt;/res-auth&gt;
+        &lt;res-sharing-scope&gt;Shareable&lt;/res-sharing-scope&gt;
+&lt;/resource-ref&gt;
 
-<p><message-destination-ref>
-        <message-destination-ref-name>jms/FooQueue</message-destination-ref-name>
-        <message-destination-type>javax.jms.Queue</message-destination-type>
-        <message-destination-usage>Produces</message-destination-usage>
-        <message-destination-link>jms/FooQueue</message-destination-link>
-</message-destination-ref></p>
+&lt;message-destination-ref&gt;
+        &lt;message-destination-ref-name&gt;jms/FooQueue&lt;/message-destination-ref-name&gt;
+        &lt;message-destination-type&gt;javax.jms.Queue&lt;/message-destination-type&gt;
+        &lt;message-destination-usage&gt;Produces&lt;/message-destination-usage&gt;
+        &lt;message-destination-link&gt;jms/FooQueue&lt;/message-destination-link&gt;
+&lt;/message-destination-ref&gt;
+</code></pre>
 ]]></content>
   </entry>
   
