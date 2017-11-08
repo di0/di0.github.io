@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T02:00:09-02:00</updated>
+  <updated>2017-11-08T02:26:25-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pereira Pinto]]></name>
@@ -20,8 +20,8 @@
     <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
     <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:</p>
 
-<p>1) Remover o .git</br>
-2) Recriar o artefato do banco de dados git, conforme comandos abaixo:</p>
+<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
+2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
 
 <pre><code class="bash">$ cd Project
 $ git init
