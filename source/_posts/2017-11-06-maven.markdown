@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "maven-jetty-and-activemq"
+title: "Using Jetty plugin with maven and ActiveMQ"
 date: 2017-11-06 00:36:41 -0200
 comments: true
 categories: [maven]
@@ -37,7 +37,7 @@ Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as con
 ### Adicionando dependências dos artefatos para o ActiveMQ
 
 Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
-
+"<!--more-->"
 <dependency>
        <groupId>org.apache.activemq</groupId>
        <artifactId>activemq-core</artifactId>

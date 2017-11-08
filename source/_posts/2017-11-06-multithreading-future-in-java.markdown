@@ -14,28 +14,13 @@ public interface Runnable {
 }
 ```
 
-Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível lançar uma exceção.
+Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
+lançar uma exceção.
 
-Para casos em que há tarefas que devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
 armazenar o valor desejado após a execução de uma tarefa.
 
-Segue um exemplo à grosso modo:
-
-``` java
-class Foo implements Runnable
-{
-        private String operation ;
-
-        public String getOperation() {
-             return operation;
-        }
-
-        public void run() {
-            // Stuff
-            operation = operation();
-        }
-}
-```
+Conforme exemplo abaixo:
 
 ``` java
 class Foo implements Runnable
@@ -76,7 +61,7 @@ método submit é descrito abaixo:
 Future submit( Callable task )
 ```
 
-Quando uma tarefa é executada através de Callable, sendo ela “submitada”, pelo método submit(), é retornado a
+Quando uma tarefa é executada através de Callable, sendo ela “submitada”, pelo método submit(), é retornado a 
 interface Future e, através dela, é usado o método get, para recuperar os valores processados.
 
 O método get é mutuamente excluído, até que a tarefa termine, semântica idêntica ao Join da classe Thread.
@@ -103,7 +88,7 @@ class Foo implements Callable
                 }
                 catch ( InterruptedException e )
                 {
-                        e.printStackTrace();
+                        // stuff
                 }
 
                 return value;
@@ -132,57 +117,6 @@ public class Test
                         System.out.println( i2 + " -> Executed by c2 reference");
                 }
 
-                s.shutdown();
-        }
-}
-```
-``` java
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
- 
-class Foo implements Callable
-{
-        private static int value = 0;
- 
-        public Integer call()
-        {
-                try
-                {
-                        value++;
-                        Thread.sleep(600);
-                }
-                catch ( InterruptedException e )
-                {
-                        e.printStackTrace();
-                }
- 
-                return value;
-        }
-}
-```
-``` java
-public class Test
-{
-        public static void main( String[] args ) throws Exception
-        {
-                ExecutorService s = Executors.newFixedThreadPool( 1 );
-                Callable c1 = new Foo();
-                Callable c2 = c1;
- 
-                for ( int count = 1; count <= 5; count++ )
-                {
-                        Future f1 = s.submit( c1 );
-                        Future f2 = s.submit( c2 );
- 
-                        Integer i1 = f1.get();
-                        System.out.println( i1 + " -> Executed by c1 reference" );
- 
-                        Integer i2 = f2.get();
-                        System.out.println( i2 + " -> Executed by c2 reference");
-                }
- 
                 s.shutdown();
         }
 }
