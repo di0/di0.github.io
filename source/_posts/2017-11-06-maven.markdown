@@ -36,13 +36,17 @@ Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as con
 
 ### Adicionando dependências dos artefatos para o ActiveMQ
 
-Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
-"<!--more-->"
+Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:
+
+```bash
 <dependency>
        <groupId>org.apache.activemq</groupId>
        <artifactId>activemq-core</artifactId>
        <version>5.0.0</version>
 </dependency>
+```
+
 Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.
 
 Instalando binários do ActiveMQ

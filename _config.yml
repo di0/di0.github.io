@@ -5,7 +5,7 @@
 url: http://di0.github.io
 title: Dio's Blog
 subtitle: By Diogo Pinto
-author: Diogo Pereira Pinto
+author: Diogo Pinto
 simple_search: https://www.google.com/search
 description:
 
@@ -64,13 +64,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: di0
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: diogolion
 twitter_tweet_button: true
 
 # Google +1
@@ -79,7 +79,7 @@ google_plus_one_size: medium
 
 # Google Plus Profile
 # Hidden: No visible button, just add author information to search results
-googleplus_user:
+googleplus_user: 115661938273408826648
 googleplus_hidden: false
 
 # Pinboard
@@ -98,4 +98,6 @@ disqus_show_comment_count: false
 google_analytics_tracking_id:
 
 # Facebook Like
-facebook_like: false
+facebook_like: true
+
+linkedin_user: diogo-pereira-pinto-7607a13a
