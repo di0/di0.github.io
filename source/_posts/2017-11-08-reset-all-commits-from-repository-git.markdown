@@ -16,7 +16,7 @@ $ cd Project
 $ git init
 // crie alguns arquivos ( eu clonei do SVN, em vez disso )
 $ git add .
-$ git commit -m ‘Initial commit’
+$ git commit -m "Initial commit"
 ```
 
 3) Realizar o push para o servidor remoto**(troque a url pela url do repositorio alvo)**, forçando a sobreescrita:
