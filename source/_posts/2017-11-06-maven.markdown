@@ -3,33 +3,39 @@ layout: post
 title: "maven-jetty-and-activemq"
 date: 2017-11-06 00:36:41 -0200
 comments: true
-categories: [Java,octopress]
+categories: [maven]
 ---
-Configurando plugin Jetty
+
+### Configurando plugin Jetty
+
 Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:
 
+``` xml
 <build>
-    <plugins>
-         <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.6.8.v20121106</version>
-                <configuration>
-                        <scanIntervalSeconds>10</scanIntervalSeconds>
-                        <webApp>
-                                <contextPath>/test</contextPath>
-                        </webApp>
-                        <webAppConfig>
-                                <jettyEnvXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
-                                <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                        </webAppConfig>
-                </configuration>
-         </plugin>
-     <plugins>
+  <plugins>
+     <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>7.6.8.v20121106</version>
+        <configuration>
+           <scanIntervalSeconds>10</scanIntervalSeconds>
+           <webApp>
+              <contextPath>/test</contextPath>
+              </webApp>
+                 <webAppConfig>
+                    <jettyEnvXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                 </webAppConfig>
+        </configuration>
+     </plugin>
+  <plugins>
 </build>
+```
+
 Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.
 
-Adicionando dependências dos artefatos para o ActiveMQ
+### Adicionando dependências dos artefatos para o ActiveMQ
+
 Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
 
 <dependency>
@@ -102,15 +108,19 @@ Deve ser o IP e porta onde o daemon do ActiveMQ está escutando.
 
 E onde:
 
+``` xml
 <New class="org.apache.activemq.command.ActiveMQQueue">
         <Arg>FOO.QUEUE</Arg>
 </New>
+```
+
 É a fila configurada no painel ou linha de comando do ActiveMQ.
 
 Mapeando os recursos do ActiveMQ dentro do Container
-No arquivo de configuração web.xml, dentro do WEB-INF da aplicação, deverá ser mapeado referências para
+No arquivo de configuração web.xml, dentro do **WEB-INF** da aplicação, deverá ser mapeado referências para
 utilização do ActiveMQ:
 
+``` xml
 <resource-ref id="ResourceRef_1291169365479">
         <description>JMS Connection</description>
         <res-ref-name>jms/ConnectionFactory</res-ref-name>
@@ -118,10 +128,11 @@ utilização do ActiveMQ:
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
 </resource-ref>
- 
+
 <message-destination-ref>
         <message-destination-ref-name>jms/FooQueue</message-destination-ref-name>
         <message-destination-type>javax.jms.Queue</message-destination-type>
         <message-destination-usage>Produces</message-destination-usage>
         <message-destination-link>jms/FooQueue</message-destination-link>
 </message-destination-ref>
+```
