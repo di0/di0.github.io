@@ -105,43 +105,13 @@ utilizá-la, a implementação de um único método chamado run().</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível lançar uma exceção.</p>
+<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
+lançar uma exceção.</p>
 
-<p>Para casos em que há tarefas que devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+<p>Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
 armazenar o valor desejado após a execução de uma tarefa.</p>
 
-<p>Segue um exemplo à grosso modo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>             <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="c1">// Stuff</span>
-</span><span class='line'>            <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<p>Conforme exemplo abaixo:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -250,7 +220,7 @@ dividir em duas linhas de execuções, e realizar a incrementação do valor e e
 </span><span class='line'>                <span class="o">}</span>
 </span><span class='line'>                <span class="k">catch</span> <span class="o">(</span> <span class="n">InterruptedException</span> <span class="n">e</span> <span class="o">)</span>
 </span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>                        <span class="c1">// stuff</span>
 </span><span class='line'>                <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
@@ -259,106 +229,6 @@ dividir em duas linhas de execuções, e realizar a incrementação do valor e e
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>                <span class="n">ExecutorService</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span> <span class="mi">1</span> <span class="o">);</span>
-</span><span class='line'>                <span class="n">Callable</span> <span class="n">c1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Foo</span><span class="o">();</span>
-</span><span class='line'>                <span class="n">Callable</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">c1</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">for</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">count</span><span class="o">++</span> <span class="o">)</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">Future</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c1</span> <span class="o">);</span>
-</span><span class='line'>                        <span class="n">Future</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c2</span> <span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i1</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c1 reference&quot;</span> <span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i2</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c2 reference&quot;</span><span class="o">);</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">s</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Callable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">()</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>                <span class="k">try</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">value</span><span class="o">++;</span>
-</span><span class='line'>                        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">600</span><span class="o">);</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>                <span class="k">catch</span> <span class="o">(</span> <span class="n">InterruptedException</span> <span class="n">e</span> <span class="o">)</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -509,7 +379,7 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2017/11/06/maven/" title="Previous Post: maven-jetty-and-activemq">&laquo; maven-jetty-and-activemq</a>
+        <a class="basic-alignment left" href="/blog/2017/11/06/maven/" title="Previous Post: Using Jetty plugin with maven and ActiveMQ">&laquo; Using Jetty plugin with maven and ActiveMQ</a>
       
       
     </p>
@@ -548,7 +418,7 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
       </li>
     
       <li class="post">
-        <a href="/blog/2017/11/06/maven/">Maven-jetty-and-activemq</a>
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
       </li>
     
       <li class="post">
@@ -568,7 +438,7 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
       </li>
     
       <li class="post">
-        <a href="/blog/2017/11/06/maven/">Maven-jetty-and-activemq</a>
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
       </li>
     
       <li class="post">

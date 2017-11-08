@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Maven | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/maven/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T01:21:16-02:00</updated>
+  <updated>2017-11-08T02:00:09-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pereira Pinto]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Maven-jetty-and-activemq]]></title>
+    <title type="html"><![CDATA[Using Jetty Plugin With Maven and ActiveMQ]]></title>
     <link href="http://di0.github.io/blog/2017/11/06/maven/"/>
     <updated>2017-11-06T00:36:41-02:00</updated>
     <id>http://di0.github.io/blog/2017/11/06/maven</id>
@@ -47,9 +47,9 @@
 
 <h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
 
-<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:</p>
-
-<p><dependency>
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
+&ldquo;<!--more-->&rdquo;
+<dependency>
        <groupId>org.apache.activemq</groupId>
        <artifactId>activemq-core</artifactId>
        <version>5.0.0</version>
