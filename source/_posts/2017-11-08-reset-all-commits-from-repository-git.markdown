@@ -8,8 +8,8 @@ categories: [Git]
 
 Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:
 
-1) Remover o .git</br>
-2) Recriar o artefato do banco de dados git, conforme comandos abaixo:
+1) Remover o .git do repositorio(local) que deseja resetar</br>
+2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:
 
 ``` bash
 $ cd Project
