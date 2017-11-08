@@ -4,10 +4,10 @@
   <title><![CDATA[Category: Maven | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/maven/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T09:30:47-02:00</updated>
+  <updated>2017-11-08T10:23:13-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
-    <name><![CDATA[Diogo Pereira Pinto]]></name>
+    <name><![CDATA[Diogo Pinto]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -47,14 +47,17 @@
 
 <h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
 
-<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
-&ldquo;<!--more-->&rdquo;
-<dependency>
-       <groupId>org.apache.activemq</groupId>
-       <artifactId>activemq-core</artifactId>
-       <version>5.0.0</version>
-</dependency>
-Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:</p>
+
+<pre><code class="bash">&lt;dependency&gt;
+       &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+       &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;
+       &lt;version&gt;5.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
 
 <p>Instalando binários do ActiveMQ
 Para instalar os binários do ActiveMQ:</p>

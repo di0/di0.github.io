@@ -4,10 +4,10 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T09:30:47-02:00</updated>
+  <updated>2017-11-08T10:23:13-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
-    <name><![CDATA[Diogo Pereira Pinto]]></name>
+    <name><![CDATA[Diogo Pinto]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -322,14 +322,23 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
 
 <h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
 
-<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como dependência:
-&ldquo;<!--more-->&rdquo;
-<dependency>
-       <groupId>org.apache.activemq</groupId>
-       <artifactId>activemq-core</artifactId>
-       <version>5.0.0</version>
-</dependency>
-Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;dependency&gt;
+</span><span class='line'>       &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+</span><span class='line'>       &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;
+</span><span class='line'>       &lt;version&gt;5.0.0&lt;/version&gt;
+</span><span class='line'>&lt;/dependency&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
 
 <p>Instalando binários do ActiveMQ
 Para instalar os binários do ActiveMQ:</p>
