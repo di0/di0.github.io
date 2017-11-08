@@ -4,7 +4,7 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T02:26:25-02:00</updated>
+  <updated>2017-11-08T09:30:47-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pereira Pinto]]></name>
@@ -493,7 +493,7 @@ utilização do ActiveMQ:</p>
 </span><span class='line'><span class="nv">$ </span>git init
 </span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
 </span><span class='line'><span class="nv">$ </span>git add .
-</span><span class='line'><span class="nv">$ </span>git commit -m ‘Initial commit’
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

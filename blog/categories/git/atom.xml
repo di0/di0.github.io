@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-08T02:26:25-02:00</updated>
+  <updated>2017-11-08T09:30:47-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pereira Pinto]]></name>
@@ -27,7 +27,7 @@
 $ git init
 // crie alguns arquivos ( eu clonei do SVN, em vez disso )
 $ git add .
-$ git commit -m ‘Initial commit’
+$ git commit -m "Initial commit"
 </code></pre>
 
 <p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
