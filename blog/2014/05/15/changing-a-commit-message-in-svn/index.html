@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Maven - Dio's Blog</title>
+  <title>Changing a Commit Message in SVN - Dio's Blog</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Category: maven">
+  <meta name="description" content="Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN: A &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/categories/maven">
+  <link rel="canonical" href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Dio's Blog" type="application/atom+xml">
@@ -65,35 +65,106 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Maven</h1>
+    
+      <h1 class="entry-title">Changing a Commit Message in SVN</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-15T01:50:04-03:00" pubdate data-updated="true"></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:</p>
 
-  
-  <h2>2017</h2>
+<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
 
-<article>
-  
-<h1><a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a></h1>
-<time datetime="2017-11-06T00:36:41-02:00" pubdate><span class='month'>Nov</span> <span class='day'>06</span> <span class='year'>2017</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/maven/'>maven</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
+</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>Onde <strong>N</strong> é o número da revisão</p>
 
+<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-15T01:50:04-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/svn/'>svn</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/09/23/reset-all-commits-from-repository-git/" title="Next Post: Reset all commits from Repository Git">Reset all commits from Repository Git &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
 
 </div>

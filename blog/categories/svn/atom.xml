@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Svn | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/svn/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2017-11-09T02:55:34-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Changing a Commit Message in SVN]]></title>
+    <link href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/"/>
+    <updated>2014-05-15T01:50:04-03:00</updated>
+    <id>http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn</id>
+    <content type="html"><![CDATA[<p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:</p>
+
+<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
+
+<pre><code class="bash">$ svn propedit -r N --revprop svn:log URL
+$ svn propset -r N --revprop svn:log "nova mensagem" [URL do Repositório]
+</code></pre>
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+
+<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
+
+<pre><code class="bash">$ svnadmin setlog [PATH do Repositório] -r N Arquivo
+</code></pre>
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+]]></content>
+  </entry>
+  
+</feed>

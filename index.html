@@ -215,6 +215,80 @@ lançar uma exceção.</p>
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Prevent SSH Connection Time Out</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-02-24T01:36:18-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Cliente SSH’s, são automaticamente desconectado do servidor SSH, quando um tempo limite de conexão é alcançado, como mostrado abaixo:</p>
+
+<p>Read from remote host foo.com: Connection reset by peer
+Connection to foo.com closed.</p>
+
+<p>Para evitar que o cliente perda conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
+
+<p>Configuração no servidor</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>TCPKeepAlive no
+</span><span class='line'>ClientAliveInterval 30
+</span><span class='line'>ClientAliveCountMax 100
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
+aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
+
+<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
+anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
+
+<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
+
+<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service sshd restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuração no Cliente</p>
+
+<p>Se acaso, não for </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a></h1>
     
     
@@ -271,6 +345,62 @@ lançar uma exceção.</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/15/changing-a-commit-message-in-svn/">Changing a Commit Message in SVN</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-15T01:50:04-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:</p>
+
+<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
+</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+
+<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -279,9 +409,13 @@ lançar uma exceção.</p>
 </div>
 <aside class="sidebar">
   <section>
-  <p>I'm Diogo Pereira Pinto, a System Analyst, Developer and fervent Unix fan</a>!</p>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
   
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
 
+
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br>
   <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
   <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
   <div class="social-icons">
@@ -306,7 +440,7 @@ lançar uma exceção.</p>
   </div>
 </section>
 
-  <section>
+  <!-- <section>
   <h1>Posts</h1>
   <ul id="recent_posts">
     
@@ -319,13 +453,21 @@ lançar uma exceção.</p>
       </li>
     
       <li class="post">
+        <a href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Prevent SSH Connection Time Out</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/15/changing-a-commit-message-in-svn/">Changing a Commit Message in SVN</a>
       </li>
     
   </ul>
 </section>
-
-  <!--
+ -->
+  
     <section>
   <h1>Posts</h1>
   <ul id="recent_posts">
@@ -339,12 +481,19 @@ lançar uma exceção.</p>
       </li>
     
       <li class="post">
+        <a href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Prevent SSH Connection Time Out</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Reset All Commits From Repository Git</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/15/changing-a-commit-message-in-svn/">Changing a Commit Message in SVN</a>
       </li>
     
   </ul>
 </section>
--->
 
 <section>
   <h1>GitHub Repos</h1>
