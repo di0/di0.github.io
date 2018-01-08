@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-06T22:42:07-02:00</updated>
+  <updated>2018-01-08T00:02:53-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -14,18 +14,66 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
+    <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
+    <updated>2016-08-21T04:17:15-03:00</updated>
+    <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
+    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir diretórios
+e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
+
+<pre><code class="bash">grep -r [Win] --color --exclude-dir=test --exclude-dir=target \
+--exclude-dir=bin --exclude=\*.xml --exclude=\*.svn "pesquisa" .
+</code></pre>
+
+<p>Ou ainda:</p>
+
+<pre><code class="bash">$ grep -r [Win] --color --exclude-dir={test,target,bin} \
+--exclude={*.xml,*.svn} "pesquisa" .
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Names Duplicates With Sort Command]]></title>
+    <link href="http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command/"/>
+    <updated>2016-05-20T19:37:51-03:00</updated>
+    <id>http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command</id>
+    <content type="html"><![CDATA[<p>É possível remover nomes duplicados de uma saída padrão com o utilitário <strong>sort</strong>. Exemplos:</p>
+
+<pre><code class="bash">sort -u foo.txt
+</code></pre>
+
+<p>ou</p>
+
+<pre><code class="bash">sort file.txt | uniq
+</code></pre>
+
+<p>É possível também, imprimir somente os valores repetidos, em vez de ocultá-los, segue:</p>
+
+<pre><code class="bash">sort file.txt | uniq -d
+</code></pre>
+
+<p>Uma outra forma de realizar a mesma tarefa que faz o comando <strong>sort</strong> é a de usar o comando
+<strong>awk</strong>, conforme exemplo abaixo:</p>
+
+<pre><code class="bash">$ awk '!a[$0]++' foo.txt
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Prevent SSH Connection Time Out]]></title>
     <link href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/"/>
     <updated>2016-02-24T01:36:18-03:00</updated>
     <id>http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout</id>
-    <content type="html"><![CDATA[<p>Cliente SSH’s, são automaticamente desconectado do servidor SSH, quando um tempo limite de conexão é alcançado, como mostrado abaixo:</p>
+    <content type="html"><![CDATA[<p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
 
-<p>Read from remote host foo.com: Connection reset by peer
-Connection to foo.com closed.</p>
+<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
+<strong> <em>Connection to foo.com closed.</em> </strong></p>
 
-<p>Para evitar que o cliente perda conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
+<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
 
-<p>Configuração no servidor</p>
+<p><del>Configuração no servidor</del></p>
 
 <pre><code class="bash">TCPKeepAlive no
 ClientAliveInterval 30
@@ -45,7 +93,7 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
 <pre><code class="bash">$ sudo service sshd restart
 </code></pre>
 
-<p>Configuração no Cliente</p>
+<p><del>Configuração no Cliente</del></p>
 
 <p>Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:</p>
 
@@ -65,6 +113,41 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
 E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
 
 <pre><code class="bash">$ ssh -o ServerAliveInterval=30 user@foo.com
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Status With Grep]]></title>
+    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
+    <updated>2015-05-15T02:36:05-03:00</updated>
+    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
+    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
+utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, basta adicionar a opção <strong>-c color-status=always</strong> ao
+executar o comando <strong>git status</strong>. Por exemplo:</p>
+
+<pre><code class="bash">git -c color.status=always status | grep -i "alguma coisa"
+</code></pre>
+
+<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
+Do contrário, um erro ocorrerá.</p>
+
+<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
+variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
+
+<pre><code class="bash">git -c color.ui=always log | grep -i -B 2 -A 3 "alguma coisa"
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NMAP - Searching Open Ports Into Specific Network]]></title>
+    <link href="http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/"/>
+    <updated>2014-07-08T20:12:26-03:00</updated>
+    <id>http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network</id>
+    <content type="html"><![CDATA[<p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede local especificada:</p>
+
+<pre><code class="bash">nmap -p22 192.168.0.0/24 -oG - | grep 22/open
 </code></pre>
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Svn | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/svn/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-06T22:42:07-02:00</updated>
+  <updated>2018-01-08T00:02:53-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,18 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SVN - Getting Revision Since the First Copy]]></title>
+    <link href="http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy/"/>
+    <updated>2016-11-01T23:27:11-02:00</updated>
+    <id>http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy</id>
+    <content type="html"><![CDATA[<p>Para obter o primeiro commit de onde foi criada a branch:</p>
+
+<pre><code class="bash">svn log --stop-on-copy
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Changing a Commit Message in SVN]]></title>
