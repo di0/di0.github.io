@@ -6,7 +6,7 @@ comments: true
 sharing: true
 footer: true
 ---
-I am a System Analyst and Software Developer, my skills are, C/C++, Perl
+I am a System Analyst and Software Developer, my skills are, C/C++, Perl,
 Shell Scripting, PHP, Java and System Operating Unix-Like(FreeBSD and Linux).
 
 My interests are, software development and network security. I am currently
