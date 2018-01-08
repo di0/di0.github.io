@@ -10,25 +10,29 @@ categories: [maven]
 
 Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:
 
-``` xml
+```xml
 <build>
-  <plugins>
-     <plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>7.6.8.v20121106</version>
-        <configuration>
-           <scanIntervalSeconds>10</scanIntervalSeconds>
-           <webApp>
-              <contextPath>/test</contextPath>
-              </webApp>
-                 <webAppConfig>
-                    <jettyEnvXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyEnvXml>
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                 </webAppConfig>
-        </configuration>
-     </plugin>
-  <plugins>
+ <plugins>
+  <plugin>
+    <groupId>org.mortbay.jetty</groupId>
+    <artifactId>jetty-maven-plugin</artifactId>
+    <version>7.6.8.v20121106</version>
+      <configuration>
+        <scanIntervalSeconds>10</scanIntervalSeconds>
+          <webApp>
+            <contextPath>/test</contextPath>
+          </webApp>
+          <webAppConfig>
+            <jettyEnvXml>
+					src/main/webapp/WEB-INF/jetty-env.xml
+            </jettyEnvXml>
+            <webXml>
+					src/main/webapp/WEB-INF/web.xml
+            </webXml>
+          </webAppConfig>
+      </configuration>
+  </plugin>
+ <plugins>
 </build>
 ```
 

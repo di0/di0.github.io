@@ -3,14 +3,15 @@ layout: post
 title: "MultiThreading - Future in Java"
 date: 2017-11-06 02:32:36 -0200
 comments: true
-categories: 
+categories: [java]
 ---
 
 Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
 utilizá-la, a implementação de um único método chamado run().
 ```java
-public interface Runnable {
-        public void run();
+public interface Runnable
+{
+	public void run();
 }
 ```
 
@@ -27,11 +28,13 @@ class Foo implements Runnable
 {
         private String operation ;
  
-        public String getOperation() {
+        public String getOperation()
+	{
              return operation;
         }
  
-        public void run() {
+        public void run()
+	{
             // Stuff
             operation = operation();
         }
@@ -46,7 +49,8 @@ chamado call(). Através desse método, agora é possível recuperar valores ret
 especificamente, qualquer tipo devido à sua construção genericamente parametrizada.
 
 ``` java
-public interface Callable {
+public interface Callable
+{
      V call() throws Exception;
 }
 ```

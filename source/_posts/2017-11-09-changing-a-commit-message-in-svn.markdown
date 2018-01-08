@@ -3,7 +3,7 @@ layout: post
 title: "Changing a commit message in SVN"
 date: 2014-05-15 02:50:04 -0200
 comments: true
-categories: svn
+categories: [svn]
 ---
 
 Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:

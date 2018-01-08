@@ -3,7 +3,7 @@ layout: post
 title: "Reset all commits from Repository Git"
 date: 2015-09-24 00:26:40 -0200
 comments: true
-categories: [Git]
+categories: [git]
 ---
 
 Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:

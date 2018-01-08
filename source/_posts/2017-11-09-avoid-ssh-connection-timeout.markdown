@@ -3,17 +3,17 @@ layout: post
 title: "Prevent SSH connection time out"
 date: 2016-02-24 02:36:18 -0200
 comments: true
-categories: Linux
+categories: [linux]
 ---
 
-Cliente SSH’s, são automaticamente desconectado do servidor SSH, quando um tempo limite de conexão é alcançado, como mostrado abaixo:
+Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:
 
-Read from remote host foo.com: Connection reset by peer
-Connection to foo.com closed.
+** *Read from remote host foo.com: Connection reset by peer* **
+** *Connection to foo.com closed.* **
 
-Para evitar que o cliente perda conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:
+Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:
 
-Configuração no servidor
+~~Configuração no servidor~~
 
 ``` bash
 TCPKeepAlive no
@@ -35,7 +35,7 @@ Reiniciando o servidor para aplicar as configurações modificadas:
 $ sudo service sshd restart
 ```
 
-Configuração no Cliente
+~~Configuração no Cliente~~
 
 Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:
 
