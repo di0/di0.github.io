@@ -21,7 +21,7 @@ Onde **java** é o nome do link simbólico.
 Segue exemplo:
 
 ```bash
-update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_151/bin/java 55
+update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
 ```
 
 Após o comando acima, basta confirmar com **\-\-list**:
@@ -39,7 +39,7 @@ update-alternatives --config java
 Há também a forma mais direta de se alternar a versão, passando o argumento **\-\-set** ou **-s**, conforme abaixo:
 
 ```bash
-sudo update-alternatives --set java /opt/jdk1.8.0_151/bin/java
+sudo update-alternatives --set java /opt/jdk1.8/bin/java
 ```
 
 Para maiores informaçoes:
