@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-17T17:08:42-02:00</updated>
+  <updated>2018-01-17T17:31:46-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -20,31 +20,31 @@
     <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
     <content type="html"><![CDATA[<p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
 sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
-no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>&ndash;list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
+no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>--list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
 
 <pre><code class="bash">update-alternatives --list java
 </code></pre>
 
 <p>Onde <strong>java</strong> é o nome do link simbólico.</p>
 
-<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>&ndash;install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>&ndash;install</strong>, o nível prioridade que a nova versão terá.</p>
+<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>--install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>--install</strong>, o nível prioridade que a nova versão terá.</p>
 
 <p>Segue exemplo:</p>
 
 <pre><code class="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_151/bin/java 55
 </code></pre>
 
-<p>Após o comando acima, basta confirmar com <strong>&ndash;list</strong>:</p>
+<p>Após o comando acima, basta confirmar com <strong>--list</strong>:</p>
 
 <pre><code class="bash">update-alternatives --list java
 </code></pre>
 
-<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento &ndash;config, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
+<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento <strong>--config</strong>, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
 
 <pre><code class="bash">update-alternatives --config java
 </code></pre>
 
-<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>&ndash;set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
+<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>--set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
 
 <pre><code class="bash">sudo update-alternatives --set java /opt/jdk1.8.0_151/bin/java
 </code></pre>
