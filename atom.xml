@@ -4,7 +4,7 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-08T00:34:35-02:00</updated>
+  <updated>2018-01-17T17:07:54-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
+    <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
+    <updated>2018-01-17T16:01:01-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
+    <content type="html"><![CDATA[<p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
+sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
+no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>&ndash;list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>java</strong> é o nome do link simbólico.</p>
+
+<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>&ndash;install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>&ndash;install</strong>, o nível prioridade que a nova versão terá.</p>
+
+<p>Segue exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_151/bin/java 55
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Após o comando acima, basta confirmar com <strong>&ndash;list</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento &ndash;config, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>&ndash;set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8.0_151/bin/java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para maiores informaçoes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MySQL - Searching for Distinct Fields]]></title>
@@ -1478,49 +1535,6 @@ do diretório /usr/ports, há inúmeros aplicativos para instalação. No exempl
 
 <p>A instalação é realizada pelo utilitário make, que acima, está em sua forma mais simples, podendo variar
 conforme necessidades.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[PHP - Correct Use of the Count Function]]></title>
-    <link href="http://di0.github.io/blog/2011/12/02/php-correct-use-of-the-count-function/"/>
-    <updated>2011-12-02T23:10:47-02:00</updated>
-    <id>http://di0.github.io/blog/2011/12/02/php-correct-use-of-the-count-function</id>
-    <content type="html"><![CDATA[<p>Comumente e erroneamente, a função <strong>count</strong> é chamada dentro de um laço de repetição, na
-intenção de impor um limite de contagem em uma determinada rotina de repetição, um simples
-exemplo desse caso seria:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$alfa</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$alfa</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span> <span class="p">)</span>
-</span><span class='line'>       <span class="c1">// codigo....</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Veja que desnecessariamente, chama-se a cada interação da instrução for, a função count().</p>
-
-<p>No contexto de se impor um limite, a forma correta seria fora do laço de repetição, chamar uma única vez a
-função, atribuindo seu valor de retorno em uma variável e essa sim, será utilizada dentro da instrução de
-repetição, segue:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$alfa</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$count</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span> <span class="nv">$alfa</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$count</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span> <span class="p">)</span>
-</span><span class='line'>      <span class="c1">// codigo.... </span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
