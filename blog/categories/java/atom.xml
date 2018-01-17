@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-17T17:31:46-02:00</updated>
+  <updated>2018-01-17T17:58:35-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -31,7 +31,7 @@ no sistema alvo, basta executar o comando update-alternatives, passando como arg
 
 <p>Segue exemplo:</p>
 
-<pre><code class="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_151/bin/java 55
+<pre><code class="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
 </code></pre>
 
 <p>Após o comando acima, basta confirmar com <strong>--list</strong>:</p>
@@ -46,7 +46,7 @@ no sistema alvo, basta executar o comando update-alternatives, passando como arg
 
 <p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>--set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
 
-<pre><code class="bash">sudo update-alternatives --set java /opt/jdk1.8.0_151/bin/java
+<pre><code class="bash">sudo update-alternatives --set java /opt/jdk1.8/bin/java
 </code></pre>
 
 <p>Para maiores informaçoes:</p>
