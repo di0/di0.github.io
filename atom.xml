@@ -4,7 +4,7 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-17T17:58:35-02:00</updated>
+  <updated>2018-01-22T02:14:17-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Creating WebService SOAP With Java]]></title>
+    <link href="http://di0.github.io/blog/2018/01/19/creating-webservice-soap-with-java/"/>
+    <updated>2018-01-19T01:54:21-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/19/creating-webservice-soap-with-java</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
@@ -1488,53 +1497,6 @@ dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, 
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeBSD - Install Programs]]></title>
-    <link href="http://di0.github.io/blog/2012/01/02/freebsd-install-programs/"/>
-    <updated>2012-01-02T23:38:14-02:00</updated>
-    <id>http://di0.github.io/blog/2012/01/02/freebsd-install-programs</id>
-    <content type="html"><![CDATA[<p>Existem duas formas comuns de se instalar programas no FreeBSD, via Pacotes e via Ports.</p>
-
-<p>Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não
-sendo necessário a utilização de um compilador no ambiente que está sendo instalado.</p>
-
-<p>Instalações via Ports, são realizadas através código fonte. No processo de instalação, os fontes são baixados
-e compilados. Obviamente para isso, há a necessidade de um compilador no ambiente de instalação.</p>
-
-<p>Mais trabalhoso e mais lento que a forma anterior, a vantagem nesse processo de instalação, é a possibilidade de
-personalizar opções antes das instalações ou na aplicações de patches(às vezes customizados), etc.</p>
-
-<p>Abaixo a forma de instalação de ambos métodos:</p>
-
-<p>Instalando com Pacote</p>
-
-<p>No FreeBSD, temos o utilitário pkg_add(man pkg_add), para instalações de pacotes:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pkg_add /foo/pacote-2-2.tar.gz
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Instalando via Ports</p>
-
-<p>O Ports além de outros, dispõe de arquivos Makefiles, customizados para o processo de instalação. A coleção de
-ports ou árvores de ports, estão disponíveis através do diretório /usr/ports/.</p>
-
-<p>Caso o Ports não tem sido instalado, é possível fazê-lo através dos utilitários portsnap ou csup. Dentro
-do diretório /usr/ports, há inúmeros aplicativos para instalação. No exemplo, a instalação do servidor Proxy Squid:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /usr/ports/www/squid
-</span><span class='line'>make instal clean
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A instalação é realizada pelo utilitário make, que acima, está em sua forma mais simples, podendo variar
-conforme necessidades.</p>
 ]]></content>
   </entry>
   
