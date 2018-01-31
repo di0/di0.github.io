@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T16:09:48-02:00</updated>
+  <updated>2018-01-31T21:04:27-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Capturing Groups Regex With Perl]]></title>
+    <link href="http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl/"/>
+    <updated>2018-01-31T20:46:12-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl</id>
+    <content type="html"><![CDATA[<p>Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
+o número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
+
+<pre><code class="perl">
+#!/usr/bin/env perl
+
+print "Enter your name and lastname here";
+chop ( $name_and_lastname = &lt;STDIN&gt; );
+
+if ( $name_and_lastname =~ /^\s*(\S+)\s+(\S+)\s*$/ )
+{
+    print "Hello $1. Your lastname: $2.";
+}
+else
+{
+    print "no result";
+}
+print "\n";
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Creating Objects in Perl]]></title>

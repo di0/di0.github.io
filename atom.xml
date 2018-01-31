@@ -4,7 +4,7 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T16:09:48-02:00</updated>
+  <updated>2018-01-31T21:04:27-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Capturing Groups Regex With Perl]]></title>
+    <link href="http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl/"/>
+    <updated>2018-01-31T20:46:12-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl</id>
+    <content type="html"><![CDATA[<p>Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
+o número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1">#!/usr/bin/env perl</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Enter your name and lastname here&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nb">chop</span> <span class="p">(</span> <span class="nv">$name_and_lastname</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nv">$name_and_lastname</span> <span class="o">=~</span><span class="sr"> /^\s*(\S+)\s+(\S+)\s*$/</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">print</span> <span class="s">&quot;Hello $1. Your lastname: $2.&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">print</span> <span class="s">&quot;no result&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Searching Exact Word With Vi Editor]]></title>
@@ -1447,62 +1488,6 @@ dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --no-assume-unchanged foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creating Objects in Perl]]></title>
-    <link href="http://di0.github.io/blog/2012/05/11/creating-objects-in-perl/"/>
-    <updated>2012-05-11T21:08:36-03:00</updated>
-    <id>http://di0.github.io/blog/2012/05/11/creating-objects-in-perl</id>
-    <content type="html"><![CDATA[<p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente representados por Hash e Bless.</p>
-
-<p>Uma Classe, é representada como um Pacote, utilizando a palavra chave package para criá-la:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'> <span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Quando um Pacote está no mesmo arquivo, é necessário um pacote principal:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">main</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Método Construtor é feito através da palavra chave new:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">sub </span><span class="nf">new</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$this</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$class</span> <span class="o">=</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span> <span class="o">||</span> <span class="nv">$this</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">nome</span> <span class="o">=&gt;</span> <span class="nb">shift</span><span class="p">,</span>
-</span><span class='line'>      <span class="n">ano_nasc</span> <span class="o">=&gt;</span> <span class="nb">shift</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nv">$class</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
