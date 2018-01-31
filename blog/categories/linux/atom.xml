@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T15:59:31-02:00</updated>
+  <updated>2018-01-31T16:06:36-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -24,7 +24,7 @@ regulares \&lt; e \>, por exemplo:</p>
 <pre><code class="bash">/\&lt;FOO\&gt;
 </code></pre>
 
-<p>Isso por exemplo, retornará somente a palavra FOO, em vez de FOOBAR, BARFOO, etc.</p>
+<p>Isso por exemplo, retornará somente a palavra FOO, em vez de FOOBAR, BARFOO, etc&hellip;</p>
 ]]></content>
   </entry>
   
