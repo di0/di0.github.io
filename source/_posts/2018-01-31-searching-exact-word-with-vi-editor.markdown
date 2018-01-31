@@ -13,4 +13,4 @@ regulares \\< e \\>, por exemplo:
 /\<FOO\>
 ```
 
-Isso por exemplo, retornará somente a palavra FOO, em vez de FOOBAR, BARFOO, etc.
+Isso por exemplo, retornará somente a palavra FOO, em vez de FOOBAR, BARFOO, etc...
