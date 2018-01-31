@@ -1,16 +1,1541 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Mais um blog hacker]]></title>
+  <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2017-11-03T17:59:13-02:00</updated>
+  <updated>2018-01-22T02:57:30-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
-    <name><![CDATA[Diogo Pereira Pinto]]></name>
+    <name><![CDATA[Diogo Pinto]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
+    <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
+    <updated>2018-01-17T16:01:01-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
+    <content type="html"><![CDATA[<p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
+sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
+no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>--list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>java</strong> é o nome do link simbólico.</p>
+
+<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>--install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>--install</strong>, o nível prioridade que a nova versão terá.</p>
+
+<p>Segue exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Após o comando acima, basta confirmar com <strong>--list</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento <strong>--config</strong>, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>--set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8/bin/java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para maiores informaçoes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL - Searching for Distinct Fields]]></title>
+    <link href="http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields/"/>
+    <updated>2018-01-07T21:42:23-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields</id>
+    <content type="html"><![CDATA[<p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
+podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQL, veja um exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">TABLE_NAME</span>
+</span><span class='line'>    <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span>
+</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;coluna_pesquisar&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;no_database&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MultiThreading - Future in Java]]></title>
+    <link href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/"/>
+    <updated>2017-11-06T02:32:36-02:00</updated>
+    <id>http://di0.github.io/blog/2017/11/06/multithreading-future-in-java</id>
+    <content type="html"><![CDATA[<p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
+utilizá-la, a implementação de um único método chamado run().</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
+lançar uma exceção.</p>
+
+<p>Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+armazenar o valor desejado após a execução de uma tarefa.</p>
+
+<p>Conforme exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>             <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// Stuff</span>
+</span><span class='line'>            <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Não há problema algum com o uso do exemplo acima, contudo, existe uma solução mais adequada e viável para esse caso, através da
+utilização da interface nomeada Callable.</p>
+
+<p>Callable é uma interface que foi disponibilizada na versão J2SE 5.0, ela oferece um método
+chamado call(). Através desse método, agora é possível recuperar valores retornados do tipo Object, ou mais
+especificamente, qualquer tipo devido à sua construção genericamente parametrizada.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>     <span class="n">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pelo fato de não ser possível trabalhar com Callable com auxílio da classe Thread, a qual implementa apenas
+Runnable, é usado ao invés disso, o suporte da interface ExecutorService para executar objetos do tipo Callable.</p>
+
+<p>Através de ExecutorService, é utilizada o método submit, que aceita como parâmetro um Callable e retorna uma
+interface Future, responsável por disponibilizar resultados através de operações assíncronas, a assinatura do
+método submit é descrito abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Future</span> <span class="nf">submit</span><span class="o">(</span> <span class="n">Callable</span> <span class="n">task</span> <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Quando uma tarefa é executada através de Callable, sendo ela “submitada”, pelo método submit(), é retornado a
+interface Future e, através dela, é usado o método get, para recuperar os valores processados.</p>
+
+<p>O método get é mutuamente excluído, até que a tarefa termine, semântica idêntica ao Join da classe Thread.</p>
+
+<p>Uma demonstração do uso de Callable é exibido no código seguinte. Esse teste se baseia em um processo se
+dividir em duas linhas de execuções, e realizar a incrementação do valor e exibi-lo logo em seguida. Por exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Callable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">()</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>                <span class="k">try</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="n">value</span><span class="o">++;</span>
+</span><span class='line'>                        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">600</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>                <span class="k">catch</span> <span class="o">(</span> <span class="n">InterruptedException</span> <span class="n">e</span> <span class="o">)</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="c1">// stuff</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>                <span class="n">ExecutorService</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span> <span class="mi">1</span> <span class="o">);</span>
+</span><span class='line'>                <span class="n">Callable</span> <span class="n">c1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Foo</span><span class="o">();</span>
+</span><span class='line'>                <span class="n">Callable</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">c1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">for</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">count</span><span class="o">++</span> <span class="o">)</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="n">Future</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c1</span> <span class="o">);</span>
+</span><span class='line'>                        <span class="n">Future</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c2</span> <span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i1</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c1 reference&quot;</span> <span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i2</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c2 reference&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">s</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>No trecho de código acima, na linhas 25 é utilizado o método estático newFixedThreadPool(), da classe Executors. Esse método
+cria uma espécie de mina de Threads, e diz a quantidade de tarefas que serão executadas a um
+determinado momento. O argumento 1, diz que apenas uma Thread executará por vez.</p>
+
+<p>Na linha 26, a variável c1 referencia um objeto que tem Callable a serem executados e na linha seguinte, uma outra
+variável(c2) referencia a mesma instância, para que seja possível demonstrar duas linhas de execuções, atuando na mesma tarefa.</p>
+
+<p>No loop, as duas threads serão “submitadas” e executadas e seus valores recuperadas pelo método get() da
+interface Future e, no fim do loop, o serviço executor é finalizado com método shutdown(), o resultado da operação será:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">1</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">3</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">5</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">7</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">9</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>De acordo o que foi passado para o método Executors.newFixedThreadPool( 1 ), apenas uma linha foi
+executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será algo como:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">2</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Jetty Plugin With Maven and ActiveMQ]]></title>
+    <link href="http://di0.github.io/blog/2017/11/06/maven/"/>
+    <updated>2017-11-06T00:36:41-02:00</updated>
+    <id>http://di0.github.io/blog/2017/11/06/maven</id>
+    <content type="html"><![CDATA[<h3>Configurando plugin Jetty</h3>
+
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;build&gt;</span>
+</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>org.mortbay.jetty<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jetty-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>7.6.8.v20121106<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;scanIntervalSeconds&gt;</span>10<span class="nt">&lt;/scanIntervalSeconds&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;webApp&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;contextPath&gt;</span>/test<span class="nt">&lt;/contextPath&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/webApp&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;webAppConfig&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;jettyEnvXml&gt;</span>
+</span><span class='line'>                  src/main/webapp/WEB-INF/jetty-env.xml
+</span><span class='line'>            <span class="nt">&lt;/jettyEnvXml&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;webXml&gt;</span>
+</span><span class='line'>                  src/main/webapp/WEB-INF/web.xml
+</span><span class='line'>            <span class="nt">&lt;/webXml&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/webAppConfig&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/plugin&gt;</span>
+</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+
+<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
+
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;dependency&gt;
+</span><span class='line'>       &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+</span><span class='line'>       &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;
+</span><span class='line'>       &lt;version&gt;5.0.0&lt;/version&gt;
+</span><span class='line'>&lt;/dependency&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
+
+<p>Instalando binários do ActiveMQ
+Para instalar os binários do ActiveMQ:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://activemq.apache.org/path/tofile/apache-activemq-x.x.x-bin.tar.gz
+</span><span class='line'><span class="nb">cd</span> <span class="o">[</span>diretorio_instalacao<span class="o">]</span>
+</span><span class='line'>tar zxvf activemq-x.x.x-bin.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Iniciando ActiveMQ
+Para iniciar o daemon após instalação:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="o">[</span>diretorio_instalacao<span class="o">]</span>/bin
+</span><span class='line'>./activemq start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para acessar o painel de administrador:</p>
+
+<p><a href="http://127.0.0.1:8161/admin/">http://127.0.0.1:8161/admin/</a></p>
+
+<p>Configurando recursos JNDI para o Jetty
+No caminho especificado nas configurações do Plugin do Jetty, no arquivo pom, é necessário configurar os recursos do JNDI para o específico webapp, exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE Configure PUBLIC &quot;-//Mort Bay Consulting//DTD Configure//EN&quot;</span>
+</span><span class='line'><span class="cp">&quot;http://jetty.mortbay.org/configure.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;Configure</span> <span class="na">id=</span><span class="s">&#39;jms-webapp-wac&#39;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.webapp.WebAppContext&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;New</span> <span class="na">id=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.plus.jndi.Resource&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;Ref</span> <span class="na">id=</span><span class="s">&#39;jms-webapp-wac&#39;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>jms/ConnectionFactory<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>tcp://127.0.0.1:61616<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;New</span> <span class="na">id=</span><span class="s">&quot;fooQueue&quot;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.plus.jndi.Resource&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>jms/FooQueue<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.command.ActiveMQQueue&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>FOO.QUEUE<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'><span class="nt">&lt;/Configure&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>tcp://127.0.0.1:61616<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'><span class="nt">&lt;/New&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Deve ser o IP e porta onde o daemon do ActiveMQ está escutando.</p>
+
+<p>E onde:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.command.ActiveMQQueue&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>FOO.QUEUE<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'><span class="nt">&lt;/New&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
+
+<p>Mapeando os recursos do ActiveMQ dentro do Container
+No arquivo de configuração web.xml, dentro do <strong>WEB-INF</strong> da aplicação, deverá ser mapeado referências para
+utilização do ActiveMQ:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;resource-ref</span> <span class="na">id=</span><span class="s">&quot;ResourceRef_1291169365479&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;description&gt;</span>JMS Connection<span class="nt">&lt;/description&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-ref-name&gt;</span>jms/ConnectionFactory<span class="nt">&lt;/res-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-type&gt;</span>javax.jms.ConnectionFactory<span class="nt">&lt;/res-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-auth&gt;</span>Container<span class="nt">&lt;/res-auth&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-sharing-scope&gt;</span>Shareable<span class="nt">&lt;/res-sharing-scope&gt;</span>
+</span><span class='line'><span class="nt">&lt;/resource-ref&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;message-destination-ref&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-ref-name&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-type&gt;</span>javax.jms.Queue<span class="nt">&lt;/message-destination-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-usage&gt;</span>Produces<span class="nt">&lt;/message-destination-usage&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-link&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-link&gt;</span>
+</span><span class='line'><span class="nt">&lt;/message-destination-ref&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git - Revert Specific Files]]></title>
+    <link href="http://di0.github.io/blog/2017/10/20/git-revert-specific-files/"/>
+    <updated>2017-10-20T22:12:50-02:00</updated>
+    <id>http://di0.github.io/blog/2017/10/20/git-revert-specific-files</id>
+    <content type="html"><![CDATA[<p>Assumindo hipoteticamente que o hash para qual deseja reverter um ou mais arquivos é <strong>cf762e4c187b</strong>.</p>
+
+<p>O comando abaixo irá reverter os arquivos foo1.txt e foo2.txt para o hash informado:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout cf762e4c187b -- dir/foo1.txt dir/foo2.txt
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SVN - Getting Revision Since the First Copy]]></title>
+    <link href="http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy/"/>
+    <updated>2016-11-01T23:27:11-02:00</updated>
+    <id>http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy</id>
+    <content type="html"><![CDATA[<p>Para obter o primeiro commit de onde foi criada a branch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>svn log --stop-on-copy
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
+    <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
+    <updated>2016-08-21T04:17:15-03:00</updated>
+    <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
+    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir diretórios
+e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">=</span><span class="nb">test</span> --exclude-dir<span class="o">=</span>target <span class="se">\</span>
+</span><span class='line'>--exclude-dir<span class="o">=</span>bin --exclude<span class="o">=</span><span class="se">\*</span>.xml --exclude<span class="o">=</span><span class="se">\*</span>.svn <span class="s2">&quot;pesquisa&quot;</span> .
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ou ainda:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">={</span><span class="nb">test</span>,target,bin<span class="o">}</span> <span class="se">\</span>
+</span><span class='line'>--exclude<span class="o">={</span>*.xml,*.svn<span class="o">}</span> <span class="s2">&quot;pesquisa&quot;</span> .
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Names Duplicates With Sort Command]]></title>
+    <link href="http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command/"/>
+    <updated>2016-05-20T19:37:51-03:00</updated>
+    <id>http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command</id>
+    <content type="html"><![CDATA[<p>É possível remover nomes duplicados de uma saída padrão com o utilitário <strong>sort</strong>. Exemplos:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort -u foo.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ou</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort file.txt <span class="p">|</span> uniq
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>É possível também, imprimir somente os valores repetidos, em vez de ocultá-los, segue:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort file.txt <span class="p">|</span> uniq -d
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Uma outra forma de realizar a mesma tarefa que faz o comando <strong>sort</strong> é a de usar o comando
+<strong>awk</strong>, conforme exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>awk <span class="s1">&#39;!a[$0]++&#39;</span> foo.txt
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Prevent SSH Connection Time Out]]></title>
+    <link href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/"/>
+    <updated>2016-02-24T01:36:18-03:00</updated>
+    <id>http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout</id>
+    <content type="html"><![CDATA[<p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
+
+<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
+<strong> <em>Connection to foo.com closed.</em> </strong></p>
+
+<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
+
+<p><del>Configuração no servidor</del></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>TCPKeepAlive no
+</span><span class='line'>ClientAliveInterval 30
+</span><span class='line'>ClientAliveCountMax 100
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
+aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
+
+<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
+anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
+
+<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
+
+<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service sshd restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><del>Configuração no Cliente</del></p>
+
+<p>Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:</p>
+
+<p>Se para todos os usuários do sistema, adicionar aqui</p>
+
+<p><strong> /etc/ssh/ssh_config </strong></p>
+
+<p>Ou para um usuário específico, adicionar aqui</p>
+
+<p><strong> ~/.ssh/config </strong></p>
+
+<p>A seguinte configuração:</p>
+
+<p><strong>ServerAliveInterval 30</strong></p>
+
+<p>Configuração no cliente – linha de comando
+E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -o <span class="nv">ServerAliveInterval</span><span class="o">=</span><span class="m">30</span> user@foo.com
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reset All Commits From Repository Git]]></title>
+    <link href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/"/>
+    <updated>2015-09-23T23:26:40-03:00</updated>
+    <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
+    <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:</p>
+
+<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
+2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
+</span><span class='line'><span class="nv">$ </span>git init
+</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
+</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ERROR: SERVER CERTIFICATE VERIFICATION FAILED]]></title>
+    <link href="http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed/"/>
+    <updated>2015-09-23T02:05:40-03:00</updated>
+    <id>http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed</id>
+    <content type="html"><![CDATA[<p>No momento do clone:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone https://develdio.com/SourceCode.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Foi obtido o seguinte erro:</p>
+
+<p><strong> Cloning into ‘SourceCode’… </strong></p>
+
+<p><strong> fatal: unable to access &lsquo;<a href="https://develdio.com/SourceCode.git/">https://develdio.com/SourceCode.git/</a>&rsquo;: server certificate verification failed. </strong>
+<strong> CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none </strong></p>
+
+<p>A falha ocorre devido o certificado não ser confiado.</p>
+
+<p>Para solucionar o problema através utilitário do git na linha de comando, basta executar:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global http.sslverify <span class="nb">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Status With Grep]]></title>
+    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
+    <updated>2015-05-15T02:36:05-03:00</updated>
+    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
+    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
+utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, basta adicionar a opção <strong>-c color-status=always</strong> ao
+executar o comando <strong>git status</strong>. Por exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.status<span class="o">=</span>always status <span class="p">|</span> grep -i <span class="s2">&quot;alguma coisa&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
+Do contrário, um erro ocorrerá.</p>
+
+<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
+variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.ui<span class="o">=</span>always log <span class="p">|</span> grep -i -B <span class="m">2</span> -A <span class="m">3</span> <span class="s2">&quot;alguma coisa&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NMAP - Searching Open Ports Into Specific Network]]></title>
+    <link href="http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/"/>
+    <updated>2014-07-08T20:12:26-03:00</updated>
+    <id>http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network</id>
+    <content type="html"><![CDATA[<p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede local especificada:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap -p22 192.168.0.0/24 -oG - <span class="p">|</span> grep 22/open
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changing a Commit Message in SVN]]></title>
+    <link href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/"/>
+    <updated>2014-05-15T01:50:04-03:00</updated>
+    <id>http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn</id>
+    <content type="html"><![CDATA[<p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:</p>
+
+<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
+</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+
+<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde <strong>N</strong> é o número da revisão</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Compress File With Git Diff Output]]></title>
+    <link href="http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output/"/>
+    <updated>2014-04-24T03:00:14-03:00</updated>
+    <id>http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output</id>
+    <content type="html"><![CDATA[<p>O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos
+que foram modificados são exibidos na saída comando git diff. Por exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git diff --name-only <span class="p">|</span> xargs tar czf new-files.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Searching for Table Name]]></title>
+    <link href="http://di0.github.io/blog/2013/05/13/searching-for-table-name/"/>
+    <updated>2013-05-13T20:30:04-03:00</updated>
+    <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
+    <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
+um simples <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SHOW</span> <span class="n">TABLES</span> <span class="k">FROM</span> <span class="n">database_name</span> <span class="k">LIKE</span> <span class="ss">&quot;%table_name%&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PHP - Reusing Code With Traits]]></title>
+    <link href="http://di0.github.io/blog/2012/12/01/php-reusing-code-with-traits/"/>
+    <updated>2012-12-01T22:21:08-02:00</updated>
+    <id>http://di0.github.io/blog/2012/12/01/php-reusing-code-with-traits</id>
+    <content type="html"><![CDATA[<p>Propósito geral dos Traits</p>
+
+<p>A Orientação a Objetos em PHP, não trabalha com conceitos de herança múltipla. Apesar da herança múltipla não fazer
+falta alguma em PHP(ou em qualquer outra linguagem), por trazer consigo mais desvantagens do que vantagens, como
+implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros
+problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos
+repetidos de códigos.</p>
+
+<p>Traits são mecanismos que possibilitam o reuso de código, em um contexto relacional não vertical. Com traits, em uma
+única classe é possível utilizar recursos que se tornam modulares e que são carregados conforme necessidade. A vantagem de
+utilizar <strong>Traits</strong>, vai além da reutilização e, o grande destaque está em seu relacionamento com outros participantes que, ao
+contrário da herança, não tem o relacionamento <em>&ldquo;É UM&rdquo;</em> e sim um talvez, se <em>&ldquo;COMPORTA(-SE) COMO&rdquo;</em>. Essa sútil diferença é de suma
+importância, evitando os problemas citados anteriormente quando se faz o uso indiscriminado e / ou incorreto de uma ou muitas
+extensões(o qual já foi citado não ser suportado no PHP), evitando-se relacionamentos excêntricos, <em>&ldquo;É UM&rdquo;</em>, onde por exemplo
+uma classe Pessoa estende Database, formando o relacionamento Pessoa É UM Database, quando Pessoa, obviamente, não É UM Database.</p>
+
+<p>Um exemplo simples para introduzir a sintaxe em torno das Traits:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">trait</span> <span class="nx">Foo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">function</span> <span class="nf">firstName</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="s1">&#39;James&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">trait</span> <span class="nx">Bar</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">function</span> <span class="nf">lastName</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="s1">&#39;Bond&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Baz</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">use</span> <span class="nx">Foo</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$objBaz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$strResult</span>  <span class="o">=</span> <span class="s1">&#39;My name is &#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot;, &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot; &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot;!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$strResult</span><span class="p">;</span>          <span class="c1">// My name is Bond, James Bond!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Traits assemelham-se às classes, mais aproximadamente às <!--more--> classes abstratas, que não
+podem ser instanciadas diretamente, todavia, seu principal objetivo é de reunir
+grupo(s) de comportamentos(s) que serão reutilizadas em um ou diversos pontos.</p>
+
+<p>Visão mais ampla</p>
+
+<p>Um outro exemplo recorrente, ajuda a ilustrar melhor o propósito de Traits:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">trait</span> <span class="nx">Singleton</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">private</span> <span class="k">static</span> <span class="nv">$instance</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getInstance</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="p">(</span> <span class="nx">self</span><span class="o">::</span><span class="nv">$instance</span> <span class="nx">instanceof</span> <span class="nx">self</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="nx">self</span><span class="o">::</span><span class="nv">$instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">self</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="nv">$instance</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">protected</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">private</span> <span class="k">function</span> <span class="nf">__clone</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">private</span> <span class="k">function</span> <span class="nf">__wakeup</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">DatabaseLoader</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">use</span> <span class="nx">Singleton</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span>  <span class="nc">FileLoader</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">use</span> <span class="nx">Singleton</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nesse exemplo, tanto a classe DatabaseLoader, como FileLoader, se comportam como Singleton, e por ambas herdarem
+esse comportamento, não é possível(devido aos construtores protegidos) criar novos objetos dessas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$database</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DatabaseLoader</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileLoader</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>PHP Fatal error: Call to protected DatabaseLoader::__construct<span class="o">()</span> from invalid context ...
+</span><span class='line'>PHP Fatal error: Call to protected FileLoader::__construct<span class="o">()</span> from invalid context ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As classes DatabaseLoader e FileLoader tem comportamentos idênticos à Trait Singleton, portanto, para o efeito
+desejado o correto será:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$databaseLoad_1</span> <span class="o">=</span> <span class="nx">DatabaseLoader</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$databaseLoad_2</span> <span class="o">=</span> <span class="nx">DatabaseLoader</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$fileLoad_1</span> <span class="o">=</span> <span class="nx">FileLoader</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$fileLoad_2</span> <span class="o">=</span> <span class="nx">FileLoader</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nv">$databaseLoad_1</span> <span class="nx">instanceof</span> <span class="nv">$databaseLoad_2</span> <span class="p">)</span>
+</span><span class='line'>  <span class="k">echo</span> <span class="s2">&quot;Singleton is working&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nv">$fileLoad_1</span> <span class="nx">instanceof</span> <span class="nv">$fileLoad_2</span> <span class="p">)</span>
+</span><span class='line'>  <span class="k">echo</span> <span class="s2">&quot;Singleton is working&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Isso reforça a grande cartada de Traits – possibilitar comportamentos aos participantes, ou seja, relacionamentos
+do tipo comporta-se como. A leitura dessas classes seria algo adjacente a: DatabaseLoader e FileLoader não são
+Singletons, não tem Singletons(usar singleton não é um contrato), mas se comportam como Singletons.</p>
+
+<p>Futuramente, tanto DatabaseLoader como FileLoader, de maneira flexivelmente simples, poderiam deixar de se comportar
+como Singletons, apenas deixando de usar(se comportar como) Trait Singleton.</p>
+
+<p>Traits e Interface</p>
+
+<p>Um exemplo usando Traits e Contrato:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">class</span> <span class="nc">CSV</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">public</span> <span class="k">function</span> <span class="nf">Output</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="c1">// {...}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="s2">&quot;CSV file contents has been read&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PDF</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">public</span> <span class="k">function</span> <span class="nf">Output</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="c1">// {...}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="s2">&quot;PDF file contents has been read&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">trait</span> <span class="nx">LoaderCSV</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">private</span> <span class="nv">$file</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span> <span class="nv">$file</span> <span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span> <span class="o">=</span> <span class="nv">$file</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nv">$csv</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CSV</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="c1">// {...}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="nv">$csv</span><span class="o">-&gt;</span><span class="na">Output</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">trait</span> <span class="nx">LoaderPDF</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">private</span> <span class="nv">$file</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span> <span class="nv">$file</span> <span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span> <span class="o">=</span> <span class="nv">$file</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>                <span class="nv">$pdf</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDF</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="c1">// {...}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="nv">$pdf</span><span class="o">-&gt;</span><span class="na">Output</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">interface</span> <span class="nx">ReaderFile</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">PDFReaderFile</span> <span class="k">implements</span> <span class="nx">ReaderFile</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">use</span> <span class="nx">LoaderPDF</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">CSVReaderFile</span> <span class="k">implements</span> <span class="nx">ReaderFile</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">use</span> <span class="nx">LoaderCSV</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">LoaderContents</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">private</span> <span class="nv">$contents</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span> <span class="nx">ReaderFile</span> <span class="nv">$rf</span> <span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">contents</span> <span class="o">=</span> <span class="nv">$rf</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// {...}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">public</span> <span class="k">function</span> <span class="nf">getContents</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">contents</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//---------------------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$filePDF</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LoaderContents</span><span class="p">(</span><span class="k">new</span> <span class="nx">PDFReaderFile</span><span class="p">(</span><span class="s2">&quot;file.pdf&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$filePDF</span><span class="o">-&gt;</span><span class="na">getContents</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>  <span class="c1">// PDF file contents has been read</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$fileCSV</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LoaderContents</span><span class="p">(</span><span class="k">new</span> <span class="nx">CSVReaderFile</span><span class="p">(</span><span class="s2">&quot;file.csv&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="k">echo</span> <span class="nv">$fileCSV</span><span class="o">-&gt;</span><span class="na">getContents</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>  <span class="c1">// CSV file contents has been read</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Há alguns pontos a serem ressaltados, por exemplo, como é notado, as classes PDFReaderFile e CSVReaderFile tem
+(uma interface) um ReaderFile, mas cada um se comporta(uma trait) de uma maneira. Nesse caso também, foi
+possível realizar uma abstração encapsulada, pois, quem usa a classe LoaderContents, não tem conhecimentos de que
+o contrato assinado está sob comportamentos ou uma implementação.</p>
+
+<p>Os construtores de cada Traits são herdados, tendo os construtores dos participantes que usam essas
+Traits, os mesmos comportamentos.</p>
+
+<p>Traits e Autload</p>
+
+<p>Também é possível utilizar Traits com autoload/spl_autload_register e a função trait_exists():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">class</span> <span class="nc">ReaderFile</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">use</span> <span class="nx">LoaderFile</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">__autoload</span><span class="p">(</span> <span class="nv">$name</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nv">$trait</span> <span class="o">=</span> <span class="nv">$name</span><span class="o">.</span><span class="s2">&quot;.php&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span> <span class="nb">file_exists</span><span class="p">(</span> <span class="nv">$trait</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">include_once</span><span class="p">(</span> <span class="nv">$trait</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nb">trait_exists</span><span class="p">(</span> <span class="nv">$name</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>          <span class="k">throw</span> <span class="k">new</span> <span class="nx">exception</span><span class="p">(</span> <span class="s2">&quot;No trait exists&quot;</span> <span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      <span class="k">throw</span> <span class="k">new</span> <span class="nx">exception</span><span class="p">(</span><span class="s2">&quot;No file exists&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Conclusão final</p>
+
+<p>Há uma infinidade de maneiras de se usar Traits, como compor Traits dentro de Traits, criando uma hierarquia
+de comportamentos. Sem dúvida, Traits trouxe para o PHP muito mais flexibilidade em todos os sentidos.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ignore Temporarily Files With Git]]></title>
+    <link href="http://di0.github.io/blog/2012/05/25/ignore-temporarily-files-with-git/"/>
+    <updated>2012-05-25T03:46:06-03:00</updated>
+    <id>http://di0.github.io/blog/2012/05/25/ignore-temporarily-files-with-git</id>
+    <content type="html"><![CDATA[<p>A maneira de ignorar arquivos nos commits do git é através do arquivo de configuração chamado
+<strong>gitignore</strong>. Basta adicionar nele arquivos ou diretórios que não serão colocados na área de commit
+na geração de um novo snapshot.</p>
+
+<p>Há uma outra maneira de ignorar temporariamente arquivos ou diretórios de maneira dinâmica, em
+vez de adicionar de maneira estática, como acontece ao utilizar o gitignore. A maneira de se
+fazer isso, é através do argumento <strong>update-index &ndash;assume-unchanged</strong>, de tal forma:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --assume-unchanged foo.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Isso fará com que o arquivo não apareça mais em comandos como <strong>git status</strong>, <strong>git diff</strong>&hellip;</p>
+
+<p>Por consequência, não será colocado na área de stage para o próximo commit.</p>
+
+<p>Para retornar o arquivo a ser monitorado, basta desfazer a método de ignore, utilizando
+dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, da seguinte forma:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --no-assume-unchanged foo.txt
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Objects in Perl]]></title>
+    <link href="http://di0.github.io/blog/2012/05/11/creating-objects-in-perl/"/>
+    <updated>2012-05-11T21:08:36-03:00</updated>
+    <id>http://di0.github.io/blog/2012/05/11/creating-objects-in-perl</id>
+    <content type="html"><![CDATA[<p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente representados por Hash e Bless.</p>
+
+<p>Uma Classe, é representada como um Pacote, utilizando a palavra chave package para criá-la:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'> <span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Quando um Pacote está no mesmo arquivo, é necessário um pacote principal:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">main</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Método Construtor é feito através da palavra chave new:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">sub </span><span class="nf">new</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$this</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$class</span> <span class="o">=</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span> <span class="o">||</span> <span class="nv">$this</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">nome</span> <span class="o">=&gt;</span> <span class="nb">shift</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">ano_nasc</span> <span class="o">=&gt;</span> <span class="nb">shift</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FreeBSD - Install Programs]]></title>
+    <link href="http://di0.github.io/blog/2012/01/02/freebsd-install-programs/"/>
+    <updated>2012-01-02T23:38:14-02:00</updated>
+    <id>http://di0.github.io/blog/2012/01/02/freebsd-install-programs</id>
+    <content type="html"><![CDATA[<p>Existem duas formas comuns de se instalar programas no FreeBSD, via Pacotes e via Ports.</p>
+
+<p>Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não
+sendo necessário a utilização de um compilador no ambiente que está sendo instalado.</p>
+
+<p>Instalações via Ports, são realizadas através código fonte. No processo de instalação, os fontes são baixados
+e compilados. Obviamente para isso, há a necessidade de um compilador no ambiente de instalação.</p>
+
+<p>Mais trabalhoso e mais lento que a forma anterior, a vantagem nesse processo de instalação, é a possibilidade de
+personalizar opções antes das instalações ou na aplicações de patches(às vezes customizados), etc.</p>
+
+<p>Abaixo a forma de instalação de ambos métodos:</p>
+
+<p>Instalando com Pacote</p>
+
+<p>No FreeBSD, temos o utilitário pkg_add(man pkg_add), para instalações de pacotes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pkg_add /foo/pacote-2-2.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalando via Ports</p>
+
+<p>O Ports além de outros, dispõe de arquivos Makefiles, customizados para o processo de instalação. A coleção de
+ports ou árvores de ports, estão disponíveis através do diretório /usr/ports/.</p>
+
+<p>Caso o Ports não tem sido instalado, é possível fazê-lo através dos utilitários portsnap ou csup. Dentro
+do diretório /usr/ports, há inúmeros aplicativos para instalação. No exemplo, a instalação do servidor Proxy Squid:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /usr/ports/www/squid
+</span><span class='line'>make instal clean
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A instalação é realizada pelo utilitário make, que acima, está em sua forma mais simples, podendo variar
+conforme necessidades.</p>
+]]></content>
+  </entry>
   
 </feed>

@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Using Jetty Plugin With Maven and ActiveMQ - Dio's Blog</title>
+  <meta name="author" content="Diogo Pinto">
+
+  
+  <meta name="description" content="Configurando plugin Jetty Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas: 1
+2 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://di0.github.io/blog/2017/11/06/maven">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Dio's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Dio's Blog</a></h1>
+  
+  <div class="subtitle">
+    <h2>By Diogo Pinto</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Using Jetty Plugin With Maven and ActiveMQ</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-11-06T00:36:41-02:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Configurando plugin Jetty</h3>
+
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;build&gt;</span>
+</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>org.mortbay.jetty<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jetty-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>7.6.8.v20121106<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;scanIntervalSeconds&gt;</span>10<span class="nt">&lt;/scanIntervalSeconds&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;webApp&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;contextPath&gt;</span>/test<span class="nt">&lt;/contextPath&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/webApp&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;webAppConfig&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;jettyEnvXml&gt;</span>
+</span><span class='line'>                  src/main/webapp/WEB-INF/jetty-env.xml
+</span><span class='line'>            <span class="nt">&lt;/jettyEnvXml&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;webXml&gt;</span>
+</span><span class='line'>                  src/main/webapp/WEB-INF/web.xml
+</span><span class='line'>            <span class="nt">&lt;/webXml&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/webAppConfig&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/plugin&gt;</span>
+</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+
+<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
+
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;dependency&gt;
+</span><span class='line'>       &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+</span><span class='line'>       &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;
+</span><span class='line'>       &lt;version&gt;5.0.0&lt;/version&gt;
+</span><span class='line'>&lt;/dependency&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
+
+<p>Instalando binários do ActiveMQ
+Para instalar os binários do ActiveMQ:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget http://activemq.apache.org/path/tofile/apache-activemq-x.x.x-bin.tar.gz
+</span><span class='line'><span class="nb">cd</span> <span class="o">[</span>diretorio_instalacao<span class="o">]</span>
+</span><span class='line'>tar zxvf activemq-x.x.x-bin.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Iniciando ActiveMQ
+Para iniciar o daemon após instalação:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="o">[</span>diretorio_instalacao<span class="o">]</span>/bin
+</span><span class='line'>./activemq start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para acessar o painel de administrador:</p>
+
+<p><a href="http://127.0.0.1:8161/admin/">http://127.0.0.1:8161/admin/</a></p>
+
+<p>Configurando recursos JNDI para o Jetty
+No caminho especificado nas configurações do Plugin do Jetty, no arquivo pom, é necessário configurar os recursos do JNDI para o específico webapp, exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+</span><span class='line'><span class="cp">&lt;!DOCTYPE Configure PUBLIC &quot;-//Mort Bay Consulting//DTD Configure//EN&quot;</span>
+</span><span class='line'><span class="cp">&quot;http://jetty.mortbay.org/configure.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;Configure</span> <span class="na">id=</span><span class="s">&#39;jms-webapp-wac&#39;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.webapp.WebAppContext&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;New</span> <span class="na">id=</span><span class="s">&quot;connectionFactory&quot;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.plus.jndi.Resource&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;Ref</span> <span class="na">id=</span><span class="s">&#39;jms-webapp-wac&#39;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>jms/ConnectionFactory<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>tcp://127.0.0.1:61616<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;New</span> <span class="na">id=</span><span class="s">&quot;fooQueue&quot;</span> <span class="na">class=</span><span class="s">&quot;org.eclipse.jetty.plus.jndi.Resource&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>jms/FooQueue<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.command.ActiveMQQueue&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>FOO.QUEUE<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/New&gt;</span>
+</span><span class='line'><span class="nt">&lt;/Configure&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Onde:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>tcp://127.0.0.1:61616<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'><span class="nt">&lt;/New&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Deve ser o IP e porta onde o daemon do ActiveMQ está escutando.</p>
+
+<p>E onde:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;New</span> <span class="na">class=</span><span class="s">&quot;org.apache.activemq.command.ActiveMQQueue&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;Arg&gt;</span>FOO.QUEUE<span class="nt">&lt;/Arg&gt;</span>
+</span><span class='line'><span class="nt">&lt;/New&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
+
+<p>Mapeando os recursos do ActiveMQ dentro do Container
+No arquivo de configuração web.xml, dentro do <strong>WEB-INF</strong> da aplicação, deverá ser mapeado referências para
+utilização do ActiveMQ:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;resource-ref</span> <span class="na">id=</span><span class="s">&quot;ResourceRef_1291169365479&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;description&gt;</span>JMS Connection<span class="nt">&lt;/description&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-ref-name&gt;</span>jms/ConnectionFactory<span class="nt">&lt;/res-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-type&gt;</span>javax.jms.ConnectionFactory<span class="nt">&lt;/res-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-auth&gt;</span>Container<span class="nt">&lt;/res-auth&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;res-sharing-scope&gt;</span>Shareable<span class="nt">&lt;/res-sharing-scope&gt;</span>
+</span><span class='line'><span class="nt">&lt;/resource-ref&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;message-destination-ref&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-ref-name&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-ref-name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-type&gt;</span>javax.jms.Queue<span class="nt">&lt;/message-destination-type&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-usage&gt;</span>Produces<span class="nt">&lt;/message-destination-usage&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;message-destination-link&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-link&gt;</span>
+</span><span class='line'><span class="nt">&lt;/message-destination-ref&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-11-06T00:36:41-02:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/maven/'>maven</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2017/11/06/maven/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2017/11/06/maven/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/10/20/git-revert-specific-files/" title="Previous Post: Git - Revert specific files">&laquo; Git - Revert specific files</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2017/11/06/multithreading-future-in-java/" title="Next Post: MultiThreading - Future in Java">MultiThreading - Future in Java &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
+  
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
+
+
+  <b><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br></b>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
+  <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+  <a href="http://www.linkedin.com/in/diogo-pereira-pinto-dio"><i class="fa fa-linkedin fa-3x"></i></a>
+
+
+    
+  <a href="https://plus.google.com/115661938273408826648"<i class="fa fa-google-plus fa-3x"></i></a>
+
+
+    
+  <a href="https://github.com/di0"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/diogolion"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/115661938273408826648?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (6)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (6)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/di0">@di0</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'di0',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2018 - Diogo Pinto -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2018  Diogo Pinto -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

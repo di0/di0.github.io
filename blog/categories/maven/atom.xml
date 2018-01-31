@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Maven | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/maven/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-01-22T02:57:30-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using Jetty Plugin With Maven and ActiveMQ]]></title>
+    <link href="http://di0.github.io/blog/2017/11/06/maven/"/>
+    <updated>2017-11-06T00:36:41-02:00</updated>
+    <id>http://di0.github.io/blog/2017/11/06/maven</id>
+    <content type="html"><![CDATA[<h3>Configurando plugin Jetty</h3>
+
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
+
+<pre><code class="xml">&lt;build&gt;
+ &lt;plugins&gt;
+  &lt;plugin&gt;
+    &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+    &lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;7.6.8.v20121106&lt;/version&gt;
+      &lt;configuration&gt;
+        &lt;scanIntervalSeconds&gt;10&lt;/scanIntervalSeconds&gt;
+          &lt;webApp&gt;
+            &lt;contextPath&gt;/test&lt;/contextPath&gt;
+          &lt;/webApp&gt;
+          &lt;webAppConfig&gt;
+            &lt;jettyEnvXml&gt;
+                    src/main/webapp/WEB-INF/jetty-env.xml
+            &lt;/jettyEnvXml&gt;
+            &lt;webXml&gt;
+                    src/main/webapp/WEB-INF/web.xml
+            &lt;/webXml&gt;
+          &lt;/webAppConfig&gt;
+      &lt;/configuration&gt;
+  &lt;/plugin&gt;
+ &lt;plugins&gt;
+&lt;/build&gt;
+</code></pre>
+
+<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
+
+<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
+
+<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como <!--more-->
+dependência:</p>
+
+<pre><code class="bash">&lt;dependency&gt;
+       &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+       &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;
+       &lt;version&gt;5.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Essa entrada apenas disponibilizará as bibliotecas necessárias para criar as conexões e sessões.</p>
+
+<p>Instalando binários do ActiveMQ
+Para instalar os binários do ActiveMQ:</p>
+
+<pre><code class="bash">wget http://activemq.apache.org/path/tofile/apache-activemq-x.x.x-bin.tar.gz
+cd [diretorio_instalacao]
+tar zxvf activemq-x.x.x-bin.tar.gz
+</code></pre>
+
+<p>Iniciando ActiveMQ
+Para iniciar o daemon após instalação:</p>
+
+<pre><code class="bash">cd [diretorio_instalacao]/bin
+./activemq start
+</code></pre>
+
+<p>Para acessar o painel de administrador:</p>
+
+<p><a href="http://127.0.0.1:8161/admin/">http://127.0.0.1:8161/admin/</a></p>
+
+<p>Configurando recursos JNDI para o Jetty
+No caminho especificado nas configurações do Plugin do Jetty, no arquivo pom, é necessário configurar os recursos do JNDI para o específico webapp, exemplo:</p>
+
+<pre><code class="xml">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
+"http://jetty.mortbay.org/configure.dtd"&gt;
+&lt;Configure id='jms-webapp-wac' class="org.eclipse.jetty.webapp.WebAppContext"&gt;
+  &lt;New id="connectionFactory" class="org.eclipse.jetty.plus.jndi.Resource"&gt;
+    &lt;Arg&gt;
+      &lt;Ref id='jms-webapp-wac' /&gt;
+    &lt;/Arg&gt;
+    &lt;Arg&gt;jms/ConnectionFactory&lt;/Arg&gt;
+    &lt;Arg&gt;
+      &lt;New class="org.apache.activemq.ActiveMQConnectionFactory"&gt;
+        &lt;Arg&gt;tcp://127.0.0.1:61616&lt;/Arg&gt;
+      &lt;/New&gt;
+    &lt;/Arg&gt;
+  &lt;/New&gt;
+  &lt;New id="fooQueue" class="org.eclipse.jetty.plus.jndi.Resource"&gt;
+    &lt;Arg&gt;jms/FooQueue&lt;/Arg&gt;
+    &lt;Arg&gt;
+      &lt;New class="org.apache.activemq.command.ActiveMQQueue"&gt;
+        &lt;Arg&gt;FOO.QUEUE&lt;/Arg&gt;
+      &lt;/New&gt;
+    &lt;/Arg&gt;
+  &lt;/New&gt;
+&lt;/Configure&gt;
+</code></pre>
+
+<p>Onde:</p>
+
+<pre><code class="xml">&lt;New class="org.apache.activemq.ActiveMQConnectionFactory"&gt;
+        &lt;Arg&gt;tcp://127.0.0.1:61616&lt;/Arg&gt;
+&lt;/New&gt;
+</code></pre>
+
+<p>Deve ser o IP e porta onde o daemon do ActiveMQ está escutando.</p>
+
+<p>E onde:</p>
+
+<pre><code class="xml">&lt;New class="org.apache.activemq.command.ActiveMQQueue"&gt;
+        &lt;Arg&gt;FOO.QUEUE&lt;/Arg&gt;
+&lt;/New&gt;
+</code></pre>
+
+<p>É a fila configurada no painel ou linha de comando do ActiveMQ.</p>
+
+<p>Mapeando os recursos do ActiveMQ dentro do Container
+No arquivo de configuração web.xml, dentro do <strong>WEB-INF</strong> da aplicação, deverá ser mapeado referências para
+utilização do ActiveMQ:</p>
+
+<pre><code class="xml">&lt;resource-ref id="ResourceRef_1291169365479"&gt;
+        &lt;description&gt;JMS Connection&lt;/description&gt;
+        &lt;res-ref-name&gt;jms/ConnectionFactory&lt;/res-ref-name&gt;
+        &lt;res-type&gt;javax.jms.ConnectionFactory&lt;/res-type&gt;
+        &lt;res-auth&gt;Container&lt;/res-auth&gt;
+        &lt;res-sharing-scope&gt;Shareable&lt;/res-sharing-scope&gt;
+&lt;/resource-ref&gt;
+
+&lt;message-destination-ref&gt;
+        &lt;message-destination-ref-name&gt;jms/FooQueue&lt;/message-destination-ref-name&gt;
+        &lt;message-destination-type&gt;javax.jms.Queue&lt;/message-destination-type&gt;
+        &lt;message-destination-usage&gt;Produces&lt;/message-destination-usage&gt;
+        &lt;message-destination-link&gt;jms/FooQueue&lt;/message-destination-link&gt;
+&lt;/message-destination-ref&gt;
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

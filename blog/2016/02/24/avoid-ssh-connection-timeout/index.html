@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Prevent SSH Connection Time Out - Dio's Blog</title>
+  <meta name="author" content="Diogo Pinto">
+
+  
+  <meta name="description" content="Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Dio's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Dio's Blog</a></h1>
+  
+  <div class="subtitle">
+    <h2>By Diogo Pinto</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Prevent SSH Connection Time Out</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-02-24T01:36:18-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
+
+<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
+<strong> <em>Connection to foo.com closed.</em> </strong></p>
+
+<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
+
+<p><del>Configuração no servidor</del></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>TCPKeepAlive no
+</span><span class='line'>ClientAliveInterval 30
+</span><span class='line'>ClientAliveCountMax 100
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
+aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
+
+<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
+anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
+
+<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
+
+<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service sshd restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><del>Configuração no Cliente</del></p>
+
+<p>Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:</p>
+
+<p>Se para todos os usuários do sistema, adicionar aqui</p>
+
+<p><strong> /etc/ssh/ssh_config </strong></p>
+
+<p>Ou para um usuário específico, adicionar aqui</p>
+
+<p><strong> ~/.ssh/config </strong></p>
+
+<p>A seguinte configuração:</p>
+
+<p><strong>ServerAliveInterval 30</strong></p>
+
+<p>Configuração no cliente – linha de comando
+E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -o <span class="nv">ServerAliveInterval</span><span class="o">=</span><span class="m">30</span> user@foo.com
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-02-24T01:36:18-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/09/23/reset-all-commits-from-repository-git/" title="Previous Post: Reset all commits from Repository Git">&laquo; Reset all commits from Repository Git</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/05/20/remove-names-duplicates-with-sort-command/" title="Next Post: Remove names duplicates with sort command">Remove names duplicates with sort command &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
+  
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
+
+
+  <b><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br></b>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
+  <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+  <a href="http://www.linkedin.com/in/diogo-pereira-pinto-dio"><i class="fa fa-linkedin fa-3x"></i></a>
+
+
+    
+  <a href="https://plus.google.com/115661938273408826648"<i class="fa fa-google-plus fa-3x"></i></a>
+
+
+    
+  <a href="https://github.com/di0"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/diogolion"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/115661938273408826648?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (6)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (6)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/di0">@di0</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'di0',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2018 - Diogo Pinto -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2018  Diogo Pinto -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

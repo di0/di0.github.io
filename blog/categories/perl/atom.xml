@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Perl | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/perl/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-01-22T02:57:30-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Creating Objects in Perl]]></title>
+    <link href="http://di0.github.io/blog/2012/05/11/creating-objects-in-perl/"/>
+    <updated>2012-05-11T21:08:36-03:00</updated>
+    <id>http://di0.github.io/blog/2012/05/11/creating-objects-in-perl</id>
+    <content type="html"><![CDATA[<p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente representados por Hash e Bless.</p>
+
+<p>Uma Classe, é representada como um Pacote, utilizando a palavra chave package para criá-la:</p>
+
+<pre><code class="perl"> package Pessoa;
+</code></pre>
+
+<p>Quando um Pacote está no mesmo arquivo, é necessário um pacote principal:</p>
+
+<pre><code class="perl">package main;
+</code></pre>
+
+<p>Método Construtor é feito através da palavra chave new:</p>
+
+<pre><code class="perl">package Pessoa;
+
+sub new
+{
+    my $this = shift;
+    my $class = ref($this) || $this;
+
+    my $self = {
+        nome =&gt; shift,
+        ano_nasc =&gt; shift
+    };
+
+    return bless $self, $class;
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

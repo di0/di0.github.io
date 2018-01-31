@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Freebsd | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/freebsd/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-01-22T02:57:30-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FreeBSD - Install Programs]]></title>
+    <link href="http://di0.github.io/blog/2012/01/02/freebsd-install-programs/"/>
+    <updated>2012-01-02T23:38:14-02:00</updated>
+    <id>http://di0.github.io/blog/2012/01/02/freebsd-install-programs</id>
+    <content type="html"><![CDATA[<p>Existem duas formas comuns de se instalar programas no FreeBSD, via Pacotes e via Ports.</p>
+
+<p>Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não
+sendo necessário a utilização de um compilador no ambiente que está sendo instalado.</p>
+
+<p>Instalações via Ports, são realizadas através código fonte. No processo de instalação, os fontes são baixados
+e compilados. Obviamente para isso, há a necessidade de um compilador no ambiente de instalação.</p>
+
+<p>Mais trabalhoso e mais lento que a forma anterior, a vantagem nesse processo de instalação, é a possibilidade de
+personalizar opções antes das instalações ou na aplicações de patches(às vezes customizados), etc.</p>
+
+<p>Abaixo a forma de instalação de ambos métodos:</p>
+
+<p>Instalando com Pacote</p>
+
+<p>No FreeBSD, temos o utilitário pkg_add(man pkg_add), para instalações de pacotes:</p>
+
+<pre><code class="bash">pkg_add /foo/pacote-2-2.tar.gz
+</code></pre>
+
+<p>Instalando via Ports</p>
+
+<p>O Ports além de outros, dispõe de arquivos Makefiles, customizados para o processo de instalação. A coleção de
+ports ou árvores de ports, estão disponíveis através do diretório /usr/ports/.</p>
+
+<p>Caso o Ports não tem sido instalado, é possível fazê-lo através dos utilitários portsnap ou csup. Dentro
+do diretório /usr/ports, há inúmeros aplicativos para instalação. No exemplo, a instalação do servidor Proxy Squid:</p>
+
+<pre><code class="bash">cd /usr/ports/www/squid
+make instal clean
+</code></pre>
+
+<p>A instalação é realizada pelo utilitário make, que acima, está em sua forma mais simples, podendo variar
+conforme necessidades.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-01-22T02:57:30-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git - Revert Specific Files]]></title>
+    <link href="http://di0.github.io/blog/2017/10/20/git-revert-specific-files/"/>
+    <updated>2017-10-20T22:12:50-02:00</updated>
+    <id>http://di0.github.io/blog/2017/10/20/git-revert-specific-files</id>
+    <content type="html"><![CDATA[<p>Assumindo hipoteticamente que o hash para qual deseja reverter um ou mais arquivos é <strong>cf762e4c187b</strong>.</p>
+
+<p>O comando abaixo irá reverter os arquivos foo1.txt e foo2.txt para o hash informado:</p>
+
+<pre><code class="bash">git checkout cf762e4c187b -- dir/foo1.txt dir/foo2.txt
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reset All Commits From Repository Git]]></title>
+    <link href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/"/>
+    <updated>2015-09-23T23:26:40-03:00</updated>
+    <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
+    <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:</p>
+
+<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
+2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
+
+<pre><code class="bash">$ cd Project
+$ git init
+// crie alguns arquivos ( eu clonei do SVN, em vez disso )
+$ git add .
+$ git commit -m "Initial commit"
+</code></pre>
+
+<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
+
+<pre><code class="bash">$ git remote add origin &lt;url&gt;
+$ git push ‐‐force ‐‐set-upstream origin master
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ERROR: SERVER CERTIFICATE VERIFICATION FAILED]]></title>
+    <link href="http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed/"/>
+    <updated>2015-09-23T02:05:40-03:00</updated>
+    <id>http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed</id>
+    <content type="html"><![CDATA[<p>No momento do clone:</p>
+
+<pre><code class="bash">git clone https://develdio.com/SourceCode.git
+</code></pre>
+
+<p>Foi obtido o seguinte erro:</p>
+
+<p><strong> Cloning into ‘SourceCode’… </strong></p>
+
+<p><strong> fatal: unable to access &lsquo;<a href="https://develdio.com/SourceCode.git/">https://develdio.com/SourceCode.git/</a>&rsquo;: server certificate verification failed. </strong>
+<strong> CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none </strong></p>
+
+<p>A falha ocorre devido o certificado não ser confiado.</p>
+
+<p>Para solucionar o problema através utilitário do git na linha de comando, basta executar:</p>
+
+<pre><code class="bash">git config --global http.sslverify false
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Status With Grep]]></title>
+    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
+    <updated>2015-05-15T02:36:05-03:00</updated>
+    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
+    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
+utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, basta adicionar a opção <strong>-c color-status=always</strong> ao
+executar o comando <strong>git status</strong>. Por exemplo:</p>
+
+<pre><code class="bash">git -c color.status=always status | grep -i "alguma coisa"
+</code></pre>
+
+<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
+Do contrário, um erro ocorrerá.</p>
+
+<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
+variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
+
+<pre><code class="bash">git -c color.ui=always log | grep -i -B 2 -A 3 "alguma coisa"
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Compress File With Git Diff Output]]></title>
+    <link href="http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output/"/>
+    <updated>2014-04-24T03:00:14-03:00</updated>
+    <id>http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output</id>
+    <content type="html"><![CDATA[<p>O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos
+que foram modificados são exibidos na saída comando git diff. Por exemplo:</p>
+
+<pre><code class="bash">git diff --name-only | xargs tar czf new-files.tar.gz
+</code></pre>
+
+<p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
+]]></content>
+  </entry>
+  
+</feed>

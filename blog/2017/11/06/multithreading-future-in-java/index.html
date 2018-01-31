@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MultiThreading - Future in Java - Dio's Blog</title>
+  <meta name="author" content="Diogo Pinto">
+
+  
+  <meta name="description" content="Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
+utilizá-la &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Dio's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Dio's Blog</a></h1>
+  
+  <div class="subtitle">
+    <h2>By Diogo Pinto</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MultiThreading - Future in Java</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-11-06T02:32:36-02:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
+utilizá-la, a implementação de um único método chamado run().</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
+lançar uma exceção.</p>
+
+<p>Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+armazenar o valor desejado após a execução de uma tarefa.</p>
+
+<p>Conforme exemplo abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>             <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
+</span><span class='line'>  <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// Stuff</span>
+</span><span class='line'>            <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Não há problema algum com o uso do exemplo acima, contudo, existe uma solução mais adequada e viável para esse caso, através da
+utilização da interface nomeada Callable.</p>
+
+<p>Callable é uma interface que foi disponibilizada na versão J2SE 5.0, ela oferece um método
+chamado call(). Através desse método, agora é possível recuperar valores retornados do tipo Object, ou mais
+especificamente, qualquer tipo devido à sua construção genericamente parametrizada.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>     <span class="n">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pelo fato de não ser possível trabalhar com Callable com auxílio da classe Thread, a qual implementa apenas
+Runnable, é usado ao invés disso, o suporte da interface ExecutorService para executar objetos do tipo Callable.</p>
+
+<p>Através de ExecutorService, é utilizada o método submit, que aceita como parâmetro um Callable e retorna uma
+interface Future, responsável por disponibilizar resultados através de operações assíncronas, a assinatura do
+método submit é descrito abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Future</span> <span class="nf">submit</span><span class="o">(</span> <span class="n">Callable</span> <span class="n">task</span> <span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Quando uma tarefa é executada através de Callable, sendo ela “submitada”, pelo método submit(), é retornado a
+interface Future e, através dela, é usado o método get, para recuperar os valores processados.</p>
+
+<p>O método get é mutuamente excluído, até que a tarefa termine, semântica idêntica ao Join da classe Thread.</p>
+
+<p>Uma demonstração do uso de Callable é exibido no código seguinte. Esse teste se baseia em um processo se
+dividir em duas linhas de execuções, e realizar a incrementação do valor e exibi-lo logo em seguida. Por exemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Callable</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">()</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>                <span class="k">try</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="n">value</span><span class="o">++;</span>
+</span><span class='line'>                        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">600</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>                <span class="k">catch</span> <span class="o">(</span> <span class="n">InterruptedException</span> <span class="n">e</span> <span class="o">)</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="c1">// stuff</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>                <span class="n">ExecutorService</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span> <span class="mi">1</span> <span class="o">);</span>
+</span><span class='line'>                <span class="n">Callable</span> <span class="n">c1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Foo</span><span class="o">();</span>
+</span><span class='line'>                <span class="n">Callable</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">c1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">for</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">count</span><span class="o">++</span> <span class="o">)</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                        <span class="n">Future</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c1</span> <span class="o">);</span>
+</span><span class='line'>                        <span class="n">Future</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c2</span> <span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i1</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c1 reference&quot;</span> <span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i2</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c2 reference&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">s</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>No trecho de código acima, na linhas 25 é utilizado o método estático newFixedThreadPool(), da classe Executors. Esse método
+cria uma espécie de mina de Threads, e diz a quantidade de tarefas que serão executadas a um
+determinado momento. O argumento 1, diz que apenas uma Thread executará por vez.</p>
+
+<p>Na linha 26, a variável c1 referencia um objeto que tem Callable a serem executados e na linha seguinte, uma outra
+variável(c2) referencia a mesma instância, para que seja possível demonstrar duas linhas de execuções, atuando na mesma tarefa.</p>
+
+<p>No loop, as duas threads serão “submitadas” e executadas e seus valores recuperadas pelo método get() da
+interface Future e, no fim do loop, o serviço executor é finalizado com método shutdown(), o resultado da operação será:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">1</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">3</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">5</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">7</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">9</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>De acordo o que foi passado para o método Executors.newFixedThreadPool( 1 ), apenas uma linha foi
+executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será algo como:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">2</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c1 reference
+</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-11-06T02:32:36-02:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/11/06/maven/" title="Previous Post: Using Jetty plugin with maven and ActiveMQ">&laquo; Using Jetty plugin with maven and ActiveMQ</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/01/07/searching-for-distinct-fields/" title="Next Post: MySQL - Searching for distinct fields">MySQL - Searching for distinct fields &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
+  
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
+
+
+  <b><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br></b>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
+  <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+  <a href="http://www.linkedin.com/in/diogo-pereira-pinto-dio"><i class="fa fa-linkedin fa-3x"></i></a>
+
+
+    
+  <a href="https://plus.google.com/115661938273408826648"<i class="fa fa-google-plus fa-3x"></i></a>
+
+
+    
+  <a href="https://github.com/di0"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/diogolion"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/115661938273408826648?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Determining Symbolic Links Java With Update-alternatives Command</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/multithreading-future-in-java/">MultiThreading - Future in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/11/06/maven/">Using Jetty Plugin With Maven and ActiveMQ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/10/20/git-revert-specific-files/">Git - Revert Specific Files</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (6)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (6)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/di0">@di0</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'di0',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2018 - Diogo Pinto -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2018  Diogo Pinto -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

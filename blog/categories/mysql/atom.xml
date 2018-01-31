@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mysql | Dio's Blog]]></title>
+  <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-01-22T02:57:30-02:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL - Searching for Distinct Fields]]></title>
+    <link href="http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields/"/>
+    <updated>2018-01-07T21:42:23-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields</id>
+    <content type="html"><![CDATA[<p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
+podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQL, veja um exemplo:</p>
+
+<pre><code class="sql">SELECT DISTINCT TABLE_NAME 
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE COLUMN_NAME IN ('coluna_pesquisar')
+AND TABLE_SCHEMA='no_database';
+</code></pre>
+
+<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Searching for Table Name]]></title>
+    <link href="http://di0.github.io/blog/2013/05/13/searching-for-table-name/"/>
+    <updated>2013-05-13T20:30:04-03:00</updated>
+    <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
+    <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
+um simples <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
+
+<pre><code class="sql">SHOW TABLES FROM database_name LIKE "%table_name%";
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
