@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-22T02:57:30-02:00</updated>
+  <updated>2018-01-31T15:57:07-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Searching Exact Word With Vi Editor]]></title>
+    <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
+    <updated>2018-01-31T15:41:24-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor</id>
+    <content type="html"><![CDATA[<p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as expressões
+regulares \&lt; e \>, por exemplo:</p>
+
+<pre><code class="bash">/\&lt;FOO\&gt;
+</code></pre>
+
+<p>Isso por exemplo, retornará somente a palavra FOO, em vez de FOOBAR, BARFOO, etc.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
@@ -136,18 +151,6 @@ Do contrário, um erro ocorrerá.</p>
 variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
 
 <pre><code class="bash">git -c color.ui=always log | grep -i -B 2 -A 3 "alguma coisa"
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[NMAP - Searching Open Ports Into Specific Network]]></title>
-    <link href="http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/"/>
-    <updated>2014-07-08T20:12:26-03:00</updated>
-    <id>http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network</id>
-    <content type="html"><![CDATA[<p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede local especificada:</p>
-
-<pre><code class="bash">nmap -p22 192.168.0.0/24 -oG - | grep 22/open
 </code></pre>
 ]]></content>
   </entry>
