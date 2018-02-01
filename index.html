@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o número de variáveis( $1, $2, $3&hellip;) casadas nessa &hellip;">
+o ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,40 +97,12 @@ o número de variáveis( $1, $2, $3&hellip;) casadas nessa &hellip;">
 
 
   <div class="entry-content"><p>Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1">#!/usr/bin/env perl</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">print</span> <span class="s">&quot;Enter your name and lastname here&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nb">chop</span> <span class="p">(</span> <span class="nv">$name_and_lastname</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span> <span class="nv">$name_and_lastname</span> <span class="o">=~</span><span class="sr"> /^\s*(\S+)\s+(\S+)\s*$/</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">print</span> <span class="s">&quot;Hello $1. Your lastname: $2.&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">else</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">print</span> <span class="s">&quot;no result&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="k">print</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+o </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2018/01/31/capturing-groups-regex-with-perl/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -164,17 +136,12 @@ o número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
   </header>
 
 
-  <div class="entry-content"><p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as expressões
-regulares \&lt; e \>, por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>/<span class="se">\&lt;</span>FOO<span class="se">\&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Isso por exemplo, retornará somente a palavra <strong>FOO</strong>, em vez de <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc&hellip;</p>
-</div>
+  <div class="entry-content"><p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2018/01/31/searching-exact-word-with-vi-editor/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -209,56 +176,12 @@ regulares \&lt; e \>, por exemplo:</p>
 
 
   <div class="entry-content"><p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
-sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
-no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>--list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>java</strong> é o nome do link simbólico.</p>
-
-<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>--install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>--install</strong>, o nível prioridade que a nova versão terá.</p>
-
-<p>Segue exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Após o comando acima, basta confirmar com <strong>--list</strong>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento <strong>--config</strong>, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>--set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8/bin/java
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Para maiores informaçoes:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
+sem a necessidade de </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -293,22 +216,12 @@ no sistema alvo, basta executar o comando update-alternatives, passando como arg
 
 
   <div class="entry-content"><p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQL, veja um exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">TABLE_NAME</span>
-</span><span class='line'>    <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span>
-</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;coluna_pesquisar&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;no_database&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
-</div>
+podemos pesquisar por todas tabelas do banco, utilizando a </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2018/01/07/searching-for-distinct-fields/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -342,28 +255,11 @@ podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQ
   </header>
 
 
-  <div class="entry-content"><p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
-utilizá-la, a implementação de um único método chamado run().</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
-lançar uma exceção.</p>
-
-<p>Para casos em que há tarefas que </div>
+  <div class="entry-content"><p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2017/11/06/multithreading-future-in-java/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2017/11/06/multithreading-future-in-java/">Continue reading here &rarr;</a>
     </footer>
   
 
@@ -400,66 +296,11 @@ lançar uma exceção.</p>
 
   <div class="entry-content"><h3>Configurando plugin Jetty</h3>
 
-<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;build&gt;</span>
-</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;plugin&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>org.mortbay.jetty<span class="nt">&lt;/groupId&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jetty-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;version&gt;</span>7.6.8.v20121106<span class="nt">&lt;/version&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;configuration&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;scanIntervalSeconds&gt;</span>10<span class="nt">&lt;/scanIntervalSeconds&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;webApp&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;contextPath&gt;</span>/test<span class="nt">&lt;/contextPath&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;/webApp&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;webAppConfig&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;jettyEnvXml&gt;</span>
-</span><span class='line'>                  src/main/webapp/WEB-INF/jetty-env.xml
-</span><span class='line'>            <span class="nt">&lt;/jettyEnvXml&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;webXml&gt;</span>
-</span><span class='line'>                  src/main/webapp/WEB-INF/web.xml
-</span><span class='line'>            <span class="nt">&lt;/webXml&gt;</span>
-</span><span class='line'>          <span class="nt">&lt;/webAppConfig&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;/configuration&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/plugin&gt;</span>
-</span><span class='line'> <span class="nt">&lt;plugins&gt;</span>
-</span><span class='line'><span class="nt">&lt;/build&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Acima, além de adicionar o plugin a ser ativado, foi adicionado também, as configurações que serão lidas pelo WebContext.</p>
-
-<h3>Adicionando dependências dos artefatos para o ActiveMQ</h3>
-
-<p>Para o ActiveMQ, é necessário adicionar a entrada abaixo do core, que será utilizada como </div>
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2017/11/06/maven/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2017/11/06/maven/">Continue reading here &rarr;</a>
     </footer>
   
 
@@ -496,14 +337,12 @@ lançar uma exceção.</p>
 
   <div class="entry-content"><p>Assumindo hipoteticamente que o hash para qual deseja reverter um ou mais arquivos é <strong>cf762e4c187b</strong>.</p>
 
-<p>O comando abaixo irá reverter os arquivos foo1.txt e foo2.txt para o hash informado:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout cf762e4c187b -- dir/foo1.txt dir/foo2.txt
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+<p>O comando abaixo irá reverter os arquivos foo1.txt e foo2.txt para o </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/10/20/git-revert-specific-files/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -537,14 +376,12 @@ lançar uma exceção.</p>
   </header>
 
 
-  <div class="entry-content"><p>Para obter o primeiro commit de onde foi criada a branch:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>svn log --stop-on-copy
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"><p>Para obter o primeiro commit de onde foi </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/11/01/svn-getting-revision-since-the-first-copy/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -578,28 +415,12 @@ lançar uma exceção.</p>
   </header>
 
 
-  <div class="entry-content"><p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir diretórios
-e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">=</span><span class="nb">test</span> --exclude-dir<span class="o">=</span>target <span class="se">\</span>
-</span><span class='line'>--exclude-dir<span class="o">=</span>bin --exclude<span class="o">=</span><span class="se">\*</span>.xml --exclude<span class="o">=</span><span class="se">\*</span>.svn <span class="s2">&quot;pesquisa&quot;</span> .
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ou ainda:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">={</span><span class="nb">test</span>,target,bin<span class="o">}</span> <span class="se">\</span>
-</span><span class='line'>--exclude<span class="o">={</span>*.xml,*.svn<span class="o">}</span> <span class="s2">&quot;pesquisa&quot;</span> .
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
+  <div class="entry-content"><p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -633,36 +454,12 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
   </header>
 
 
-  <div class="entry-content"><p>É possível remover nomes duplicados de uma saída padrão com o utilitário <strong>sort</strong>. Exemplos:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort -u foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ou</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort file.txt <span class="p">|</span> uniq
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>É possível também, imprimir somente os valores repetidos, em vez de ocultá-los, segue:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sort file.txt <span class="p">|</span> uniq -d
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Uma outra forma de realizar a mesma tarefa que faz o comando <strong>sort</strong> é a de usar o comando
-<strong>awk</strong>, conforme exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>awk <span class="s1">&#39;!a[$0]++&#39;</span> foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"><p>É possível remover nomes duplicados de uma saída padrão com o utilitário </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/05/20/remove-names-duplicates-with-sort-command/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -696,46 +493,11 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
   </header>
 
 
-  <div class="entry-content"><p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
-
-<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
-<strong> <em>Connection to foo.com closed.</em> </strong></p>
-
-<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
-
-<p><del>Configuração no servidor</del></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>TCPKeepAlive no
-</span><span class='line'>ClientAliveInterval 30
-</span><span class='line'>ClientAliveCountMax 100
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
-aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
-
-<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
-anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
-
-<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
-
-<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service sshd restart
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><del>Configuração no Cliente</del></p>
-
-<p>Se acaso, não for </div>
+  <div class="entry-content"><p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2016/02/24/avoid-ssh-connection-timeout/">Continue reading here &rarr;</a>
     </footer>
   
 
@@ -770,34 +532,12 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
   </header>
 
 
-  <div class="entry-content"><p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos:</p>
-
-<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
-2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
-</span><span class='line'><span class="nv">$ </span>git init
-</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
-</span><span class='line'><span class="nv">$ </span>git add .
-</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
-</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"><p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/23/reset-all-commits-from-repository-git/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -831,30 +571,12 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
   </header>
 
 
-  <div class="entry-content"><p>No momento do clone:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone https://develdio.com/SourceCode.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Foi obtido o seguinte erro:</p>
-
-<p><strong> Cloning into ‘SourceCode’… </strong></p>
-
-<p><strong> fatal: unable to access &lsquo;<a href="https://develdio.com/SourceCode.git/">https://develdio.com/SourceCode.git/</a>&rsquo;: server certificate verification failed. </strong>
-<strong> CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none </strong></p>
-
-<p>A falha ocorre devido o certificado não ser confiado.</p>
-
-<p>Para solucionar o problema através utilitário do git na linha de comando, basta executar:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global http.sslverify <span class="nb">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"></div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/23/error-server-certificate-verification-failed/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -889,26 +611,12 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
 
 
   <div class="entry-content"><p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
-utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, basta adicionar a opção <strong>-c color-status=always</strong> ao
-executar o comando <strong>git status</strong>. Por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.status<span class="o">=</span>always status <span class="p">|</span> grep -i <span class="s2">&quot;alguma coisa&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
-Do contrário, um erro ocorrerá.</p>
-
-<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
-variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.ui<span class="o">=</span>always log <span class="p">|</span> grep -i -B <span class="m">2</span> -A <span class="m">3</span> <span class="s2">&quot;alguma coisa&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/05/15/git-status-with-grep/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -942,14 +650,12 @@ variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaix
   </header>
 
 
-  <div class="entry-content"><p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede local especificada:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap -p22 192.168.0.0/24 -oG - <span class="p">|</span> grep 22/open
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"><p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -983,29 +689,12 @@ variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaix
   </header>
 
 
-  <div class="entry-content"><p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:</p>
-
-<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
-</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
-
-<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
-</div>
+  <div class="entry-content"><p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/15/changing-a-commit-message-in-svn/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1040,16 +729,12 @@ variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaix
 
 
   <div class="entry-content"><p>O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos
-que foram modificados são exibidos na saída comando git diff. Por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git diff --name-only <span class="p">|</span> xargs tar czf new-files.tar.gz
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
-</div>
+que foram modificados são exibidos na </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/24/compress-file-with-git-diff-output/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1084,14 +769,12 @@ que foram modificados são exibidos na saída comando git diff. Por exemplo:</p>
 
 
   <div class="entry-content"><p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
-um simples <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SHOW</span> <span class="n">TABLES</span> <span class="k">FROM</span> <span class="n">database_name</span> <span class="k">LIKE</span> <span class="ss">&quot;%table_name%&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+um simples </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/13/searching-for-table-name/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1128,89 +811,11 @@ um simples <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tab
   <div class="entry-content"><p>Propósito geral dos Traits</p>
 
 <p>A Orientação a Objetos em PHP, não trabalha com conceitos de herança múltipla. Apesar da herança múltipla não fazer
-falta alguma em PHP(ou em qualquer outra linguagem), por trazer consigo mais desvantagens do que vantagens, como
-implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros
-problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos
-repetidos de códigos.</p>
-
-<p>Traits são mecanismos que possibilitam o reuso de código, em um contexto relacional não vertical. Com traits, em uma
-única classe é possível utilizar recursos que se tornam modulares e que são carregados conforme necessidade. A vantagem de
-utilizar <strong>Traits</strong>, vai além da reutilização e, o grande destaque está em seu relacionamento com outros participantes que, ao
-contrário da herança, não tem o relacionamento <em>&ldquo;É UM&rdquo;</em> e sim um talvez, se <em>&ldquo;COMPORTA(-SE) COMO&rdquo;</em>. Essa sútil diferença é de suma
-importância, evitando os problemas citados anteriormente quando se faz o uso indiscriminado e / ou incorreto de uma ou muitas
-extensões(o qual já foi citado não ser suportado no PHP), evitando-se relacionamentos excêntricos, <em>&ldquo;É UM&rdquo;</em>, onde por exemplo
-uma classe Pessoa estende Database, formando o relacionamento Pessoa É UM Database, quando Pessoa, obviamente, não É UM Database.</p>
-
-<p>Um exemplo simples para introduzir a sintaxe em torno das Traits:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">trait</span> <span class="nx">Foo</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">function</span> <span class="nf">firstName</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="s1">&#39;James&#39;</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">trait</span> <span class="nx">Bar</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">function</span> <span class="nf">lastName</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="s1">&#39;Bond&#39;</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Baz</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">use</span> <span class="nx">Foo</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$objBaz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$strResult</span>  <span class="o">=</span> <span class="s1">&#39;My name is &#39;</span><span class="p">;</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot;, &quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot; &quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="nv">$objBaz</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$strResult</span> <span class="o">.=</span> <span class="s2">&quot;!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="k">echo</span> <span class="nv">$strResult</span><span class="p">;</span>          <span class="c1">// My name is Bond, James Bond!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Traits assemelham-se às classes, mais aproximadamente às </div>
+falta alguma em PHP(ou em qualquer outra linguagem), por trazer </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/12/01/php-reusing-code-with-traits/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/12/01/php-reusing-code-with-traits/">Continue reading here &rarr;</a>
     </footer>
   
 
@@ -1247,30 +852,12 @@ uma classe Pessoa estende Database, formando o relacionamento Pessoa É UM Datab
 
   <div class="entry-content"><p>A maneira de ignorar arquivos nos commits do git é através do arquivo de configuração chamado
 <strong>gitignore</strong>. Basta adicionar nele arquivos ou diretórios que não serão colocados na área de commit
-na geração de um novo snapshot.</p>
-
-<p>Há uma outra maneira de ignorar temporariamente arquivos ou diretórios de maneira dinâmica, em
-vez de adicionar de maneira estática, como acontece ao utilizar o gitignore. A maneira de se
-fazer isso, é através do argumento <strong>update-index &ndash;assume-unchanged</strong>, de tal forma:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --assume-unchanged foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Isso fará com que o arquivo não apareça mais em comandos como <strong>git status</strong>, <strong>git diff</strong>&hellip;</p>
-
-<p>Por consequência, não será colocado na área de stage para o próximo commit.</p>
-
-<p>Para retornar o arquivo a ser monitorado, basta desfazer a método de ignore, utilizando
-dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, da seguinte forma:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --no-assume-unchanged foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+na geração de um </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/25/ignore-temporarily-files-with-git/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1304,56 +891,12 @@ dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, 
   </header>
 
 
-  <div class="entry-content"><p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente representados por Hash e Bless.</p>
-
-<p>Uma Classe, é representada como um Pacote, utilizando a palavra chave package para criá-la:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'> <span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Quando um Pacote está no mesmo arquivo, é necessário um pacote principal:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">main</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Método Construtor é feito através da palavra chave new:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">package</span> <span class="n">Pessoa</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">sub </span><span class="nf">new</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$this</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$class</span> <span class="o">=</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span> <span class="o">||</span> <span class="nv">$this</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">nome</span> <span class="o">=&gt;</span> <span class="nb">shift</span><span class="p">,</span>
-</span><span class='line'>      <span class="n">ano_nasc</span> <span class="o">=&gt;</span> <span class="nb">shift</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nv">$class</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+  <div class="entry-content"><p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/11/creating-objects-in-perl/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1389,45 +932,12 @@ dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, 
 
   <div class="entry-content"><p>Existem duas formas comuns de se instalar programas no FreeBSD, via Pacotes e via Ports.</p>
 
-<p>Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não
-sendo necessário a utilização de um compilador no ambiente que está sendo instalado.</p>
-
-<p>Instalações via Ports, são realizadas através código fonte. No processo de instalação, os fontes são baixados
-e compilados. Obviamente para isso, há a necessidade de um compilador no ambiente de instalação.</p>
-
-<p>Mais trabalhoso e mais lento que a forma anterior, a vantagem nesse processo de instalação, é a possibilidade de
-personalizar opções antes das instalações ou na aplicações de patches(às vezes customizados), etc.</p>
-
-<p>Abaixo a forma de instalação de ambos métodos:</p>
-
-<p>Instalando com Pacote</p>
-
-<p>No FreeBSD, temos o utilitário pkg_add(man pkg_add), para instalações de pacotes:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>pkg_add /foo/pacote-2-2.tar.gz
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Instalando via Ports</p>
-
-<p>O Ports além de outros, dispõe de arquivos Makefiles, customizados para o processo de instalação. A coleção de
-ports ou árvores de ports, estão disponíveis através do diretório /usr/ports/.</p>
-
-<p>Caso o Ports não tem sido instalado, é possível fazê-lo através dos utilitários portsnap ou csup. Dentro
-do diretório /usr/ports, há inúmeros aplicativos para instalação. No exemplo, a instalação do servidor Proxy Squid:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /usr/ports/www/squid
-</span><span class='line'>make instal clean
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A instalação é realizada pelo utilitário make, que acima, está em sua forma mais simples, podendo variar
-conforme necessidades.</p>
-</div>
+<p>Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não sendo necessário a utilização de um compilador no </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/02/freebsd-install-programs/">Continue reading here &rarr;</a>
+    </footer>
   
 
 
@@ -1462,42 +972,12 @@ conforme necessidades.</p>
 
 
   <div class="entry-content"><p>Comumente e erroneamente, a função <strong>count</strong> é chamada dentro de um laço de repetição, na
-intenção de impor um limite de contagem em uma determinada rotina de repetição, um simples
-exemplo desse caso seria:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$alfa</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$alfa</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span> <span class="p">)</span>
-</span><span class='line'>       <span class="c1">// codigo....</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Veja que desnecessariamente, chama-se a cada interação da instrução for, a função count().</p>
-
-<p>No contexto de se impor um limite, a forma correta seria fora do laço de repetição, chamar uma única vez a
-função, atribuindo seu valor de retorno em uma variável e essa sim, será utilizada dentro da instrução de
-repetição, segue:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$alfa</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$count</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span> <span class="nv">$alfa</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$count</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span> <span class="p">)</span>
-</span><span class='line'>      <span class="c1">// codigo.... </span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
+intenção de impor um limite de </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/12/02/php-correct-use-of-the-count-function/">Continue reading here &rarr;</a>
+    </footer>
   
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T21:45:04-02:00</updated>
+  <updated>2018-01-31T23:16:21-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -19,7 +19,7 @@
     <updated>2018-01-17T16:01:01-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
     <content type="html"><![CDATA[<p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
-sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
+sem a necessidade de <!--more--> adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
 no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>--list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
 
 <pre><code class="bash">update-alternatives --list java
@@ -61,7 +61,7 @@ no sistema alvo, basta executar o comando update-alternatives, passando como arg
     <link href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/"/>
     <updated>2017-11-06T02:32:36-02:00</updated>
     <id>http://di0.github.io/blog/2017/11/06/multithreading-future-in-java</id>
-    <content type="html"><![CDATA[<p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
+    <content type="html"><![CDATA[<p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a <!--more--> interface Runnable, responsabilizando a quem vai
 utilizá-la, a implementação de um único método chamado run().
 <code>java
 public interface Runnable
@@ -73,7 +73,7 @@ public interface Runnable
 <p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
 lançar uma exceção.</p>
 
-<p>Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+<p>Para casos em que há tarefas que devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
 armazenar o valor desejado após a execução de uma tarefa.</p>
 
 <p>Conforme exemplo abaixo:</p>

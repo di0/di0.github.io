@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T21:45:04-02:00</updated>
+  <updated>2018-01-31T23:16:21-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,7 +18,7 @@
     <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
     <updated>2018-01-31T15:41:24-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor</id>
-    <content type="html"><![CDATA[<p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as expressões
+    <content type="html"><![CDATA[<p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as <!--more--> expressões
 regulares \&lt; e \>, por exemplo:</p>
 
 <pre><code class="bash">/\&lt;FOO\&gt;
@@ -33,7 +33,7 @@ regulares \&lt; e \>, por exemplo:</p>
     <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
     <updated>2016-08-21T04:17:15-03:00</updated>
     <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
-    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir diretórios
+    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir <!--more--> diretórios
 e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
 
 <pre><code class="bash">grep -r [Win] --color --exclude-dir=test --exclude-dir=target \
@@ -53,7 +53,7 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
     <link href="http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command/"/>
     <updated>2016-05-20T19:37:51-03:00</updated>
     <id>http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command</id>
-    <content type="html"><![CDATA[<p>É possível remover nomes duplicados de uma saída padrão com o utilitário <strong>sort</strong>. Exemplos:</p>
+    <content type="html"><![CDATA[<p>É possível remover nomes duplicados de uma saída padrão com o utilitário <!--more--> <strong>sort</strong>. Exemplos:</p>
 
 <pre><code class="bash">sort -u foo.txt
 </code></pre>
@@ -81,7 +81,7 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
     <link href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/"/>
     <updated>2016-02-24T01:36:18-03:00</updated>
     <id>http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout</id>
-    <content type="html"><![CDATA[<p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
+    <content type="html"><![CDATA[<p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um <!--more--> tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
 
 <p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
 <strong> <em>Connection to foo.com closed.</em> </strong></p>
@@ -138,7 +138,7 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
     <updated>2015-05-15T02:36:05-03:00</updated>
     <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
     <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
-utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, basta adicionar a opção <strong>-c color-status=always</strong> ao
+utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, <!--more--> basta adicionar a opção <strong>-c color-status=always</strong> ao
 executar o comando <strong>git status</strong>. Por exemplo:</p>
 
 <pre><code class="bash">git -c color.status=always status | grep -i "alguma coisa"

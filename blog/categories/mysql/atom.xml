@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mysql | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T21:45:04-02:00</updated>
+  <updated>2018-01-31T23:16:21-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -19,7 +19,7 @@
     <updated>2018-01-07T21:42:23-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields</id>
     <content type="html"><![CDATA[<p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQL, veja um exemplo:</p>
+podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:</p>
 
 <pre><code class="sql">SELECT DISTINCT TABLE_NAME 
     FROM INFORMATION_SCHEMA.COLUMNS
@@ -37,7 +37,7 @@ AND TABLE_SCHEMA='no_database';
     <updated>2013-05-13T20:30:04-03:00</updated>
     <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
     <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
-um simples <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
+um simples <!--more--> <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
 
 <pre><code class="sql">SHOW TABLES FROM database_name LIKE "%table_name%";
 </code></pre>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Php | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T21:45:04-02:00</updated>
+  <updated>2018-01-31T23:16:21-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -21,10 +21,7 @@
     <content type="html"><![CDATA[<p>Propósito geral dos Traits</p>
 
 <p>A Orientação a Objetos em PHP, não trabalha com conceitos de herança múltipla. Apesar da herança múltipla não fazer
-falta alguma em PHP(ou em qualquer outra linguagem), por trazer consigo mais desvantagens do que vantagens, como
-implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros
-problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos
-repetidos de códigos.</p>
+falta alguma em PHP(ou em qualquer outra linguagem), por trazer <!--more--> consigo mais desvantagens do que vantagens, como implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos repetidos de códigos.</p>
 
 <p>Traits são mecanismos que possibilitam o reuso de código, em um contexto relacional não vertical. Com traits, em uma
 única classe é possível utilizar recursos que se tornam modulares e que são carregados conforme necessidade. A vantagem de
@@ -68,7 +65,7 @@ $strResult .= "!\n";
 echo $strResult;          // My name is Bond, James Bond!
 </code></pre>
 
-<p>Traits assemelham-se às classes, mais aproximadamente às <!--more--> classes abstratas, que não
+<p>Traits assemelham-se às classes, mais aproximadamente às classes abstratas, que não
 podem ser instanciadas diretamente, todavia, seu principal objetivo é de reunir
 grupo(s) de comportamentos(s) que serão reutilizadas em um ou diversos pontos.</p>
 
@@ -305,7 +302,7 @@ de comportamentos. Sem dúvida, Traits trouxe para o PHP muito mais flexibilidad
     <updated>2011-12-02T23:10:47-02:00</updated>
     <id>http://di0.github.io/blog/2011/12/02/php-correct-use-of-the-count-function</id>
     <content type="html"><![CDATA[<p>Comumente e erroneamente, a função <strong>count</strong> é chamada dentro de um laço de repetição, na
-intenção de impor um limite de contagem em uma determinada rotina de repetição, um simples
+intenção de impor um limite de <!--more--> contagem em uma determinada rotina de repetição, um simples
 exemplo desse caso seria:</p>
 
 <pre><code class="php">$alfa = array( 1, 2, 3, 4, 5 );
