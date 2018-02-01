@@ -6,7 +6,7 @@ comments: true
 categories: linux
 ---
 
-Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as expressões
+Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as <!--more--> expressões
 regulares \\< e \\>, por exemplo:
 
 ```bash

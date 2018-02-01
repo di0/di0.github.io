@@ -9,10 +9,7 @@ categories: [php]
 Propósito geral dos Traits
 
 A Orientação a Objetos em PHP, não trabalha com conceitos de herança múltipla. Apesar da herança múltipla não fazer
-falta alguma em PHP(ou em qualquer outra linguagem), por trazer consigo mais desvantagens do que vantagens, como
-implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros
-problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos
-repetidos de códigos.
+falta alguma em PHP(ou em qualquer outra linguagem), por trazer <!--more--> consigo mais desvantagens do que vantagens, como implementações difíceis, manutenção trabalhosa, acoplamento forte, baixa coesão e centenas de outros problemas, há ainda assim, a necessidade de se reutilizar recursos em diferentes locais, evitando rescrever trechos repetidos de códigos.
 
 Traits são mecanismos que possibilitam o reuso de código, em um contexto relacional não vertical. Com traits, em uma
 única classe é possível utilizar recursos que se tornam modulares e que são carregados conforme necessidade. A vantagem de
@@ -57,7 +54,7 @@ $strResult .= "!\n";
 echo $strResult;          // My name is Bond, James Bond!
 ```
 
-Traits assemelham-se às classes, mais aproximadamente às <!--more--> classes abstratas, que não
+Traits assemelham-se às classes, mais aproximadamente às classes abstratas, que não
 podem ser instanciadas diretamente, todavia, seu principal objetivo é de reunir 
 grupo(s) de comportamentos(s) que serão reutilizadas em um ou diversos pontos.
 

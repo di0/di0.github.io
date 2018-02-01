@@ -6,7 +6,7 @@ comments: true
 categories: [svn]
 ---
 
-Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN:
+Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens <!--more--> previamentes comitadas no SVN:
 
 A primeira modifica a mensagem remotamente, com uma das duas formas:
 

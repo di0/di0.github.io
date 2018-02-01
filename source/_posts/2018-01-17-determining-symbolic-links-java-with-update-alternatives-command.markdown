@@ -7,7 +7,7 @@ categories: [java]
 ---
 
 Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
-sem a necessidade de adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
+sem a necessidade de <!--more--> adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
 no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção **\-\-list**, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:
 
 ```bash

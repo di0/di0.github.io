@@ -7,7 +7,7 @@ categories: [mysql]
 ---
 
 Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a linha de comando MySQL, veja um exemplo:
+podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:
 
 ```sql
 SELECT DISTINCT TABLE_NAME 

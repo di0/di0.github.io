@@ -6,6 +6,7 @@ comments: true
 categories: [git]
 ---
 
+<!--more-->
 No momento do clone:
 
 ``` bash

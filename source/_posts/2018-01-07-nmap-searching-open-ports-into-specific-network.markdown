@@ -6,7 +6,7 @@ comments: true
 categories: [linux]
 ---
 
-Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede local especificada:
+Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede<!--more--> local especificada:
 
 ```bash
 nmap -p22 192.168.0.0/24 -oG - | grep 22/open

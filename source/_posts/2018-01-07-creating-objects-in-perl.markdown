@@ -6,7 +6,7 @@ comments: true
 categories: [perl]
 ---
 
-É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente representados por Hash e Bless.
+É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente <!--more --> representados por Hash e Bless.
 
 Uma Classe, é representada como um Pacote, utilizando a palavra chave package para criá-la:
 

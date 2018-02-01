@@ -8,7 +8,7 @@ categories: [git]
 
 A maneira de ignorar arquivos nos commits do git é através do arquivo de configuração chamado
 **gitignore**. Basta adicionar nele arquivos ou diretórios que não serão colocados na área de commit
-na geração de um novo snapshot.
+na geração de um <!--more--> novo snapshot.
 
 Há uma outra maneira de ignorar temporariamente arquivos ou diretórios de maneira dinâmica, em
 vez de adicionar de maneira estática, como acontece ao utilizar o gitignore. A maneira de se

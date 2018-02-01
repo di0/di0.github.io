@@ -6,7 +6,7 @@ comments: true
 categories: [svn]
 ---
 
-Para obter o primeiro commit de onde foi criada a branch:
+Para obter o primeiro commit de onde foi <!--more--> criada a branch:
 
 ```bash
 svn log --stop-on-copy

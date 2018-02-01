@@ -6,7 +6,7 @@ comments: true
 categories: [java]
 ---
 
-Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a interface Runnable, responsabilizando a quem vai
+Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a <!--more--> interface Runnable, responsabilizando a quem vai
 utilizá-la, a implementação de um único método chamado run().
 ```java
 public interface Runnable
@@ -18,7 +18,7 @@ public interface Runnable
 Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
 lançar uma exceção.
 
-Para casos em que há tarefas que <!--more--> devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
+Para casos em que há tarefas que devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
 armazenar o valor desejado após a execução de uma tarefa.
 
 Conforme exemplo abaixo:

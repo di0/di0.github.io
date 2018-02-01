@@ -8,7 +8,7 @@ categories: [maven]
 
 ### Configurando plugin Jetty
 
-Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes entradas:
+Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes <!--more--> entradas:
 
 ```xml
 <build>

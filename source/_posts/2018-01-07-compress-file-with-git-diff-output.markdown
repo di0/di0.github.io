@@ -7,7 +7,7 @@ categories: [git,linux]
 ---
 
 O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos 
-que foram modificados são exibidos na saída comando git diff. Por exemplo:
+que foram modificados são exibidos na <!--more--> saída comando git diff. Por exemplo:
 
 
 ```bash

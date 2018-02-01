@@ -6,7 +6,7 @@ comments: true
 categories: [linux]
 ---
 
-É possível remover nomes duplicados de uma saída padrão com o utilitário **sort**. Exemplos:
+É possível remover nomes duplicados de uma saída padrão com o utilitário <!--more--> **sort**. Exemplos:
 
 ```bash
 sort -u foo.txt

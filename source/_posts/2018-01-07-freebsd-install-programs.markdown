@@ -8,8 +8,7 @@ categories: [freebsd]
 
 Existem duas formas comuns de se instalar programas no FreeBSD, via Pacotes e via Ports.
 
-Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não
-sendo necessário a utilização de um compilador no ambiente que está sendo instalado.
+Pacotes já estão disponíveis pré-compilados, são pacotes binários, sendo vantajoso na velocidade de instalação, não sendo necessário a utilização de um compilador no <!--more--> ambiente que está sendo instalado.
 
 Instalações via Ports, são realizadas através código fonte. No processo de instalação, os fontes são baixados
 e compilados. Obviamente para isso, há a necessidade de um compilador no ambiente de instalação.

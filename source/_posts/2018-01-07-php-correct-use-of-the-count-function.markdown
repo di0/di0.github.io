@@ -7,7 +7,7 @@ categories: [php]
 ---
 
 Comumente e erroneamente, a função **count** é chamada dentro de um laço de repetição, na
-intenção de impor um limite de contagem em uma determinada rotina de repetição, um simples
+intenção de impor um limite de <!--more--> contagem em uma determinada rotina de repetição, um simples
 exemplo desse caso seria:
 
 ```php

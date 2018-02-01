@@ -6,7 +6,7 @@ comments: true
 categories: [linux]
 ---
 
-Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:
+Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um <!--more--> tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:
 
 ** *Read from remote host foo.com: Connection reset by peer* **
 ** *Connection to foo.com closed.* **

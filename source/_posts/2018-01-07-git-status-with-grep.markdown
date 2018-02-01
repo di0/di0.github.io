@@ -7,7 +7,7 @@ categories: [git,linux]
 ---
 
 Para manter as cores na saída padrão, ao usar o comando **git status** junto aos
-utilitários **grep**, **less** ou **more**, basta adicionar a opção **-c color-status=always** ao
+utilitários **grep**, **less** ou **more**, <!--more--> basta adicionar a opção **-c color-status=always** ao
 executar o comando **git status**. Por exemplo:
 
 ``` bash

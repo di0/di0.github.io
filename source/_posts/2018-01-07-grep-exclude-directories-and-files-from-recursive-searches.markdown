@@ -6,7 +6,7 @@ comments: true
 categories: [linux]
 ---
 
-Simplesmente, usando o parâmetro **\-\-exclude-dir** para excluir diretórios
+Simplesmente, usando o parâmetro **\-\-exclude-dir** para excluir <!--more--> diretórios
 e/ou **\-\-exclude** para excluir arquivos ou extensões de arquivos, tal como exemplo:
 
 ```bash

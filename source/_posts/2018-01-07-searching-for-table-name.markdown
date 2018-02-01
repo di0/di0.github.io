@@ -7,7 +7,7 @@ categories: [mysql]
 ---
 
 No MySQL, tais informações metadatas, estão armazenadas na tabela **database_name**, portanto,
-um simples **SHOW TABLES** nessa tabela, filtrando pelo nome da tabela desejada. Segue:
+um simples <!--more--> **SHOW TABLES** nessa tabela, filtrando pelo nome da tabela desejada. Segue:
 
 ```sql
 SHOW TABLES FROM database_name LIKE "%table_name%";

@@ -7,7 +7,7 @@ categories: perl
 ---
 
 Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o número de variáveis( $1, $2, $3...) casadas nessa comparação:
+o <!--more--> número de variáveis( $1, $2, $3...) casadas nessa comparação:
 
 ```perl
 
