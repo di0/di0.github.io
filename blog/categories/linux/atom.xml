@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T23:16:21-02:00</updated>
+  <updated>2018-03-17T02:15:05-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,13 +18,63 @@
     <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
     <updated>2018-01-31T15:41:24-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor</id>
-    <content type="html"><![CDATA[<p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as <!--more--> expressões
-regulares \&lt; e \>, por exemplo:</p>
+    <content type="html"><![CDATA[<p>Below I explain you how search a exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
+\&lt; and \>, for example:</p>
 
 <pre><code class="bash">/\&lt;FOO\&gt;
 </code></pre>
 
-<p>Isso por exemplo, retornará somente a palavra <strong>FOO</strong>, em vez de <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc&hellip;</p>
+<p>It will match only words whose name is <strong>FOO</strong>, rather than, <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
+    <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
+    <updated>2018-01-17T16:01:01-02:00</updated>
+    <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
+    <content type="html"><![CDATA[<p>With the utility <strong>update-alternatives</strong>, is possible you set versions of the Java installed in your Operating System Linux(which supports it),
+without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
+command <strong>update-alternatives</strong>, adding the argument <strong>--list</strong>, together with name of the symlink(Symbolic Link) desired. For example:</p>
+
+<pre><code class="bash">update-alternatives --list java
+</code></pre>
+
+<p>Where <strong>java</strong> is the name of the symbolic link.</p>
+
+<p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
+list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
+
+<pre><code>1) The value properly of the desired symbolic link name.
+2) The full path of the binary Java.
+3) Lastly, specifying the level of priority associated with it.
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
+</code></pre>
+
+<p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
+
+<pre><code class="bash">update-alternatives --list java
+</code></pre>
+
+<p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
+interactive way form:</p>
+
+<pre><code class="bash">update-alternatives --config java
+</code></pre>
+
+<p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
+
+<pre><code class="bash">sudo update-alternatives --set java /opt/jdk1.8/bin/java
+</code></pre>
+
+<p>For more info, enter with:</p>
+
+<pre><code class="bash">man update-alternatives
+</code></pre>
 ]]></content>
   </entry>
   
@@ -128,29 +178,6 @@ anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
 E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
 
 <pre><code class="bash">$ ssh -o ServerAliveInterval=30 user@foo.com
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git Status With Grep]]></title>
-    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
-    <updated>2015-05-15T02:36:05-03:00</updated>
-    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
-    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
-utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, <!--more--> basta adicionar a opção <strong>-c color-status=always</strong> ao
-executar o comando <strong>git status</strong>. Por exemplo:</p>
-
-<pre><code class="bash">git -c color.status=always status | grep -i "alguma coisa"
-</code></pre>
-
-<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
-Do contrário, um erro ocorrerá.</p>
-
-<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
-variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
-
-<pre><code class="bash">git -c color.ui=always log | grep -i -B 2 -A 3 "alguma coisa"
 </code></pre>
 ]]></content>
   </entry>

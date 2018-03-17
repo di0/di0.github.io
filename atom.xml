@@ -4,7 +4,7 @@
   <title><![CDATA[Dio's Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T23:16:21-02:00</updated>
+  <updated>2018-03-17T02:15:05-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,8 +18,7 @@
     <link href="http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl/"/>
     <updated>2018-01-31T20:46:12-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl</id>
-    <content type="html"><![CDATA[<p>Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o <!--more--> número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
+    <content type="html"><![CDATA[<p>Capturing groups in regular expression, against a scalar type, it&rsquo;s possible when you use the variable <!--more--> number, such as $1, $2, $3&hellip;, for example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,15 +58,15 @@ o <!--more--> número de variáveis( $1, $2, $3&hellip;) casadas nessa comparaç
     <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
     <updated>2018-01-31T15:41:24-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor</id>
-    <content type="html"><![CDATA[<p>Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as <!--more--> expressões
-regulares \&lt; e \>, por exemplo:</p>
+    <content type="html"><![CDATA[<p>Below I explain you how search a exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
+\&lt; and \>, for example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>/<span class="se">\&lt;</span>FOO<span class="se">\&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Isso por exemplo, retornará somente a palavra <strong>FOO</strong>, em vez de <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc&hellip;</p>
+<p>It will match only words whose name is <strong>FOO</strong>, rather than, <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc.</p>
 ]]></content>
   </entry>
   
@@ -76,48 +75,55 @@ regulares \&lt; e \>, por exemplo:</p>
     <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
     <updated>2018-01-17T16:01:01-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
-    <content type="html"><![CDATA[<p>Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
-sem a necessidade de <!--more--> adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
-no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção <strong>--list</strong>, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:</p>
+    <content type="html"><![CDATA[<p>With the utility <strong>update-alternatives</strong>, is possible you set versions of the Java installed in your Operating System Linux(which supports it),
+without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
+command <strong>update-alternatives</strong>, adding the argument <strong>--list</strong>, together with name of the symlink(Symbolic Link) desired. For example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Onde <strong>java</strong> é o nome do link simbólico.</p>
+<p>Where <strong>java</strong> is the name of the symbolic link.</p>
 
-<p>É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento <strong>--install</strong>, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento <strong>--install</strong>, o nível prioridade que a nova versão terá.</p>
+<p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
+list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
 
-<p>Segue exemplo:</p>
+<pre><code>1) The value properly of the desired symbolic link name.
+2) The full path of the binary Java.
+3) Lastly, specifying the level of priority associated with it.
+</code></pre>
+
+<p>For example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Após o comando acima, basta confirmar com <strong>--list</strong>:</p>
+<p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Para escolher a nova opção, passando o número da seleção, execute o comando com argumento <strong>--config</strong>, o qual disponibilizará um menu de escolha de forma intuitiva:</p>
+<p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
+interactive way form:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Há também a forma mais direta de se alternar a versão, passando o argumento <strong>--set</strong> ou <strong>-s</strong>, conforme abaixo:</p>
+<p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8/bin/java
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Para maiores informaçoes:</p>
+<p>For more info, enter with:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
@@ -133,8 +139,7 @@ no sistema alvo, basta executar o comando update-alternatives, passando como arg
     <link href="http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields/"/>
     <updated>2018-01-07T21:42:23-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields</id>
-    <content type="html"><![CDATA[<p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:</p>
+    <content type="html"><![CDATA[<p>When you haven&rsquo;t idea where one or more columns name are available, you can search them on all table of the database, using <!--more--> the following clause:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -142,12 +147,12 @@ podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de 
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">TABLE_NAME</span>
 </span><span class='line'>    <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span>
-</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;coluna_pesquisar&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;no_database&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;COLUMN_NAME_DESIRED&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;DATABASE_TARGET&#39;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
+<p>Where <strong>COLUMN_NAME_DESIRED</strong> is the name of the column to be searched and <strong>DATABASE_TARGET</strong> is the database where it must be searched.</p>
 ]]></content>
   </entry>
   
@@ -421,7 +426,7 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
     <id>http://di0.github.io/blog/2017/11/06/maven</id>
     <content type="html"><![CDATA[<h3>Configurando plugin Jetty</h3>
 
-<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes <!--more--> entradas:</p>
+<p>We can use and configure the Jetty plugin through Maven tool, for this, is need we add on pom.xml file, the following <!--more--> entries:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

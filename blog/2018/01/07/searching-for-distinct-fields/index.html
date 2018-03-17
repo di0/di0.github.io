@@ -9,8 +9,7 @@
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando &hellip;">
+  <meta name="description" content="When you haven&rsquo;t idea where one or more columns name are available, you can search them on all table of the database, using the following &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,8 +92,7 @@ podemos pesquisar por todas tabelas do banco, utilizando &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:</p>
+<div class="entry-content"><p>When you haven&rsquo;t idea where one or more columns name are available, you can search them on all table of the database, using <!--more--> the following clause:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -102,12 +100,12 @@ podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de 
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">TABLE_NAME</span>
 </span><span class='line'>    <span class="k">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span>
-</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;coluna_pesquisar&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;no_database&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">WHERE</span> <span class="k">COLUMN_NAME</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;COLUMN_NAME_DESIRED&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">AND</span> <span class="n">TABLE_SCHEMA</span><span class="o">=</span><span class="s1">&#39;DATABASE_TARGET&#39;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
+<p>Where <strong>COLUMN_NAME_DESIRED</strong> is the name of the column to be searched and <strong>DATABASE_TARGET</strong> is the database where it must be searched.</p>
 </div>
 
 
@@ -272,7 +270,7 @@ podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de 
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (6)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (7)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (6)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (8)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>

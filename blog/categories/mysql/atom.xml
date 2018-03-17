@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mysql | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T23:16:21-02:00</updated>
+  <updated>2018-03-17T02:15:05-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,16 +18,15 @@
     <link href="http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields/"/>
     <updated>2018-01-07T21:42:23-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/07/searching-for-distinct-fields</id>
-    <content type="html"><![CDATA[<p>Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:</p>
+    <content type="html"><![CDATA[<p>When you haven&rsquo;t idea where one or more columns name are available, you can search them on all table of the database, using <!--more--> the following clause:</p>
 
 <pre><code class="sql">SELECT DISTINCT TABLE_NAME 
     FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE COLUMN_NAME IN ('coluna_pesquisar')
-AND TABLE_SCHEMA='no_database';
+    WHERE COLUMN_NAME IN ('COLUMN_NAME_DESIRED')
+AND TABLE_SCHEMA='DATABASE_TARGET';
 </code></pre>
 
-<p>Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.</p>
+<p>Where <strong>COLUMN_NAME_DESIRED</strong> is the name of the column to be searched and <strong>DATABASE_TARGET</strong> is the database where it must be searched.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Dio's Blog]]></title>
   <link href="http://di0.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-01-31T23:16:21-02:00</updated>
+  <updated>2018-03-17T02:15:05-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,8 +18,7 @@
     <link href="http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl/"/>
     <updated>2018-01-31T20:46:12-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/31/capturing-groups-regex-with-perl</id>
-    <content type="html"><![CDATA[<p>Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o <!--more--> número de variáveis( $1, $2, $3&hellip;) casadas nessa comparação:</p>
+    <content type="html"><![CDATA[<p>Capturing groups in regular expression, against a scalar type, it&rsquo;s possible when you use the variable <!--more--> number, such as $1, $2, $3&hellip;, for example:</p>
 
 <pre><code class="perl">
 #!/usr/bin/env perl
