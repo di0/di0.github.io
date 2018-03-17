@@ -6,11 +6,11 @@ comments: true
 categories: linux
 ---
 
-Para pesquisar uma palavra exata no VI(M), basta colocar a palavra entre as <!--more--> expressões
-regulares \\< e \\>, por exemplo:
+Below I explain you how search a exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
+\\< and \\>, for example:
 
 ```bash
 /\<FOO\>
 ```
 
-Isso por exemplo, retornará somente a palavra **FOO**, em vez de **FOOBAR**, **BARFOO**, etc...
+It will match only words whose name is **FOO**, rather than, **FOOBAR**, **BARFOO**, etc.

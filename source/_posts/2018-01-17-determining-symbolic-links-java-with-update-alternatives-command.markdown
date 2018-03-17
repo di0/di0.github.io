@@ -3,46 +3,54 @@ layout: post
 title: "Determining symbolic links Java with update-alternatives command"
 date: 2018-01-17 16:01:01 -0200
 comments: true
-categories: [java]
+categories: [java,linux]
 ---
 
-Com o utilitário update-alternatives, é possível alternar entre versões do Java instaladas em um sistema Unix/Linux,
-sem a necessidade de <!--more--> adicionar ou remover links simbólicos manualmente. Para listar uma ou mais versões do Java disponíveis
-no sistema alvo, basta executar o comando update-alternatives, passando como argumento a opção **\-\-list**, junto ao nome do symlink(Link Simbólico) desejado, conforme exemplo abaixo:
+With the utility **update-alternatives**, is possible you set versions of the Java installed in your Operating System Linux(which supports it),
+without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
+command **update-alternatives**, adding the argument **\-\-list**, together with name of the symlink(Symbolic Link) desired. For example:
+
 
 ```bash
 update-alternatives --list java
 ```
 
-Onde **java** é o nome do link simbólico.
+Where **java** is the name of the symbolic link.
 
-É possível também, instalar uma nova versão, caso essa não esteja disponível na lista do update-alternatives. Para instalar uma nova versão do Java na lista, basta propriamente passar o argumento **\-\-install**, junto ao caminho onde o link estará disponível, mais o nome do symlink(Link Simbólico), mais o caminho da aplicação real que será linkada ao link simbólico e, por fim, deve se passar também junto ao argumento **\-\-install**, o nível prioridade que a nova versão terá.
+Is possible too, you to install a new version, case it hasn't on the list of the **update-alternatives**. To install a new version of the Java on the
+list, you just need use the parameter **\-\-install**, setting the following arguments:
 
-Segue exemplo:
+	1) The value properly of the desired symbolic link name.
+	2) The full path of the binary Java.
+	3) Lastly, specifying the level of priority associated with it.
+
+For example:
 
 ```bash
 update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
 ```
 
-Após o comando acima, basta confirmar com **\-\-list**:
+After typing the command above, you can use the parameter **\-\-list** to confirm the update:
 
 ```bash
 update-alternatives --list java
 ```
 
-Para escolher a nova opção, passando o número da seleção, execute o comando com argumento **\-\-config**, o qual disponibilizará um menu de escolha de forma intuitiva:
+To change to a new version, execute **update-alternatives** with parameter **\-\-config**, it will show a menu to you choice your option through
+interactive way form:
 
 ```bash
 update-alternatives --config java
 ```
 
-Há também a forma mais direta de se alternar a versão, passando o argumento **\-\-set** ou **-s**, conforme abaixo:
+There is another non-interactive way to you choice the version, just setting with parameter **\-\-set** or **-s**, instead of **\-\-config**, as below:
+
 
 ```bash
 sudo update-alternatives --set java /opt/jdk1.8/bin/java
 ```
 
-Para maiores informaçoes:
+For more info, enter with:
 
 ```bash
 man update-alternatives

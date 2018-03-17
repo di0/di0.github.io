@@ -6,8 +6,7 @@ comments: true
 categories: perl
 ---
 
-Para obter grupos na comparação regex contra um tipo escalar, é possível utilizando
-o <!--more--> número de variáveis( $1, $2, $3...) casadas nessa comparação:
+Capturing groups in regular expression, against a scalar type, it's possible when you use the variable <!--more--> number, such as $1, $2, $3..., for example:
 
 ```perl
 

@@ -6,13 +6,14 @@ comments: true
 categories: [mysql]
 ---
 
-Quando não se há certeza onde determinada(s) coluna(s) a qual se deseja buscar se encontra,
-podemos pesquisar por todas tabelas do banco, utilizando a <!--more--> linha de comando MySQL, veja um exemplo:
+When you haven't idea where one or more columns name are available, you can search them on all table of the database, using <!--more--> the following clause:
+
 
 ```sql
 SELECT DISTINCT TABLE_NAME 
     FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE COLUMN_NAME IN ('coluna_pesquisar')
-AND TABLE_SCHEMA='no_database';
+    WHERE COLUMN_NAME IN ('COLUMN_NAME_DESIRED')
+AND TABLE_SCHEMA='DATABASE_TARGET';
 ```
-Onde coluna_pesquisar é a coluna que deseja pesquisar e no_database, é o database que buscaremos a coluna.
+
+Where **COLUMN_NAME_DESIRED** is the name of the column to be searched and **DATABASE_TARGET** is the database where it must be searched.
