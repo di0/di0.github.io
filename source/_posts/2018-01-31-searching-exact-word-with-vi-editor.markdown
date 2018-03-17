@@ -6,7 +6,7 @@ comments: true
 categories: linux
 ---
 
-Below I explain you how search a exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
+Below I explain you how search an exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
 \\< and \\>, for example:
 
 ```bash
