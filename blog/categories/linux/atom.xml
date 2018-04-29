@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Linux | Dio's Blog]]></title>
+  <title><![CDATA[Category: Linux | Di0_ Developer Blog]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-03-17T12:42:39-03:00</updated>
+  <updated>2018-04-29T14:21:40-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Replace With Stream Editor(AKA Sed)]]></title>
+    <link href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/"/>
+    <updated>2018-04-28T14:08:18-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed</id>
+    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow, example of how works <!--more--> replacement order:</p>
+
+<pre><code class="bash">sed -i 's/input/output/g' file.txt
+</code></pre>
+
+<p><em>where:</em></p>
+
+<p><li> i = &ndash;in-place, edit <strong>file.txt</strong> and save it.</li>
+<li> s = substitute statement.</li>
+<li> input = original match case.</li>
+<li> output = the match replace it with.</li>
+<li> g = global(replace all ocurrence, instead first ocurrence).</li>
+<li> file.txt = the target file.</li></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Searching Exact Word With Vi Editor]]></title>
@@ -122,62 +143,6 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
 <strong>awk</strong>, conforme exemplo abaixo:</p>
 
 <pre><code class="bash">$ awk '!a[$0]++' foo.txt
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Prevent SSH Connection Time Out]]></title>
-    <link href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/"/>
-    <updated>2016-02-24T01:36:18-03:00</updated>
-    <id>http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout</id>
-    <content type="html"><![CDATA[<p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um <!--more--> tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
-
-<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
-<strong> <em>Connection to foo.com closed.</em> </strong></p>
-
-<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
-
-<p><del>Configuração no servidor</del></p>
-
-<pre><code class="bash">TCPKeepAlive no
-ClientAliveInterval 30
-ClientAliveCountMax 100
-</code></pre>
-
-<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
-aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
-
-<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
-anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
-
-<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
-
-<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
-
-<pre><code class="bash">$ sudo service sshd restart
-</code></pre>
-
-<p><del>Configuração no Cliente</del></p>
-
-<p>Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:</p>
-
-<p>Se para todos os usuários do sistema, adicionar aqui</p>
-
-<p><strong> /etc/ssh/ssh_config </strong></p>
-
-<p>Ou para um usuário específico, adicionar aqui</p>
-
-<p><strong> ~/.ssh/config </strong></p>
-
-<p>A seguinte configuração:</p>
-
-<p><strong>ServerAliveInterval 30</strong></p>
-
-<p>Configuração no cliente – linha de comando
-E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
-
-<pre><code class="bash">$ ssh -o ServerAliveInterval=30 user@foo.com
 </code></pre>
 ]]></content>
   </entry>

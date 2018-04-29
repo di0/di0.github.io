@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Dio's Blog]]></title>
+  <title><![CDATA[Di0_ Developer Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-03-17T12:42:39-03:00</updated>
+  <updated>2018-04-29T14:21:40-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Replace With Stream Editor(AKA Sed)]]></title>
+    <link href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/"/>
+    <updated>2018-04-28T14:08:18-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed</id>
+    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow, example of how works <!--more--> replacement order:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/input/output/g&#39;</span> file.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>where:</em></p>
+
+<p><li> i = &ndash;in-place, edit <strong>file.txt</strong> and save it.</li>
+<li> s = substitute statement.</li>
+<li> input = original match case.</li>
+<li> output = the match replace it with.</li>
+<li> g = global(replace all ocurrence, instead first ocurrence).</li>
+<li> file.txt = the target file.</li></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Capturing Groups Regex With Perl]]></title>
@@ -1463,38 +1486,6 @@ Traits, os mesmos comportamentos.</p>
 
 <p>Há uma infinidade de maneiras de se usar Traits, como compor Traits dentro de Traits, criando uma hierarquia
 de comportamentos. Sem dúvida, Traits trouxe para o PHP muito mais flexibilidade em todos os sentidos.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ignore Temporarily Files With Git]]></title>
-    <link href="http://di0.github.io/blog/2012/05/25/ignore-temporarily-files-with-git/"/>
-    <updated>2012-05-25T03:46:06-03:00</updated>
-    <id>http://di0.github.io/blog/2012/05/25/ignore-temporarily-files-with-git</id>
-    <content type="html"><![CDATA[<p>A maneira de ignorar arquivos nos commits do git é através do arquivo de configuração chamado
-<strong>gitignore</strong>. Basta adicionar nele arquivos ou diretórios que não serão colocados na área de commit
-na geração de um <!--more--> novo snapshot.</p>
-
-<p>Há uma outra maneira de ignorar temporariamente arquivos ou diretórios de maneira dinâmica, em
-vez de adicionar de maneira estática, como acontece ao utilizar o gitignore. A maneira de se
-fazer isso, é através do argumento <strong>update-index &ndash;assume-unchanged</strong>, de tal forma:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --assume-unchanged foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Isso fará com que o arquivo não apareça mais em comandos como <strong>git status</strong>, <strong>git diff</strong>&hellip;</p>
-
-<p>Por consequência, não será colocado na área de stage para o próximo commit.</p>
-
-<p>Para retornar o arquivo a ser monitorado, basta desfazer a método de ignore, utilizando
-dessa vez o argumento <strong>update-index &ndash;no-assume-unchanged</strong>, da seguinte forma:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git update-index --no-assume-unchanged foo.txt
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
