@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T03:33:17-03:00</updated>
+  <updated>2018-04-30T15:26:12-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -77,6 +77,8 @@ command <strong>update-alternatives</strong>, adding the argument <strong>--list
 
 <pre><code class="bash">update-alternatives --list java
 </code></pre>
+
+<p><img class="rigth" src="/images/output_update_alternative_list.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 
 <p>Where <strong>java</strong> is the name of the symbolic link.</p>
 
