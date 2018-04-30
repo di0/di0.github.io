@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Changing a Commit Message in SVN - Developer's Lab</title>
+  <title>Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens previamentes comitadas no SVN: A &hellip;">
+  <meta name="description" content="Comumente e erroneamente, a função count é chamada dentro de um laço de repetição, na
+intenção de impor um limite de ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn">
+  <link rel="canonical" href="http://di0.github.io/posts/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -49,7 +50,7 @@
 
 <div class="header-right">
   <ul class="main-navigation">
- <div> 
+ <div class="selected"> 
   <li><a href="/">blog</a></li></div><div class="spacer"></div>
      <div> 
   <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
@@ -64,12 +65,15 @@
 </header>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Changing a Commit Message in SVN</h1>
+      <h1 class="entry-title"><a href="/blog/2011/12/02/php-correct-use-of-the-count-function/">PHP - Correct Use of the Count Function</a></h1>
     
     
       <p class="meta">
@@ -85,98 +89,33 @@
   
 
 
-<time datetime="2014-05-15T01:50:04-03:00" pubdate data-updated="true"></time>
+<time datetime="2011-12-02T23:10:47-02:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens <!--more--> previamentes comitadas no SVN:</p>
-
-<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
-</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
-
-<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
+  <div class="entry-content"><p>Comumente e erroneamente, a função <strong>count</strong> é chamada dentro de um laço de repetição, na
+intenção de impor um limite de </div>
   
-
-<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/12/02/php-correct-use-of-the-count-function/">... continue reading here &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2014-05-15T01:50:04-03:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/svn/'>svn</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/04/24/compress-file-with-git-diff-output/" title="Previous Post: Compress file with git diff output">&laquo; Compress file with git diff output</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/" title="Next Post: NMAP - Searching open ports into specific Network">NMAP - Searching open ports into specific Network &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="1">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   <section>
   <h1>About Me</h1>
@@ -210,7 +149,7 @@
   </div>
 </section>
 
-  <section>
+  <!-- <section>
   <h1>Posts</h1>
   <ul id="recent_posts">
     
@@ -236,7 +175,7 @@
     
   </ul>
 </section>
-
+ -->
   
     
 <section class="googleplus">
@@ -314,7 +253,6 @@
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -333,10 +271,7 @@
       var disqus_shortname = 'www-develdio-com';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/';
-        var disqus_url = 'http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

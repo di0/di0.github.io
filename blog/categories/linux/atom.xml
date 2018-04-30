@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T16:46:46-03:00</updated>
+  <updated>2018-04-30T19:47:55-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Disable IPv6 on Linux]]></title>
+    <link href="http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux/"/>
+    <updated>2018-04-30T18:19:07-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux</id>
+    <content type="html"><![CDATA[<p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
+your network card device, you can disable it through least <!--more--> two ways:</p>
+
+<h4><u>Command line</u></h4>
+
+
+<p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
+values currently available, typing <strong>sysctl -a</strong>. More details, see <em>sysctl manual page</em>.</p>
+
+<p>Regarding configuration, with super admin user, type:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>1
+sysctl -w sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1</code></pre></div></p>
+
+<p>If you want re-enable IPv6, issue the following commands:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>0
+sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pre></div></p>
+
+<h4><u>File configuration(Debian based distro)</u></h4>
+
+
+<p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
+The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
+
+<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
+net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1
+net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div></p>
+
+<p>To disable, just remove the above lines.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Show Only File Name With Grep Command]]></title>
@@ -117,26 +157,6 @@ interactive way form:</p>
 <p>For more info, enter with:</p>
 
 <pre><code class="bash">man update-alternatives
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
-    <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
-    <updated>2016-08-21T04:17:15-03:00</updated>
-    <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
-    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir <!--more--> diretórios
-e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
-
-<pre><code class="bash">grep -r [Win] --color --exclude-dir=test --exclude-dir=target \
---exclude-dir=bin --exclude=\*.xml --exclude=\*.svn "pesquisa" .
-</code></pre>
-
-<p>Ou ainda:</p>
-
-<pre><code class="bash">$ grep -r [Win] --color --exclude-dir={test,target,bin} \
---exclude={*.xml,*.svn} "pesquisa" .
 </code></pre>
 ]]></content>
   </entry>

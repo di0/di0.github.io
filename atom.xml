@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T16:46:46-03:00</updated>
+  <updated>2018-04-30T19:47:55-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Disable IPv6 on Linux]]></title>
+    <link href="http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux/"/>
+    <updated>2018-04-30T18:19:07-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux</id>
+    <content type="html"><![CDATA[<p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
+your network card device, you can disable it through least <!--more--> two ways:</p>
+
+<h4><u>Command line</u></h4>
+
+
+<p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
+values currently available, typing <strong>sysctl -a</strong>. More details, see <em>sysctl manual page</em>.</p>
+
+<p>Regarding configuration, with super admin user, type:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>1
+sysctl -w sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1</code></pre></div>
+
+
+<p>If you want re-enable IPv6, issue the following commands:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>0
+sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pre></div>
+
+
+
+
+<h4><u>File configuration(Debian based distro)</u></h4>
+
+
+<p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
+The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
+
+<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
+net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1
+net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
+
+
+<p>To disable, just remove the above lines.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Show Only File Name With Grep Command]]></title>
@@ -995,21 +1040,6 @@ que foram modificados são exibidos na <!--more--> saída comando git diff. Por 
 
 
 <p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Searching for Table Name]]></title>
-    <link href="http://di0.github.io/blog/2013/05/13/searching-for-table-name/"/>
-    <updated>2013-05-13T20:30:04-03:00</updated>
-    <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
-    <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
-um simples <!--more--> <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SHOW</span> <span class="n">TABLES</span> <span class="k">FROM</span> <span class="n">database_name</span> <span class="k">LIKE</span> <span class="ss">&quot;%table_name%&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
