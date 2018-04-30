@@ -12,7 +12,7 @@ Capturing groups in regular expression, against a scalar type, it's possible whe
 
 #!/usr/bin/env perl
 
-print "Enter your name and lastname here";
+print "Enter your name and lastname here => ";
 chop ( $name_and_lastname = <STDIN> );
 
 if ( $name_and_lastname =~ /^\s*(\S+)\s+(\S+)\s*$/ )
@@ -26,3 +26,8 @@ else
 print "\n";
 
 ```
+
+** output: **
+
+{% img rigth /images/output_perl_group.jpeg 1800 1800 'output perl group' %}
+
