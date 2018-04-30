@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "grep command show only file name"
+title: "show only file name with grep command"
 date: 2018-04-30 00:48:26 -0300
 comments: true
 categories: linux
