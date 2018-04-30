@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T15:26:12-03:00</updated>
+  <updated>2018-04-30T16:25:36-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -85,10 +85,11 @@ command <strong>update-alternatives</strong>, adding the argument <strong>--list
 <p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
 list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
 
-<pre><code>1) The value properly of the desired symbolic link name.
-2) The full path of the binary Java.
-3) Lastly, specifying the level of priority associated with it.
-</code></pre>
+<p><ol>
+    <li> The value properly of the desired symbolic link name. </li>
+    <li> The full path of the binary Java. </li>
+    <li> Lastly, specifying the level of priority associated with it. </li>
+<ol></p>
 
 <p>For example:</p>
 
@@ -105,6 +106,8 @@ interactive way form:</p>
 
 <pre><code class="bash">update-alternatives --config java
 </code></pre>
+
+<p><img class="rigth" src="/images/output_update_alternatives_config.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 
 <p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
 
