@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T19:47:55-03:00</updated>
+  <updated>2018-04-30T20:41:36-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -32,11 +32,12 @@ command <strong>update-alternatives</strong>, adding the argument <strong>--list
 <p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
 list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
 
-<p><ol>
+<ol>
     <li> The value properly of the desired symbolic link name. </li>
     <li> The full path of the binary Java. </li>
     <li> Lastly, specifying the level of priority associated with it. </li>
-<ol></p>
+</ol>
+
 
 <p>For example:</p>
 

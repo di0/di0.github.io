@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T19:47:55-03:00</updated>
+  <updated>2018-04-30T20:41:36-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -182,44 +182,52 @@ command <strong>update-alternatives</strong>, adding the argument <strong>--list
 <p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
 list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
 
-<p><ol>
+<ol>
     <li> The value properly of the desired symbolic link name. </li>
     <li> The full path of the binary Java. </li>
     <li> Lastly, specifying the level of priority associated with it. </li>
-<ol></p>
+</ol>
+
 
 <p>For example:</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives &ndash;install /usr/bin/java java /opt/jdk1.8/bin/java 1
-</span></code></pre></td></tr></table></div></figure></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives &ndash;list java
-</span></code></pre></td></tr></table></div></figure></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
 interactive way form:</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives &ndash;config java
-</span></code></pre></td></tr></table></div></figure></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img class="rigth" src="http://di0.github.io/images/output_update_alternatives_config.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
 
 <p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives &ndash;set java /opt/jdk1.8/bin/java
-</span></code></pre></td></tr></table></div></figure></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8/bin/java
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>For more info, enter with:</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
