@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T02:59:24-03:00</updated>
+  <updated>2018-04-30T03:33:17-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -23,7 +23,7 @@
 <pre><code class="perl">
 #!/usr/bin/env perl
 
-print "Enter your name and lastname here";
+print "Enter your name and lastname here =&gt; ";
 chop ( $name_and_lastname = &lt;STDIN&gt; );
 
 if ( $name_and_lastname =~ /^\s*(\S+)\s+(\S+)\s*$/ )
@@ -36,6 +36,10 @@ else
 }
 print "\n";
 </code></pre>
+
+<p><strong> output: </strong></p>
+
+<p><img class="rigth" src="/images/output_perl_group.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 ]]></content>
   </entry>
   
