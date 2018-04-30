@@ -4,7 +4,7 @@
   <title><![CDATA[Di0_ Developer Blog]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-29T15:44:48-03:00</updated>
+  <updated>2018-04-29T21:23:45-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,10 +18,10 @@
     <link href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/"/>
     <updated>2018-04-28T14:08:18-03:00</updated>
     <id>http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed</id>
-    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow, example of how works <!--more--> replacement order:</p>
+    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow an example of how works <!--more--> replacement order:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/input/output/g&#39;</span> file.txt
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/input/output/g&#39;</span> some_file
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -31,8 +31,8 @@
 <li> s = substitute statement.</li>
 <li> input = original match case.</li>
 <li> output = the match replace it with.</li>
-<li> g = global(replace all ocurrence, instead first ocurrence).</li>
-<li> file.txt = the target file.</li></p>
+<li> g = global(replace all occurrence, instead of first occurrence).</li>
+<li> some_file = some target file.</li></p>
 ]]></content>
   </entry>
   
