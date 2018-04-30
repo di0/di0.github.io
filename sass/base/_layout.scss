@@ -5,6 +5,7 @@ $pad-min: 18px !default;
 $pad-narrow: 25px !default;
 $pad-medium: 35px !default;
 $pad-wide: 200px !default;
+$pad-wide_other: 100px !default;
 
 // Sidebar widths used in media queries
 $sidebar-width-medium: 240px !default;
@@ -61,7 +62,7 @@ body {
       padding-right: $pad-medium;
     }
     @media only screen and (min-width: 992px) {
-      padding-left: $pad-wide;
+      padding-left: $pad-wide_other;
       padding-right: $pad-wide;
     }
   }
@@ -78,7 +79,7 @@ body {
       margin-right: $pad-medium;
     }
     @media only screen and (min-width: 992px) {
-      margin-left: $pad-wide;
+      margin-left: $pad-wide_other;
       margin-right: $pad-wide;
     }
   }
@@ -171,7 +172,7 @@ body.sidebar-footer {
     width: $sidebar-width-wide - $sidebar-pad-wide*2;
     padding: 1.2em $sidebar-pad-wide $sidebar-pad-wide;
     .collapse-sidebar & {
-      padding: { left: $pad-wide; right: $pad-wide; }
+      padding: { left: $pad-wide_other; right: $pad-wide; }
     }
   }
 }

@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://di0.github.io
-title: Dio's Blog
+title: Di0_ Developer Blog
 subtitle: By Diogo Pinto
 author: Diogo Pinto
 simple_search: https://www.google.com/search
@@ -44,7 +44,7 @@ highlighter: pygments # default python pygments have been replaced by pygments.r
 paginate: 25          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
-excerpt_link: "Continue reading here &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
+excerpt_link: "... continue reading here &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 excerpt_separator: "<!--more-->"
 
 titlecase: true       # Converts page and post titles to titlecase
