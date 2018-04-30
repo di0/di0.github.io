@@ -15,14 +15,19 @@ command **update-alternatives**, adding the argument **\-\-list**, together with
 update-alternatives --list java
 ```
 
+{% img rigth /images/output_update_alternative_list.jpeg 1800 1800 'output perl group' %}
+
 Where **java** is the name of the symbolic link.
 
 Is possible too, you to install a new version, case it hasn't on the list of the **update-alternatives**. To install a new version of the Java on the
 list, you just need use the parameter **\-\-install**, setting the following arguments:
 
-	1) The value properly of the desired symbolic link name.
-	2) The full path of the binary Java.
-	3) Lastly, specifying the level of priority associated with it.
+<ol>
+	<li> The value properly of the desired symbolic link name. </li>
+	<li> The full path of the binary Java. </li>
+	<li> Lastly, specifying the level of priority associated with it. </li>
+<ol>
+
 
 For example:
 
@@ -42,6 +47,8 @@ interactive way form:
 ```bash
 update-alternatives --config java
 ```
+
+{% img rigth /images/output_update_alternatives_config.jpeg 1800 1800 'output perl group' %}
 
 There is another non-interactive way to you choice the version, just setting with parameter **\-\-set** or **-s**, instead of **\-\-config**, as below:
 
