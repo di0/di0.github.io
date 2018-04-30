@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Mysql | A Developer's Lab]]></title>
+  <title><![CDATA[Category: Mysql | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T02:15:19-03:00</updated>
+  <updated>2018-04-30T02:22:17-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
