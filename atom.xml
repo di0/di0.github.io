@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T20:41:36-03:00</updated>
+  <updated>2018-04-30T20:47:11-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -170,9 +170,7 @@ example:</p>
 without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
 command <strong>update-alternatives</strong>, adding the argument <strong>--list</strong>, together with name of the symlink(Symbolic Link) desired. For example:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives --list java</code></pre></div>
 
 
 <p><img class="rigth" src="http://di0.github.io/images/output_update_alternative_list.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
@@ -191,43 +189,30 @@ list, you just need use the parameter <strong>--install</strong>, setting the fo
 
 <p>For example:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1</code></pre></div>
 
 
 <p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --list java
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives --list java</code></pre></div>
 
 
 <p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
 interactive way form:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>update-alternatives --config java
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives --config java</code></pre></div>
 
 
 <p><img class="rigth" src="http://di0.github.io/images/output_update_alternatives_config.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
 
 <p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo update-alternatives --set java /opt/jdk1.8/bin/java
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sudo update-alternatives --set java /opt/jdk1.8/bin/java</code></pre></div>
 
 
 <p>For more info, enter with:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>man update-alternatives
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<p><strong> <em>man update-alternatives</em> </strong></p>
 ]]></content>
   </entry>
   

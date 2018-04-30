@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T20:41:36-03:00</updated>
+  <updated>2018-04-30T20:47:11-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -22,8 +22,7 @@
 without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
 command <strong>update-alternatives</strong>, adding the argument <strong>--list</strong>, together with name of the symlink(Symbolic Link) desired. For example:</p>
 
-<pre><code class="bash">update-alternatives --list java
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>list java</code></pre></div></p>
 
 <p><img class="rigth" src="/images/output_update_alternative_list.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 
@@ -41,31 +40,26 @@ list, you just need use the parameter <strong>--install</strong>, setting the fo
 
 <p>For example:</p>
 
-<pre><code class="bash">update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>install /usr/bin/java java /opt/jdk1.8/bin/java 1</code></pre></div></p>
 
 <p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
 
-<pre><code class="bash">update-alternatives --list java
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>list java</code></pre></div></p>
 
 <p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
 interactive way form:</p>
 
-<pre><code class="bash">update-alternatives --config java
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>config java</code></pre></div></p>
 
 <p><img class="rigth" src="/images/output_update_alternatives_config.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 
 <p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
 
-<pre><code class="bash">sudo update-alternatives --set java /opt/jdk1.8/bin/java
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sudo update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span><span class="nb">set </span>java /opt/jdk1.8/bin/java</code></pre></div></p>
 
 <p>For more info, enter with:</p>
 
-<pre><code class="bash">man update-alternatives
-</code></pre>
+<p><strong> <em>man update-alternatives</em> </strong></p>
 ]]></content>
   </entry>
   
