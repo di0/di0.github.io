@@ -26,7 +26,7 @@ list, you just need use the parameter **\-\-install**, setting the following arg
 	<li> The value properly of the desired symbolic link name. </li>
 	<li> The full path of the binary Java. </li>
 	<li> Lastly, specifying the level of priority associated with it. </li>
-<ol>
+</ol>
 
 
 For example:
