@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Replace With Stream Editor(AKA Sed) - A Developer's Lab</title>
+  <title>Grep Command Show Only File Name - A Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="The sed is command-line utility editor, which filtering and transforming text. Bellow an example of how works replacement order: 1
-sed -i &#39;s/ &hellip;">
+  <meta name="description" content="With grep and cut delimiter command we can get only file name where the occurrence of the input match. Bellow an
+example: 1
+grep -Rn &quot;foo&quot &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@ sed -i &#39;s/ &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="A Developer's Lab" type="application/atom+xml">
@@ -70,7 +71,7 @@ sed -i &#39;s/ &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Replace With Stream Editor(AKA Sed)</h1>
+      <h1 class="entry-title">Grep Command Show Only File Name</h1>
     
     
       <p class="meta">
@@ -86,28 +87,24 @@ sed -i &#39;s/ &hellip;">
   
 
 
-<time datetime="2018-04-28T14:08:18-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-04-30T00:48:26-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow an example of how works <!--more--> replacement order:</p>
+<div class="entry-content"><p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Bellow an<!--more-->
+example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/input/output/g&#39;</span> some_file
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep -Rn <span class="s2">&quot;foo&quot;</span> * <span class="p">|</span> cut -f1 -d:
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><em>where:</em></p>
+<p><strong>output</strong></p>
 
-<p><li> i = &ndash;in-place, edit <strong>file.txt</strong> and save it.</li>
-<li> s = substitute statement.</li>
-<li> input = original match case.</li>
-<li> output = the match replace it with.</li>
-<li> g = global(replace all occurrence, instead of first occurrence).</li>
-<li> some_file = some target file.</li></p>
+<p><img class="rigth" src="/images/output_grep_cut.jpeg" width="1800" height="1800" title="'output grep'" ></p>
 </div>
 
 
@@ -130,7 +127,7 @@ sed -i &#39;s/ &hellip;">
   
 
 
-<time datetime="2018-04-28T14:08:18-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-04-30T00:48:26-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -144,7 +141,7 @@ sed -i &#39;s/ &hellip;">
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/" >Tweet</a>
   
   
   
@@ -155,10 +152,8 @@ sed -i &#39;s/ &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2018/01/31/capturing-groups-regex-with-perl/" title="Previous Post: Capturing groups regex with Perl">&laquo; Capturing groups regex with Perl</a>
+        <a class="basic-alignment left" href="/blog/2018/04/28/replace-with-stream-editor-aka-sed/" title="Previous Post: Replace With Stream Editor(AKA Sed)">&laquo; Replace With Stream Editor(AKA Sed)</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2018/04/30/grep-command-show-only-file-name/" title="Next Post: grep command show only file name">grep command show only file name &raquo;</a>
       
     </p>
   </footer>
@@ -329,8 +324,8 @@ sed -i &#39;s/ &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/';
-        var disqus_url = 'http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/';
+        var disqus_identifier = 'http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/';
+        var disqus_url = 'http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | A Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T00:33:50-03:00</updated>
+  <updated>2018-04-30T02:15:19-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Grep Command Show Only File Name]]></title>
+    <link href="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/"/>
+    <updated>2018-04-30T00:48:26-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name</id>
+    <content type="html"><![CDATA[<p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Bellow an<!--more-->
+example:</p>
+
+<pre><code class="bash">grep -Rn "foo" * | cut -f1 -d:
+</code></pre>
+
+<p><strong>output</strong></p>
+
+<p><img class="rigth" src="/images/output_grep_cut.jpeg" width="1800" height="1800" title="&lsquo;output grep&rsquo;" ></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Replace With Stream Editor(AKA Sed)]]></title>
@@ -115,34 +132,6 @@ e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos,
 
 <pre><code class="bash">$ grep -r [Win] --color --exclude-dir={test,target,bin} \
 --exclude={*.xml,*.svn} "pesquisa" .
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Remove Names Duplicates With Sort Command]]></title>
-    <link href="http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command/"/>
-    <updated>2016-05-20T19:37:51-03:00</updated>
-    <id>http://di0.github.io/blog/2016/05/20/remove-names-duplicates-with-sort-command</id>
-    <content type="html"><![CDATA[<p>É possível remover nomes duplicados de uma saída padrão com o utilitário <!--more--> <strong>sort</strong>. Exemplos:</p>
-
-<pre><code class="bash">sort -u foo.txt
-</code></pre>
-
-<p>ou</p>
-
-<pre><code class="bash">sort file.txt | uniq
-</code></pre>
-
-<p>É possível também, imprimir somente os valores repetidos, em vez de ocultá-los, segue:</p>
-
-<pre><code class="bash">sort file.txt | uniq -d
-</code></pre>
-
-<p>Uma outra forma de realizar a mesma tarefa que faz o comando <strong>sort</strong> é a de usar o comando
-<strong>awk</strong>, conforme exemplo abaixo:</p>
-
-<pre><code class="bash">$ awk '!a[$0]++' foo.txt
 </code></pre>
 ]]></content>
   </entry>
