@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-01T13:38:17-03:00</updated>
+  <updated>2018-05-01T14:19:15-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -28,8 +28,8 @@ command <strong>update-alternatives</strong>, adding the argument <strong>--list
 
 <p>Where <strong>java</strong> is the name of the symbolic link.</p>
 
-<p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
-list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
+<p>Also it is possible, you to install a new version, if by chance it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. You can thus use the parameter
+<strong>--install</strong>, setting the following arguments:</p>
 
 <ol>
     <li> The value properly of the desired symbolic link name. </li>
@@ -42,7 +42,7 @@ list, you just need use the parameter <strong>--install</strong>, setting the fo
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>install /usr/bin/java java /opt/jdk1.8/bin/java 1</code></pre></div></p>
 
-<p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
+<p>After typing the command above, you can use the parameter <strong>--list</strong> to confirming the update:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>list java</code></pre></div></p>
 
