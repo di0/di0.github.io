@@ -18,8 +18,8 @@ update-alternatives --list java
 
 Where **java** is the name of the symbolic link.
 
-Is possible too, you to install a new version, case it hasn't on the list of the **update-alternatives**. To install a new version of the Java on the
-list, you just need use the parameter **\-\-install**, setting the following arguments:
+Also it is possible, you to install a new version, if by chance it hasn't on the list of the **update-alternatives**. You can thus use the parameter
+**\-\-install**, setting the following arguments:
 
 <ol>
 	<li> The value properly of the desired symbolic link name. </li>
@@ -34,7 +34,7 @@ For example:
 update-alternatives --install /usr/bin/java java /opt/jdk1.8/bin/java 1
 {% endhighlight %}
 
-After typing the command above, you can use the parameter **\-\-list** to confirm the update:
+After typing the command above, you can use the parameter **\-\-list** to confirming the update:
 
 {% highlight bash %}
 update-alternatives --list java
