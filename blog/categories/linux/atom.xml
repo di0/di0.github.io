@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T20:47:11-03:00</updated>
+  <updated>2018-04-30T23:08:06-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -92,6 +92,47 @@ example:</p>
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Flush Contents of a Memcached Server]]></title>
+    <link href="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/"/>
+    <updated>2018-04-25T22:12:26-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached</id>
+    <content type="html"><![CDATA[<p>The two ways following examples, show us how flush old data from memcached server through
+command line. We use netcat and <!--more--> telnet command to perform this job.</p>
+
+<h4><u>Using netcat Command</u></h4>
+
+
+<p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
+TCP or UDP protocol. Above we use this commands examples:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> nc localhost 11211
+or
+<span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> netcat localhost 11211</code></pre></div></p>
+
+<p><em>another form way:</em></p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">nc 192.168.1.10 11211<span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;&amp;</span>ldquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
+
+<p><em>with alias setting:</em></p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">alias </span><span class="nv">flush_mem_cache_server</span><span class="o">=</span><span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> netcat 127.0.0.1 11211<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
+
+<p>Now, just you run the alias <strong>flush_mem_cache_server</strong> in your bash shell.</p>
+
+<h4><u>Using telnet Command</u></h4>
+
+
+<p>We can as well use the telnet protocol via default port(11211) from memcached server, typing <strong>flush_all</strong>. For example:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">telnet 192.168.1.10 11211</code></pre></div></p>
+
+<p>then output will looks like:</p>
+
+<p><img class="rigth" src="/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Searching Exact Word With Vi Editor]]></title>
     <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
     <updated>2018-01-31T15:41:24-02:00</updated>
@@ -103,56 +144,6 @@ example:</p>
 </code></pre>
 
 <p>It will match only words whose name is <strong>FOO</strong>, rather than, <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
-    <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
-    <updated>2018-01-17T16:01:01-02:00</updated>
-    <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
-    <content type="html"><![CDATA[<p>With the utility <strong>update-alternatives</strong>, is possible you set versions of the Java installed in your Operating System Linux(which supports it),
-without need add or <!--more--> remove symbolic link manually. To list one or more Java version available in target system, you can just typing the
-command <strong>update-alternatives</strong>, adding the argument <strong>--list</strong>, together with name of the symlink(Symbolic Link) desired. For example:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>list java</code></pre></div></p>
-
-<p><img class="rigth" src="/images/output_update_alternative_list.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
-
-<p>Where <strong>java</strong> is the name of the symbolic link.</p>
-
-<p>Is possible too, you to install a new version, case it hasn&rsquo;t on the list of the <strong>update-alternatives</strong>. To install a new version of the Java on the
-list, you just need use the parameter <strong>--install</strong>, setting the following arguments:</p>
-
-<ol>
-    <li> The value properly of the desired symbolic link name. </li>
-    <li> The full path of the binary Java. </li>
-    <li> Lastly, specifying the level of priority associated with it. </li>
-</ol>
-
-
-<p>For example:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>install /usr/bin/java java /opt/jdk1.8/bin/java 1</code></pre></div></p>
-
-<p>After typing the command above, you can use the parameter <strong>--list</strong> to confirm the update:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>list java</code></pre></div></p>
-
-<p>To change to a new version, execute <strong>update-alternatives</strong> with parameter <strong>--config</strong>, it will show a menu to you choice your option through
-interactive way form:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span>config java</code></pre></div></p>
-
-<p><img class="rigth" src="/images/output_update_alternatives_config.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
-
-<p>There is another non-interactive way to you choice the version, just setting with parameter <strong>--set</strong> or <strong>-s</strong>, instead of <strong>--config</strong>, as below:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sudo update-alternatives <span class="p">&amp;</span>ndash<span class="p">;</span><span class="nb">set </span>java /opt/jdk1.8/bin/java</code></pre></div></p>
-
-<p>For more info, enter with:</p>
-
-<p><strong> <em>man update-alternatives</em> </strong></p>
 ]]></content>
   </entry>
   

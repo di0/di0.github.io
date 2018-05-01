@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Prevent SSH Connection Time Out - Developer's Lab</title>
+  <title>Flush Contents of a Memcached Server - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um tempo limite de conexão é alcançado, como &hellip;">
+  <meta name="description" content="The two ways following examples, show us how flush old data from memcached server through
+command line. We use netcat and telnet command to perform &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -69,7 +70,7 @@
   
   <header>
     
-      <h1 class="entry-title">Prevent SSH Connection Time Out</h1>
+      <h1 class="entry-title">Flush Contents of a Memcached Server</h1>
     
     
       <p class="meta">
@@ -85,69 +86,50 @@
   
 
 
-<time datetime="2016-02-24T01:36:18-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-04-25T22:12:26-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Conexões estabelecidas de clientes SSHs, são automaticamente desconectadas do servidor SSH quando um <!--more--> tempo limite de conexão é alcançado, como mostrado pela mensagem abaixo:</p>
+<div class="entry-content"><p>The two ways following examples, show us how flush old data from memcached server through
+command line. We use netcat and <!--more--> telnet command to perform this job.</p>
 
-<p><strong> <em>Read from remote host foo.com: Connection reset by peer</em> </strong>
-<strong> <em>Connection to foo.com closed.</em> </strong></p>
-
-<p>Para evitar que o cliente perca conexão com o servidor SSH, por timeout, uma das soluções abaixo são avaliadas:</p>
-
-<p><del>Configuração no servidor</del></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>TCPKeepAlive no
-</span><span class='line'>ClientAliveInterval 30
-</span><span class='line'>ClientAliveCountMax 100
-</span></code></pre></td></tr></table></div></figure>
+<h4><u>Using netcat Command</u></h4>
 
 
-<p><strong>TPCKeepAlive ( KeepAlive )</strong>, verifica se deve ou não, realizar a verificação se o Socket via cliente e servidor, ainda encontra-se
-aberto. Um pacote cru, é enviado e se for recebido, significa que a conexão ainda ativa. A opção padrão para a maioria dos caso, é “YES”.</p>
+<p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
+TCP or UDP protocol. Above we use this commands examples:</p>
 
-<p><strong>ClientAliveInterval</strong> Numero do intervalo em segundos em que o servidor, irá enviar um pacote nulo, conforme descrito
-anteriormente, ao cliente. O padrão para a maioria dos casos, é zero.</p>
-
-<p><strong>ClientAliveCountMax 100</strong> Número máximo de vezes, que será enviado o pacote antes de desconectar do cliente. O padrão para a maioria dos casos, são três.</p>
-
-<p>Reiniciando o servidor para aplicar as configurações modificadas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service sshd restart
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;flush_all&#39;</span> <span class="p">|</span> nc localhost 11211
+or
+<span class="nb">echo</span> <span class="s1">&#39;flush_all&#39;</span> <span class="p">|</span> netcat localhost 11211</code></pre></div>
 
 
-<p><del>Configuração no Cliente</del></p>
+<p><em>another form way:</em></p>
 
-<p>Se acaso, não for <!--more--> possível realizar os procedimentos anteriores no servidor, devido a permissão, no lado do cliente, é possível realizar o seguinte procedimento:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nc 192.168.1.10 11211<span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;flush_all&quot;</span></code></pre></div>
 
-<p>Se para todos os usuários do sistema, adicionar aqui</p>
 
-<p><strong> /etc/ssh/ssh_config </strong></p>
+<p><em>with alias setting:</em></p>
 
-<p>Ou para um usuário específico, adicionar aqui</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">alias </span><span class="nv">flush_mem_cache_server</span><span class="o">=</span><span class="s2">&quot;echo &#39;flush_all&#39; | netcat 127.0.0.1 11211&quot;</span></code></pre></div>
 
-<p><strong> ~/.ssh/config </strong></p>
 
-<p>A seguinte configuração:</p>
+<p>Now, just you run the alias <strong>flush_mem_cache_server</strong> in your bash shell.</p>
 
-<p><strong>ServerAliveInterval 30</strong></p>
+<h4><u>Using telnet Command</u></h4>
 
-<p>Configuração no cliente – linha de comando
-E por fim, a outra opção, seria a manual, via linha de comando, através da opção (-o)</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -o <span class="nv">ServerAliveInterval</span><span class="o">=</span><span class="m">30</span> user@foo.com
-</span></code></pre></td></tr></table></div></figure>
+<p>We can as well use the telnet protocol via default port(11211) from memcached server, typing <strong>flush_all</strong>. For example:</p>
 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">telnet 192.168.1.10 11211</code></pre></div>
+
+
+<p>then output will looks like:</p>
+
+<p><img class="rigth" src="/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
 </div>
 
 
@@ -170,7 +152,7 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
   
 
 
-<time datetime="2016-02-24T01:36:18-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-04-25T22:12:26-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -184,7 +166,7 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/" >Tweet</a>
   
   
   
@@ -195,10 +177,10 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/09/23/reset-all-commits-from-repository-git/" title="Previous Post: Reset all commits from Repository Git">&laquo; Reset all commits from Repository Git</a>
+        <a class="basic-alignment left" href="/blog/2018/01/31/capturing-groups-regex-with-perl/" title="Previous Post: Capturing groups regex with Perl">&laquo; Capturing groups regex with Perl</a>
       
       
-        <a class="basic-alignment right" href="/blog/2016/05/20/remove-names-duplicates-with-sort-command/" title="Next Post: Remove names duplicates with sort command">Remove names duplicates with sort command &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2018/04/28/replace-with-stream-editor-aka-sed/" title="Next Post: Replace With Stream Editor(AKA Sed)">Replace With Stream Editor(AKA Sed) &raquo;</a>
       
     </p>
   </footer>
@@ -369,8 +351,8 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/';
-        var disqus_url = 'http://di0.github.io/blog/2016/02/24/avoid-ssh-connection-timeout/';
+        var disqus_identifier = 'http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/';
+        var disqus_url = 'http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/';
         var disqus_script = 'embed.js';
       
     (function () {

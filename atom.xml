@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-04-30T20:47:11-03:00</updated>
+  <updated>2018-04-30T23:08:06-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -97,6 +97,51 @@ example:</p>
 <li> <strong> <em>replacement</em> </strong> = matched replacement it with.</li>
 <li> <strong> <em>g</em> </strong> = global(replace all occurrence, instead of first occurrence).</li>
 <li> <strong> <em>some_file</em> </strong> = some target file.</li></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Flush Contents of a Memcached Server]]></title>
+    <link href="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/"/>
+    <updated>2018-04-25T22:12:26-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached</id>
+    <content type="html"><![CDATA[<p>The two ways following examples, show us how flush old data from memcached server through
+command line. We use netcat and <!--more--> telnet command to perform this job.</p>
+
+<h4><u>Using netcat Command</u></h4>
+
+
+<p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
+TCP or UDP protocol. Above we use this commands examples:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;flush_all&#39;</span> <span class="p">|</span> nc localhost 11211
+or
+<span class="nb">echo</span> <span class="s1">&#39;flush_all&#39;</span> <span class="p">|</span> netcat localhost 11211</code></pre></div>
+
+
+<p><em>another form way:</em></p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">nc 192.168.1.10 11211<span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;flush_all&quot;</span></code></pre></div>
+
+
+<p><em>with alias setting:</em></p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">alias </span><span class="nv">flush_mem_cache_server</span><span class="o">=</span><span class="s2">&quot;echo &#39;flush_all&#39; | netcat 127.0.0.1 11211&quot;</span></code></pre></div>
+
+
+<p>Now, just you run the alias <strong>flush_mem_cache_server</strong> in your bash shell.</p>
+
+<h4><u>Using telnet Command</u></h4>
+
+
+<p>We can as well use the telnet protocol via default port(11211) from memcached server, typing <strong>flush_all</strong>. For example:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">telnet 192.168.1.10 11211</code></pre></div>
+
+
+<p>then output will looks like:</p>
+
+<p><img class="rigth" src="http://di0.github.io/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
 ]]></content>
   </entry>
   
@@ -1016,23 +1061,6 @@ variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaix
 
 
 <p>Onde <strong>N</strong> é o número da revisão</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Compress File With Git Diff Output]]></title>
-    <link href="http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output/"/>
-    <updated>2014-04-24T03:00:14-03:00</updated>
-    <id>http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output</id>
-    <content type="html"><![CDATA[<p>O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos
-que foram modificados são exibidos na <!--more--> saída comando git diff. Por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git diff --name-only <span class="p">|</span> xargs tar czf new-files.tar.gz
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
 ]]></content>
   </entry>
   
