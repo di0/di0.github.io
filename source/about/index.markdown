@@ -12,4 +12,6 @@ Shell Scripting, PHP, Java and System Operating Unix-Like(FreeBSD and Linux).
 My interests are, software development and network security. I am currently
 working as a computer programmer professional.
 
+Happy that one that teaches that knows and learn that teaches.
+
 See more at the my Linkedin page -> [Linkedin](https://www.linkedin.com/in/diogo-pereira-pinto-dio/)
