@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-01T02:04:00-03:00</updated>
+  <updated>2018-05-01T13:38:17-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -103,7 +103,7 @@ command line. We use netcat and <!--more--> telnet command to perform this job.<
 
 
 <p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
-TCP or UDP protocol. Above we use this commands examples:</p>
+TCP or UDP protocol. Bellow you can see how such commands works:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> nc localhost 11211
 or
