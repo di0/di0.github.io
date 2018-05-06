@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-01T14:19:15-03:00</updated>
+  <updated>2018-05-06T17:16:35-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -133,17 +133,22 @@ or
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Searching Exact Word With Vi Editor]]></title>
-    <link href="http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor/"/>
-    <updated>2018-01-31T15:41:24-02:00</updated>
-    <id>http://di0.github.io/blog/2018/01/31/searching-exact-word-with-vi-editor</id>
-    <content type="html"><![CDATA[<p>Below I explain you how search an exact word in VI(M), what you just need to do, is to put there on between <!--more--> regular expression
-\&lt; and \>, for example:</p>
+    <title type="html"><![CDATA[Remove Blank Lines With Vi(m)]]></title>
+    <link href="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/"/>
+    <updated>2018-04-06T16:37:27-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m</id>
+    <content type="html"><![CDATA[<p>If you want delete blank lines using <em>VI(M)</em> editor, you can use the following match regex <strong>^$</strong> to perform it on the
+command mode option(Esc + Shift + :) . e.g: <!--more--></p>
 
-<pre><code class="bash">/\&lt;FOO\&gt;
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">:g/^<span class="nv">$/</span>d</code></pre></div></p>
 
-<p>It will match only words whose name is <strong>FOO</strong>, rather than, <strong>FOOBAR</strong>, <strong>BARFOO</strong>, etc.</p>
+<p>The above mentioned entry, will specify the <em>VI(M)</em> editor, delete blank lines.</p>
+
+<ul> g -> will execute command on all lines that match with regex.</ul>
+
+
+<ul> d -> command order, delete that line.</ul>
+
 ]]></content>
   </entry>
   

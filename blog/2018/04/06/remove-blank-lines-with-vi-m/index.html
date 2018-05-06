@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Php - Developer's Lab</title>
+  <title>Remove Blank Lines With Vi(m) - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Category: php">
+  <meta name="description" content="If you want delete blank lines using VI(M) editor, you can use the following match regex ^$ to perform it on the
+command mode option(Esc + Shift &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/categories/php">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -65,53 +66,107 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Php</h1>
+    
+      <h1 class="entry-title">Remove Blank Lines With Vi(m)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-04-06T16:37:27-03:00" pubdate data-updated="true"></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>If you want delete blank lines using <em>VI(M)</em> editor, you can use the following match regex <strong>^$</strong> to perform it on the
+command mode option(Esc + Shift + :) . e.g: <!--more--></p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/12/01/php-reusing-code-with-traits/">PHP - Reusing Code With Traits</a></h1>
-<time datetime="2012-12-01T22:21:08-02:00" pubdate><span class='month'>Dec</span> <span class='day'>01</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/php/'>php</a></span>
-</footer>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">:g/^<span class="nv">$/</span>d</code></pre></div>
 
 
-</article>
+<p>The above mentioned entry, will specify the <em>VI(M)</em> editor, delete blank lines.</p>
+
+<ul> g -> will execute command on all lines that match with regex.</ul>
 
 
-
-  
-  <h2>2011</h2>
-
-<article>
-  
-<h1><a href="/blog/2011/12/02/php-correct-use-of-the-count-function/">PHP - Correct Use of the Count Function</a></h1>
-<time datetime="2011-12-02T23:10:47-02:00" pubdate><span class='month'>Dec</span> <span class='day'>02</span> <span class='year'>2011</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/php/'>php</a></span>
-</footer>
-
-
-</article>
+<ul> d -> command order, delete that line.</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-04-06T16:37:27-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2018/01/31/capturing-groups-regex-with-perl/" title="Previous Post: Capturing groups regex with Perl">&laquo; Capturing groups regex with Perl</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/04/25/flush-contents-of-a-memcached/" title="Next Post: Flush Contents of a Memcached Server">Flush Contents of a Memcached Server &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -271,7 +326,10 @@
       var disqus_shortname = 'www-develdio-com';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/';
+        var disqus_url = 'http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

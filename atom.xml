@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-01T14:19:15-03:00</updated>
+  <updated>2018-05-06T17:16:35-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -142,6 +142,27 @@ or
 <p>then output will looks like:</p>
 
 <p><img class="rigth" src="http://di0.github.io/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="'output perl group'" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Blank Lines With Vi(m)]]></title>
+    <link href="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/"/>
+    <updated>2018-04-06T16:37:27-03:00</updated>
+    <id>http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m</id>
+    <content type="html"><![CDATA[<p>If you want delete blank lines using <em>VI(M)</em> editor, you can use the following match regex <strong>^$</strong> to perform it on the
+command mode option(Esc + Shift + :) . e.g: <!--more--></p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">:g/^<span class="nv">$/</span>d</code></pre></div>
+
+
+<p>The above mentioned entry, will specify the <em>VI(M)</em> editor, delete blank lines.</p>
+
+<ul> g -> will execute command on all lines that match with regex.</ul>
+
+
+<ul> d -> command order, delete that line.</ul>
+
 ]]></content>
   </entry>
   
@@ -1032,35 +1053,6 @@ variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaix
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap -p22 192.168.0.0/24 -oG - <span class="p">|</span> grep 22/open
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Changing a Commit Message in SVN]]></title>
-    <link href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/"/>
-    <updated>2014-05-15T01:50:04-03:00</updated>
-    <id>http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn</id>
-    <content type="html"><![CDATA[<p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens <!--more--> previamentes comitadas no SVN:</p>
-
-<p>A primeira modifica a mensagem remotamente, com uma das duas formas:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svn propedit -r N --revprop svn:log URL
-</span><span class='line'><span class="nv">$ </span>svn propset -r N --revprop svn:log <span class="s2">&quot;nova mensagem&quot;</span> <span class="o">[</span>URL <span class="k">do</span> Repositório<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
-
-<p>A segunda apenas modifica a mensagem localmente através do utilitário svnadmin:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>svnadmin setlog <span class="o">[</span>PATH <span class="k">do</span> Repositório<span class="o">]</span> -r N Arquivo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Onde <strong>N</strong> é o número da revisão</p>
 ]]></content>
   </entry>
   
