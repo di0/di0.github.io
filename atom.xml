@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-18T10:43:50-03:00</updated>
+  <updated>2018-09-18T18:12:10-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -51,7 +51,7 @@ git push origin -u new-branch-name</code></pre></div>
     <updated>2018-09-15T03:20:58-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language</id>
     <content type="html"><![CDATA[<p>Language C has not function available that recover size of array by default. However, we
-can use a trick<br>that do possible get such size. Look like on example below:<!--more--></p>
+can use a trick that do possible get such size. Look like on example below:<!--more--></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -104,7 +104,7 @@ the type of array.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[C - Pointer to Function With Function<br>within Another Function]]></title>
+    <title type="html"><![CDATA[C - Pointer to Function With Function Within Another Function]]></title>
     <link href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/"/>
     <updated>2018-09-15T03:14:27-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another</id>
@@ -183,7 +183,7 @@ function as parameter. <!--more--></p>
     <link href="http://di0.github.io/blog/2018/09/15/create-and-save-stash-list/"/>
     <updated>2018-09-15T02:33:18-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/create-and-save-stash-list</id>
-    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive<br>
+    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive
 message on the command line when we create one. By <!--more-->example:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash save <span class="s2">&quot;Saving anything&quot;</span></code></pre></div>
@@ -426,7 +426,7 @@ command mode option(Esc + Shift + :) . e.g: <!--more--></p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Determining Symbolic Links Java With<br>update-alternatives Command]]></title>
+    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
     <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
     <updated>2018-01-17T16:01:01-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
@@ -1019,7 +1019,7 @@ utilização do ActiveMQ:</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Grep - Exclude Directories and Files From<br>recursive Searches]]></title>
+    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
     <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
     <updated>2016-08-21T04:17:15-03:00</updated>
     <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>

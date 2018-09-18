@@ -4,7 +4,7 @@
   <title><![CDATA[Category: C/c++ | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/c-slash-c-plus-plus/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-18T10:43:50-03:00</updated>
+  <updated>2018-09-18T18:12:10-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -19,7 +19,7 @@
     <updated>2018-09-15T03:20:58-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language</id>
     <content type="html"><![CDATA[<p>Language C has not function available that recover size of array by default. However, we
-can use a trick<br>that do possible get such size. Look like on example below:<!--more--></p>
+can use a trick that do possible get such size. Look like on example below:<!--more--></p>
 
 <pre><code class="c">#include &lt;stdio.h&gt;
 
@@ -52,7 +52,7 @@ the type of array.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[C - Pointer to Function With Function<br>within Another Function]]></title>
+    <title type="html"><![CDATA[C - Pointer to Function With Function Within Another Function]]></title>
     <link href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/"/>
     <updated>2018-09-15T03:14:27-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another</id>

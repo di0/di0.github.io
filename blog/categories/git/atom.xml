@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-18T10:43:50-03:00</updated>
+  <updated>2018-09-18T18:12:10-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -44,7 +44,7 @@ git push origin -u new-branch-name</code></pre></div></p>
     <link href="http://di0.github.io/blog/2018/09/15/create-and-save-stash-list/"/>
     <updated>2018-09-15T02:33:18-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/15/create-and-save-stash-list</id>
-    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive<br>
+    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive
 message on the command line when we create one. By <!--more-->example:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash save <span class="p">&amp;</span>ldquo<span class="p">;</span>Saving anything<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
