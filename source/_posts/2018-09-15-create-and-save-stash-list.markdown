@@ -6,7 +6,7 @@ comments: true
 categories: git
 ---
 
-When stash the changes in a dirty working directory away, we can can give a more descriptive<br>
+When stash the changes in a dirty working directory away, we can can give a more descriptive
 message on the command line when we create one. By <!--more-->example:
 
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Grep - Exclude directories and files from<br>recursive searches"
+title: "Grep - Exclude directories and files from recursive searches"
 date: 2016-08-21 05:17:15 -0200
 comments: true
 categories: [linux]

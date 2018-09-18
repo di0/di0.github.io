@@ -7,7 +7,7 @@ categories: c/c++
 ---
 
 Language C has not function available that recover size of array by default. However, we
-can use a trick<br>that do possible get such size. Look like on example below:<!--more-->
+can use a trick that do possible get such size. Look like on example below:<!--more-->
 
 ```c
 #include <stdio.h>

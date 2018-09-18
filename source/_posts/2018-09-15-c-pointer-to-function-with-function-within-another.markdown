@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "C - Pointer to function with function<br>within another function"
+title: "C - Pointer to function with function within another function"
 date: 2018-09-15 03:14:27 -0300
 comments: true
 categories: c/c++
