@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Mysql - Developer's Lab</title>
+  <title>Get Size of Array With C Language - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Category: mysql">
+  <meta name="description" content="Language C has not function available that recover size of array by default. However, we
+can use a trickthat do possible get such size. Look like on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/categories/mysql">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -65,53 +66,144 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Mysql</h1>
+    
+      <h1 class="entry-title">Get Size of Array With C Language</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-15T03:20:58-03:00" pubdate data-updated="true"></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Language C has not function available that recover size of array by default. However, we
+can use a trick<br>that do possible get such size. Look like on example below:<!--more--></p>
 
-  
-  <h2>2018</h2>
-
-<article>
-  
-<h1><a href="/blog/2018/01/07/searching-for-distinct-fields/">MySQL - Searching for Distinct Fields</a></h1>
-<time datetime="2018-01-07T21:42:23-02:00" pubdate><span class='month'>Jan</span> <span class='day'>07</span> <span class='year'>2018</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/mysql/'>mysql</a></span>
-</footer>
-
-
-</article>
-
-
-
-  
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/05/13/searching-for-table-name/">Searching for Table Name</a></h1>
-<time datetime="2013-05-13T20:30:04-03:00" pubdate><span class='month'>May</span> <span class='day'>13</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/mysql/'>mysql</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">a</span><span class="p">[</span> <span class="mi">99</span> <span class="p">];</span>
+</span><span class='line'>        <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span> <span class="kt">int</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>but, if you chance the type of array, you can have problems because the expression above,
+use int type. To avoid this, would be used this way:</p>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">a</span><span class="p">[</span> <span class="mi">99</span> <span class="p">];</span>
+</span><span class='line'>        <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">);</span> <span class="c1">// Here, we get the type of array</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In example abouve, we get the first field of the array, what is sufficient to calculate
+the type of array.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-15T03:20:58-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-slash-c-plus-plus/'>c/c++</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" title="Previous Post: C - Pointer to function with function<br>within another function">&laquo; C - Pointer to function with function<br>within another function</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/" title="Next Post: Rename local and remote branch with git">Rename local and remote branch with git &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -271,7 +363,10 @@
       var disqus_shortname = 'www-develdio-com';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/';
+        var disqus_url = 'http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

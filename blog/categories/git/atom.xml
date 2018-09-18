@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-06T17:16:35-03:00</updated>
+  <updated>2018-09-18T10:43:50-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rename Local and Remote Branch With Git]]></title>
+    <link href="http://di0.github.io/blog/2018/09/17/rename-local-and-remote-branch-with-git/"/>
+    <updated>2018-09-17T15:47:55-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/17/rename-local-and-remote-branch-with-git</id>
+    <content type="html"><![CDATA[<p>If you want rename a branch local and remote, follow these steps:<!--more--></p>
+
+<p>First, rename the target branch:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m new-name</code></pre></div></p>
+
+<p>Or, if by chance, you desire rename another branch, whose is not current branch, such as:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m old-branch-name new-branch-name</code></pre></div></p>
+
+<p>Second, remove remote branch and push the new local branch:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git push origin :old-branch-name new-branch-name</code></pre></div></p>
+
+<p>And finally, load the upstream branch for the new local branch:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout new-branch-name
+git push origin -u new-branch-name</code></pre></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating and Saving Stash List With Git]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/create-and-save-stash-list/"/>
+    <updated>2018-09-15T02:33:18-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/create-and-save-stash-list</id>
+    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive<br>
+message on the command line when we create one. By <!--more-->example:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash save <span class="p">&amp;</span>ldquo<span class="p">;</span>Saving anything<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
+
+<p>The above order, will push and holds on stack, the contents with descriptive message.</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash list</code></pre></div></p>
+
+<p>The command above, will show you, what is the branch name and what position that contents
+was saved on stack.</p>
+
+<p>So, to pick up first contents from stack, type:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash pop stash@<span class="o">{</span>0<span class="o">}</span></code></pre></div></p>
+
+<p>or second</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash pop stash@<span class="o">{</span>1<span class="o">}</span></code></pre></div></p>
+
+<p>and son on &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git - Revert Specific Files]]></title>
@@ -78,44 +133,6 @@ $ git push ‐‐force ‐‐set-upstream origin master
 
 <pre><code class="bash">git config --global http.sslverify false
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git Status With Grep]]></title>
-    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
-    <updated>2015-05-15T02:36:05-03:00</updated>
-    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
-    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
-utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, <!--more--> basta adicionar a opção <strong>-c color-status=always</strong> ao
-executar o comando <strong>git status</strong>. Por exemplo:</p>
-
-<pre><code class="bash">git -c color.status=always status | grep -i "alguma coisa"
-</code></pre>
-
-<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
-Do contrário, um erro ocorrerá.</p>
-
-<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
-variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
-
-<pre><code class="bash">git -c color.ui=always log | grep -i -B 2 -A 3 "alguma coisa"
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Compress File With Git Diff Output]]></title>
-    <link href="http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output/"/>
-    <updated>2014-04-24T03:00:14-03:00</updated>
-    <id>http://di0.github.io/blog/2014/04/24/compress-file-with-git-diff-output</id>
-    <content type="html"><![CDATA[<p>O comando abaixo demonstra como compactar um arquivo no formato tar, com arquivos
-que foram modificados são exibidos na <!--more--> saída comando git diff. Por exemplo:</p>
-
-<pre><code class="bash">git diff --name-only | xargs tar czf new-files.tar.gz
-</code></pre>
-
-<p>Isso criará um arquivo compactado com um ou mais arquivo retornado pelo <strong>git diff &ndash;name-only</strong></p>
 ]]></content>
   </entry>
   

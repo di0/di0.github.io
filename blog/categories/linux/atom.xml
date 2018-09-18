@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-06T17:16:35-03:00</updated>
+  <updated>2018-09-18T10:43:50-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -58,7 +58,7 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div></p>
     <link href="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/"/>
     <updated>2018-04-30T00:48:26-03:00</updated>
     <id>http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name</id>
-    <content type="html"><![CDATA[<p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Bellow an<!--more-->
+    <content type="html"><![CDATA[<p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Below an<!--more-->
 example:</p>
 
 <pre><code class="bash">grep -Rn "foo" * | cut -f1 -d:
@@ -75,7 +75,7 @@ example:</p>
     <link href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/"/>
     <updated>2018-04-28T14:08:18-03:00</updated>
     <id>http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed</id>
-    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow an example of how works <!--more--> replacement order:</p>
+    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Below an example of how it works <!--more--> replacement order:</p>
 
 <pre><code class="bash">sed -i 's/input/replacement/g' some_file
 </code></pre>
@@ -103,7 +103,7 @@ command line. We use netcat and <!--more--> telnet command to perform this job.<
 
 
 <p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
-TCP or UDP protocol. Bellow you can see how such commands works:</p>
+TCP or UDP protocol. Below you can see how such commands works:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> nc localhost 11211
 or

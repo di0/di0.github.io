@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: C/c++ | Developer's Lab]]></title>
+  <link href="http://di0.github.io/blog/categories/c-slash-c-plus-plus/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-09-18T10:43:50-03:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Get Size of Array With C Language]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/"/>
+    <updated>2018-09-15T03:20:58-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language</id>
+    <content type="html"><![CDATA[<p>Language C has not function available that recover size of array by default. However, we
+can use a trick<br>that do possible get such size. Look like on example below:<!--more--></p>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+
+int
+main()
+{
+        int a[ 99 ];
+        size_t n = sizeof( a ) / sizeof( int );
+        printf( "%d\n", n );
+}
+</code></pre>
+
+<p>but, if you chance the type of array, you can have problems because the expression above,
+use int type. To avoid this, would be used this way:</p>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+
+int
+main()
+{
+        int a[ 99 ];
+        size_t n = sizeof( a ) / sizeof( a[ 0 ] ); // Here, we get the type of array
+        printf( "%d\n", n );
+}
+</code></pre>
+
+<p>In example abouve, we get the first field of the array, what is sufficient to calculate
+the type of array.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[C - Pointer to Function With Function<br>within Another Function]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/"/>
+    <updated>2018-09-15T03:14:27-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another</id>
+    <content type="html"><![CDATA[<p>In this example, you can see as we can use pointer to a function that taken an inner
+function as parameter. <!--more--></p>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+
+int *
+function1( int g( int c ) )
+{
+        int r = g( 14 );
+        int *p = &amp;r;
+        return p;
+}
+
+int
+function2( int c )
+{
+        return c + 1;
+}
+
+int
+main( void )
+{
+        // Pointer to function that return pointer to int type and that
+        // taken as parameter a pointer to function that return a int and
+        // have as parameter an int type.
+        int * ( *p )( int (*pp)( int ) );
+
+        // Reference the function.
+        p = function1;
+
+        // Desreference the function and reference the function on parameter.
+        // Within function that p point, will be invoke the function function2.
+        printf( "%d\n", *p( function2 ) );
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

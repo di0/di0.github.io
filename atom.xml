@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-05-06T17:16:35-03:00</updated>
+  <updated>2018-09-18T10:43:50-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,204 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rename Local and Remote Branch With Git]]></title>
+    <link href="http://di0.github.io/blog/2018/09/17/rename-local-and-remote-branch-with-git/"/>
+    <updated>2018-09-17T15:47:55-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/17/rename-local-and-remote-branch-with-git</id>
+    <content type="html"><![CDATA[<p>If you want rename a branch local and remote, follow these steps:<!--more--></p>
+
+<p>First, rename the target branch:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m new-name</code></pre></div>
+
+
+<p>Or, if by chance, you desire rename another branch, whose is not current branch, such as:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m old-branch-name new-branch-name</code></pre></div>
+
+
+<p>Second, remove remote branch and push the new local branch:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git push origin :old-branch-name new-branch-name</code></pre></div>
+
+
+<p>And finally, load the upstream branch for the new local branch:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git checkout new-branch-name
+git push origin -u new-branch-name</code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get Size of Array With C Language]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/"/>
+    <updated>2018-09-15T03:20:58-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language</id>
+    <content type="html"><![CDATA[<p>Language C has not function available that recover size of array by default. However, we
+can use a trick<br>that do possible get such size. Look like on example below:<!--more--></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">a</span><span class="p">[</span> <span class="mi">99</span> <span class="p">];</span>
+</span><span class='line'>        <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span> <span class="kt">int</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>but, if you chance the type of array, you can have problems because the expression above,
+use int type. To avoid this, would be used this way:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">a</span><span class="p">[</span> <span class="mi">99</span> <span class="p">];</span>
+</span><span class='line'>        <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span> <span class="n">a</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">);</span> <span class="c1">// Here, we get the type of array</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">n</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In example abouve, we get the first field of the array, what is sufficient to calculate
+the type of array.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[C - Pointer to Function With Function<br>within Another Function]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/"/>
+    <updated>2018-09-15T03:14:27-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another</id>
+    <content type="html"><![CDATA[<p>In this example, you can see as we can use pointer to a function that taken an inner
+function as parameter. <!--more--></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="o">*</span>
+</span><span class='line'><span class="nf">function1</span><span class="p">(</span> <span class="kt">int</span> <span class="n">g</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span> <span class="mi">14</span> <span class="p">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">function2</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Pointer to function that return pointer to int type and that</span>
+</span><span class='line'>        <span class="c1">// taken as parameter a pointer to function that return a int and</span>
+</span><span class='line'>        <span class="c1">// have as parameter an int type.</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">p</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pp</span><span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Reference the function.</span>
+</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">function1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Desreference the function and reference the function on parameter.</span>
+</span><span class='line'>        <span class="c1">// Within function that p point, will be invoke the function function2.</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">(</span> <span class="n">function2</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating and Saving Stash List With Git]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/create-and-save-stash-list/"/>
+    <updated>2018-09-15T02:33:18-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/15/create-and-save-stash-list</id>
+    <content type="html"><![CDATA[<p>When stash the changes in a dirty working directory away, we can can give a more descriptive<br>
+message on the command line when we create one. By <!--more-->example:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash save <span class="s2">&quot;Saving anything&quot;</span></code></pre></div>
+
+
+<p>The above order, will push and holds on stack, the contents with descriptive message.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash list</code></pre></div>
+
+
+<p>The command above, will show you, what is the branch name and what position that contents
+was saved on stack.</p>
+
+<p>So, to pick up first contents from stack, type:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash pop stash@<span class="o">{</span>0<span class="o">}</span></code></pre></div>
+
+
+<p>or second</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">git stash pop stash@<span class="o">{</span>1<span class="o">}</span></code></pre></div>
+
+
+<p>and son on &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Disable IPv6 on Linux]]></title>
@@ -63,7 +261,7 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
     <link href="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/"/>
     <updated>2018-04-30T00:48:26-03:00</updated>
     <id>http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name</id>
-    <content type="html"><![CDATA[<p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Bellow an<!--more-->
+    <content type="html"><![CDATA[<p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Below an<!--more-->
 example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -82,7 +280,7 @@ example:</p>
     <link href="http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed/"/>
     <updated>2018-04-28T14:08:18-03:00</updated>
     <id>http://di0.github.io/blog/2018/04/28/replace-with-stream-editor-aka-sed</id>
-    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Bellow an example of how works <!--more--> replacement order:</p>
+    <content type="html"><![CDATA[<p>The <strong>sed</strong> is command-line utility editor, which filtering and transforming text. Below an example of how it works <!--more--> replacement order:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>sed -i <span class="s1">&#39;s/input/replacement/g&#39;</span> some_file
@@ -112,7 +310,7 @@ command line. We use netcat and <!--more--> telnet command to perform this job.<
 
 
 <p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
-TCP or UDP protocol. Bellow you can see how such commands works:</p>
+TCP or UDP protocol. Below you can see how such commands works:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;flush_all&#39;</span> <span class="p">|</span> nc localhost 11211
 or
@@ -228,7 +426,7 @@ command mode option(Esc + Shift + :) . e.g: <!--more--></p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Determining Symbolic Links Java With Update-alternatives Command]]></title>
+    <title type="html"><![CDATA[Determining Symbolic Links Java With<br>update-alternatives Command]]></title>
     <link href="http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command/"/>
     <updated>2018-01-17T16:01:01-02:00</updated>
     <id>http://di0.github.io/blog/2018/01/17/determining-symbolic-links-java-with-update-alternatives-command</id>
@@ -821,7 +1019,7 @@ utilização do ActiveMQ:</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
+    <title type="html"><![CDATA[Grep - Exclude Directories and Files From<br>recursive Searches]]></title>
     <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
     <updated>2016-08-21T04:17:15-03:00</updated>
     <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
@@ -943,114 +1141,6 @@ E por fim, a outra opção, seria a manual, via linha de comando, através da op
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh -o <span class="nv">ServerAliveInterval</span><span class="o">=</span><span class="m">30</span> user@foo.com
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reset All Commits From Repository Git]]></title>
-    <link href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/"/>
-    <updated>2015-09-23T23:26:40-03:00</updated>
-    <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
-    <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes <!--more--> passos:</p>
-
-<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
-2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
-</span><span class='line'><span class="nv">$ </span>git init
-</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
-</span><span class='line'><span class="nv">$ </span>git add .
-</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
-</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ERROR: SERVER CERTIFICATE VERIFICATION FAILED]]></title>
-    <link href="http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed/"/>
-    <updated>2015-09-23T02:05:40-03:00</updated>
-    <id>http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed</id>
-    <content type="html"><![CDATA[<!--more-->
-
-
-<p>No momento do clone:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone https://develdio.com/SourceCode.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Foi obtido o seguinte erro:</p>
-
-<p><strong> Cloning into ‘SourceCode’… </strong></p>
-
-<p><strong> fatal: unable to access &lsquo;<a href="https://develdio.com/SourceCode.git/">https://develdio.com/SourceCode.git/</a>&rsquo;: server certificate verification failed. </strong>
-<strong> CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none </strong></p>
-
-<p>A falha ocorre devido o certificado não ser confiado.</p>
-
-<p>Para solucionar o problema através utilitário do git na linha de comando, basta executar:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global http.sslverify <span class="nb">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git Status With Grep]]></title>
-    <link href="http://di0.github.io/blog/2015/05/15/git-status-with-grep/"/>
-    <updated>2015-05-15T02:36:05-03:00</updated>
-    <id>http://di0.github.io/blog/2015/05/15/git-status-with-grep</id>
-    <content type="html"><![CDATA[<p>Para manter as cores na saída padrão, ao usar o comando <strong>git status</strong> junto aos
-utilitários <strong>grep</strong>, <strong>less</strong> ou <strong>more</strong>, <!--more--> basta adicionar a opção <strong>-c color-status=always</strong> ao
-executar o comando <strong>git status</strong>. Por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.status<span class="o">=</span>always status <span class="p">|</span> grep -i <span class="s2">&quot;alguma coisa&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Observe na sintaxe do comando, o argumento <strong>-c color.status=always</strong> vem antes do argumento <strong>status</strong>.
-Do contrário, um erro ocorrerá.</p>
-
-<p>Para os comandos <strong>git diff</strong>, <strong>git show</strong> ou <strong>git log</strong>, a sintaxe é a mesma, exceto que, a
-variável utilizada dessa vez é a <strong>color.ui</strong>, como exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git -c color.ui<span class="o">=</span>always log <span class="p">|</span> grep -i -B <span class="m">2</span> -A <span class="m">3</span> <span class="s2">&quot;alguma coisa&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[NMAP - Searching Open Ports Into Specific Network]]></title>
-    <link href="http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network/"/>
-    <updated>2014-07-08T20:12:26-03:00</updated>
-    <id>http://di0.github.io/blog/2014/07/08/nmap-searching-open-ports-into-specific-network</id>
-    <content type="html"><![CDATA[<p>Exemplo abaixo, busca por todas conexões SSHs em um range de IP da rede<!--more--> local especificada:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap -p22 192.168.0.0/24 -oG - <span class="p">|</span> grep 22/open
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://di0.github.io/blog/2018/09/17/rename-local-and-remote-branch-with-git/</loc>
+<lastmod>2018-09-17T15:47:55-03:00</lastmod>
+</url>
+<url>
+<loc>http://di0.github.io/blog/2018/09/15/get-size-of-array-with-c-language/</loc>
+<lastmod>2018-09-15T03:20:58-03:00</lastmod>
+</url>
+<url>
+<loc>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/</loc>
+<lastmod>2018-09-15T03:14:27-03:00</lastmod>
+</url>
+<url>
+<loc>http://di0.github.io/blog/2018/09/15/create-and-save-stash-list/</loc>
+<lastmod>2018-09-15T02:33:18-03:00</lastmod>
+</url>
+<url>
 <loc>http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux/</loc>
 <lastmod>2018-04-30T18:19:07-03:00</lastmod>
 </url>
@@ -147,5 +163,8 @@
 </url>
 <url>
 <loc>http://di0.github.io/blog/categories/java/</loc>
+</url>
+<url>
+<loc>http://di0.github.io/blog/categories/c-slash-c-plus-plus/</loc>
 </url>
 </urlset>
