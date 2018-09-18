@@ -6,7 +6,7 @@ comments: true
 categories: linux
 ---
 
-The **sed** is command-line utility editor, which filtering and transforming text. Bellow an example of how works <!--more--> replacement order:
+The **sed** is command-line utility editor, which filtering and transforming text. Below an example of how it works <!--more--> replacement order:
 
 ```bash
 sed -i 's/input/replacement/g' some_file

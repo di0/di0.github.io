@@ -12,7 +12,7 @@ command line. We use netcat and <!--more--> telnet command to perform this job.
 <h4><u>Using netcat Command</u></h4>
 
 **netcat** command is a simple unix utility which reads and writes data across network connections, using
-TCP or UDP protocol. Bellow you can see how such commands works:
+TCP or UDP protocol. Below you can see how such commands works:
 
 {% highlight bash %}
 echo 'flush_all' | nc localhost 11211

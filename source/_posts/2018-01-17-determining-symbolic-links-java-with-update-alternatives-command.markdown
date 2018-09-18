@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Determining symbolic links Java with update-alternatives command"
+title: "Determining symbolic links Java with<br>update-alternatives command"
 date: 2018-01-17 16:01:01 -0200
 comments: true
 categories: [java,linux]

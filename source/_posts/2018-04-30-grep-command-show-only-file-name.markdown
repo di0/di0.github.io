@@ -6,7 +6,7 @@ comments: true
 categories: linux
 ---
 
-With **grep** and **cut** delimiter command we can get only file name where the occurrence of the input match. Bellow an<!--more--> 
+With **grep** and **cut** delimiter command we can get only file name where the occurrence of the input match. Below an<!--more--> 
 example:
 
 ```bash
