@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-18T18:12:10-03:00</updated>
+  <updated>2018-09-18T23:05:36-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -25,7 +25,7 @@
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m new-name</code></pre></div>
 
 
-<p>Or, if by chance, you desire rename another branch, whose is not current branch, such as:</p>
+<p>Or, if by chance, you desire rename another branch, whose is not current branch, do it such as:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">git branch -m old-branch-name new-branch-name</code></pre></div>
 
