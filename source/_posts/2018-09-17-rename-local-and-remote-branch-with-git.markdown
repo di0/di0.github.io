@@ -14,7 +14,7 @@ First, rename the target branch:
 git branch -m new-name
 {% endhighlight %}
 
-Or, if by chance, you desire rename another branch, whose is not current branch, such as:
+Or, if by chance, you desire rename another branch, whose is not current branch, do it such as:
 
 {% highlight bash %}
 git branch -m old-branch-name new-branch-name
