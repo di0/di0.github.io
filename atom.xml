@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-18T23:05:36-03:00</updated>
+  <updated>2018-09-21T10:08:13-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -772,7 +772,7 @@ executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será alg
     <id>http://di0.github.io/blog/2017/11/06/maven</id>
     <content type="html"><![CDATA[<h3>Configurando plugin Jetty</h3>
 
-<p>We can use and configure the Jetty plugin through Maven tool, for this, is need we add on pom.xml file, the following <!--more--> entries:</p>
+<p>Para utilizar e configurar o plugin do Jetty através do Maven, é necessário adicionar no pom.xml as seguintes <!--more--> entradas:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
