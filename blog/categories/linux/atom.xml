@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-09-21T10:08:13-03:00</updated>
+  <updated>2018-10-08T01:16:04-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
 your network card device, you can disable it through least <!--more--> two ways:</p>
 
-<h4><u>Command line</u></h4>
+<h3 style="color: #d3d378;font-size 8px">Command line</h3>
 
 
 <p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
@@ -37,13 +37,13 @@ sysctl -w sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1<
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>0
 sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pre></div></p>
 
-<h4><u>File configuration(Debian based distro)</u></h4>
+<h3 style="color: #d3d378;font-size 8px">File configuration(Debian based distro)</h3>
 
 
 <p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
 The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
 
-<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
+<p>With super admin user, edit the file <span style="color:blue;font-weight:bold">/etc/sysctl.conf</span> and add the following lines:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
 net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1

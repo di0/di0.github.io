@@ -5,28 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>C - Pointer to Function With Function Within Another Function - Developer's Lab</title>
+  <title>Shell Script - Notifying When Directory Change - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="In this example, you can see as we can use pointer to a function that taken an inner
-function as parameter. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;">
+  <meta name="description" content="Once, I have been need monitory a directory that would notify me when your status modified. Was then that I did create
+the a script shell that help &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -35,7 +19,7 @@ function as parameter. 1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -86,7 +70,7 @@ function as parameter. 1
   
   <header>
     
-      <h1 class="entry-title">C - Pointer to Function With Function Within Another Function</h1>
+      <h1 class="entry-title">Shell Script - Notifying When Directory Change</h1>
     
     
       <p class="meta">
@@ -102,15 +86,19 @@ function as parameter. 1
   
 
 
-<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-09-30T04:23:46-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>In this example, you can see as we can use pointer to a function that taken an inner
-function as parameter. <!--more--></p>
+<div class="entry-content"><p>Once, I have been need monitory a directory that would notify me when your status modified. Was then that I did create
+the a script shell that help me in this job <!--more--></p>
+
+<p>To do it, I used the <strong>stat</strong> utilitary Linux, that display file or file system status.</p>
+
+<p>Above, I show you like this works:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -139,42 +127,36 @@ function as parameter. <!--more--></p>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="o">*</span>
-</span><span class='line'><span class="nf">function1</span><span class="p">(</span> <span class="kt">int</span> <span class="n">g</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span> <span class="mi">14</span> <span class="p">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">function2</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">while</span> <span class="nb">true</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>        <span class="nv">ATIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Pointer to function that return pointer to int type and that</span>
-</span><span class='line'>        <span class="c1">// taken as parameter a pointer to function that return a int and</span>
-</span><span class='line'>        <span class="c1">// have as parameter an int type.</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">p</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pp</span><span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$ATIME&quot;</span> !<span class="o">=</span> <span class="s2">&quot;$LTIME&quot;</span> <span class="o">]]</span>
+</span><span class='line'>        <span class="k">then</span>
+</span><span class='line'>                <span class="nv">full_name</span><span class="o">=</span><span class="sb">`</span>/bin/ls <span class="p">|</span> head -1<span class="sb">`</span>
+</span><span class='line'>                <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="s2">&quot;$full_name&quot;</span><span class="k">)</span>
+</span><span class='line'>                <span class="nv">extension</span><span class="o">=</span><span class="s2">&quot;${name##*.}&quot;</span>
+</span><span class='line'>                <span class="nv">final_name</span><span class="o">=</span><span class="s2">&quot;${name%.*}&quot;</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="c1">// Reference the function.</span>
-</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">function1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Desreference the function and reference the function on parameter.</span>
-</span><span class='line'>        <span class="c1">// Within function that p point, will be invoke the function function2.</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">(</span> <span class="n">function2</span> <span class="p">)</span> <span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$extensao&quot;</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span> <span class="o">]</span>
+</span><span class='line'>                <span class="k">then</span>
+</span><span class='line'>                        <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$final_name</span>.log <span class="o">]</span>
+</span><span class='line'>                        <span class="k">then</span>
+</span><span class='line'>                                touch <span class="nv">$final_name</span>.log
+</span><span class='line'>                                <span class="nb">echo</span> <span class="s2">&quot;Modified ATIME&quot;</span> &gt;&gt; <span class="nv">$final_name</span>.log
+</span><span class='line'>                        <span class="k">fi</span>
+</span><span class='line'>                <span class="k">fi</span>
+</span><span class='line'>                <span class="nv">LTIME</span><span class="o">=</span><span class="nv">$ATIME</span>
+</span><span class='line'>        <span class="k">fi</span>
+</span><span class='line'>        sleep 5
+</span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
 
 </div>
 
@@ -198,12 +180,12 @@ function as parameter. <!--more--></p>
   
 
 
-<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-09-30T04:23:46-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/c-slash-c-plus-plus/'>c/c++</a>
+    <a class='category' href='/blog/categories/shell-script/'>shell_script</a>
   
 </span>
 
@@ -212,7 +194,7 @@ function as parameter. <!--more--></p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/" >Tweet</a>
   
   
   
@@ -223,10 +205,8 @@ function as parameter. <!--more--></p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2018/09/15/create-and-save-stash-list/" title="Previous Post: Creating and Saving Stash List With Git">&laquo; Creating and Saving Stash List With Git</a>
+        <a class="basic-alignment left" href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/" title="Previous Post: Shallow and Deep Copy in C++ Language">&laquo; Shallow and Deep Copy in C++ Language</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2018/09/15/get-size-of-array-with-c-language/" title="Next Post: Get size of array with C language">Get size of array with C language &raquo;</a>
       
     </p>
   </footer>
@@ -278,23 +258,23 @@ function as parameter. <!--more--></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
       </li>
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/04/30/disable-ipv6-on-linux/">Disable IPv6 on Linux</a>
       </li>
     
   </ul>
@@ -317,6 +297,18 @@ function as parameter. <!--more--></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
       </li>
     
@@ -324,23 +316,11 @@ function as parameter. <!--more--></p>
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/04/30/disable-ipv6-on-linux/">Disable IPv6 on Linux</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>
@@ -397,8 +377,8 @@ function as parameter. <!--more--></p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/';
-        var disqus_url = 'http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/';
+        var disqus_identifier = 'http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/';
+        var disqus_url = 'http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/';
         var disqus_script = 'embed.js';
       
     (function () {

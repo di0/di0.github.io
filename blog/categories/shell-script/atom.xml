@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Shell_script | Developer's Lab]]></title>
+  <link href="http://di0.github.io/blog/categories/shell-script/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2018-10-08T01:16:04-03:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Script - Notifying When Directory Change]]></title>
+    <link href="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/"/>
+    <updated>2018-09-30T04:23:46-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change</id>
+    <content type="html"><![CDATA[<p>Once, I have been need monitory a directory that would notify me when your status modified. Was then that I did create
+the a script shell that help me in this job <!--more--></p>
+
+<p>To do it, I used the <strong>stat</strong> utilitary Linux, that display file or file system status.</p>
+
+<p>Above, I show you like this works:</p>
+
+<pre><code class="bash">#!/bin/bash
+
+LTIME=`stat -c %Z .`
+
+while true
+do
+        ATIME=`stat -c %Z .`
+
+        if [[ "$ATIME" != "$LTIME" ]]
+        then
+                full_name=`/bin/ls | head -1`
+                name=$(basename "$full_name")
+                extension="${name##*.}"
+                final_name="${name%.*}"
+
+                if [ "$extensao" == "txt" ]
+                then
+                        if [ ! -f $final_name.log ]
+                        then
+                                touch $final_name.log
+                                echo "Modified ATIME" &gt;&gt; $final_name.log
+                        fi
+                fi
+                LTIME=$ATIME
+        fi
+        sleep 5
+done
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

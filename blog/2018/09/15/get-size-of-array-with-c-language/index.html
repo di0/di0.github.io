@@ -117,8 +117,14 @@ can use a trick that do possible get such size. Look like on example below:<!--m
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>but, if you chance the type of array, you can have problems because the expression above,
-use int type. To avoid this, would be used this way:</p>
+<p>All right, the output will be <strong>99</strong>. Thus, if you change the array to char type, for example, you can have
+problems because the expression above use <strong>int</strong> type.</p>
+
+<p>As see above, we know that, the C language use the unary operator function <strong>sizeof</strong>, that compute the size of
+type(char, int, float, double&hellip;) in compile time. So, the <strong>int</strong> type has a different size of <strong>char</strong> type.
+Also, the result of expression can be different relative from machine architecture. eg: 32 bits or 64 bits.</p>
+
+<p>Then, to avoid this, we should use something like this way:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -141,8 +147,8 @@ use int type. To avoid this, would be used this way:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In example abouve, we get the first field of the array, what is sufficient to calculate
-the type of array.</p>
+<p>In example above, we get the first field of the array(<strong><em>sizeof(a[0])</em></strong>), instead to compute by type(<strong><em>sizeof(int)</em></strong>). It was
+sufficient to compute array size, independent of data type her. Notice also that, this became more generic expression.</p>
 </div>
 
 
@@ -190,7 +196,7 @@ the type of array.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" title="Previous Post: C - Pointer to function with function within another function">&laquo; C - Pointer to function with function within another function</a>
+        <a class="basic-alignment left" href="/blog/2018/09/15/c-c++-pointer-to-function/" title="Previous Post: Pointer to function with C/C++">&laquo; Pointer to function with C/C++</a>
       
       
         <a class="basic-alignment right" href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/" title="Next Post: Rename local and remote branch with git">Rename local and remote branch with git &raquo;</a>
@@ -245,23 +251,23 @@ the type of array.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
       </li>
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/04/30/disable-ipv6-on-linux/">Disable IPv6 on Linux</a>
       </li>
     
   </ul>
@@ -284,6 +290,18 @@ the type of array.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
       </li>
     
@@ -291,23 +309,11 @@ the type of array.</p>
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/04/30/disable-ipv6-on-linux/">Disable IPv6 on Linux</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>

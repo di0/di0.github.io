@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Shallow and Deep Copy in C++ Language - Developer's Lab</title>
+  <meta name="author" content="Diogo Pinto">
+
+  
+  <meta name="description" content="When we create a new object in C++, the default constructor already do the process known as memberwise copy or
+commonly shallow copy. It happens, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Developer's Lab</a></h1>
+  
+  <div class="subtitle">
+    <h2>By Diogo Pinto - DiØ</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Shallow and Deep Copy in C++ Language</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-22T00:42:20-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When we create a new object in C++, the default constructor already do the process known as <strong>memberwise copy</strong> or
+commonly <strong>shallow copy</strong>. It happens, because C++ compiler<!--more--> do not known enough about the current class that
+is being evaluated in run time.</p>
+
+<p>For instance, consider the hypothetical example below:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">namespace</span> <span class="n">Network</span>
+<span class="p">{</span>
+        <span class="k">class</span> <span class="nc">IPConfig</span>
+        <span class="p">{</span>
+                <span class="k">private</span><span class="o">:</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_ip_address</span><span class="p">;</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_mask</span><span class="p">;</span>
+                <span class="k">public</span><span class="o">:</span>
+                        <span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">mask</span> <span class="p">);</span>
+
+                        <span class="kt">char</span> <span class="o">*</span> <span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">get_mask</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>And here is implementation of the one&rsquo;s own default constructor mentioned previously above:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mask</span> <span class="p">)</span>
+                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">),</span> <span class="n">m_mask</span><span class="p">(</span> <span class="n">mask</span> <span class="p">)</span> <span class="p">{}</span></code></pre></div>
+
+
+<p>How we can see above, we have an example code snippet that show a conventional code of a class that represent an
+Internet Protocol(IP), used in network communication layer. This class have a default constructor that configure
+the members variables with values given in your parameters.</p>
+
+<p>When we create a new object, like this:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span><span class="p">(</span> <span class="s">&quot;192.168.0.1&quot;</span><span class="p">,</span> <span class="s">&quot;255.255.0.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>and then we do like this:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">read_ipconfig</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">);</span></code></pre></div>
+
+
+<p>The compiler behind the curtains, will do something like it when we handle it on <strong>read_ipconfig</strong> function:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="o">&amp;</span> <span class="n">ipconfig</span> <span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">m_address</span> <span class="o">=</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">m_ip_address</span><span class="p">;</span>
+     <span class="n">m_mask</span> <span class="o">=</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">m_mask</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Look that the compiler created a new object, based from state another object of same type. Notice also that, the constructor
+default is not initialized again, therefore, object already has a initialized state. As we have not our own copy
+constructor, then the compiler use own way to performs member-wise copy, according shown above. Okay, so far we have not
+problem here, it is a default feature of own C++ compiler.</p>
+
+<p>However, the problem begins emerge when we work with allocation of memory blocks and we have a destructor in our class that
+deallocates eventual blocks of memory previously allocated, when our object is no more referenced on present scope.</p>
+
+<p>Let&rsquo;s go change the constructor previously shown above and implements it with allocate blocks, after we will deallocate the memory
+of block allocated:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mask</span> <span class="p">)</span>
+                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">),</span> <span class="n">m_mask</span><span class="p">(</span> <span class="n">mask</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+        <span class="n">assert</span><span class="p">(</span> <span class="n">m_mask</span> <span class="p">);</span>
+
+        <span class="kt">int</span> <span class="n">s_size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+        <span class="n">m_buffer_ip_address</span> <span class="o">=</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">)</span> <span class="n">malloc</span><span class="p">(</span> <span class="n">s_size</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+                <span class="n">m_buffer_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">m_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::~</span><span class="n">IPConfig</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="n">free</span><span class="p">(</span> <span class="n">m_buffer_ip_address</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Now, let us suppose that we have a non-member function that validate if the ip address given by parameter it&rsquo;s an
+Internet Protocol version 4 valid format:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">bool</span>
+<span class="nf">is_valid_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ip</span><span class="p">(</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">field</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span> <span class="n">ip</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span> <span class="p">)</span> <span class="p">)</span>
+                <span class="n">split_ip</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">field</span> <span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span> <span class="n">split_ip</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">)</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Without going into detail, for those that no known, the internet Protocol version 4 (IPv4), it&rsquo;s have the ip address format with
+quad-dotted representations( 32 bits ). Roughly, it&rsquo;s separated by four dots. <strong><em>eg: 200.201.3.33</em></strong></p>
+
+<p>After we validate and ensure that given ip address is an version 4 accept, we will create an another non-member function
+that simply reads and show the ip address, together with your mask set up:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span>
+<span class="nf">read_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_mask</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Finally, let go create the main function that will go call the non-member function that will validate the ip address
+and after, will read the value with mask concatenation:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span><span class="p">(</span> <span class="s">&quot;192.168.1.30&quot;</span><span class="p">,</span> <span class="s">&quot;255.255.255.0&quot;</span> <span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">)</span> <span class="p">)</span>
+                <span class="n">read_ipv4</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">);</span>
+        <span class="k">else</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid ipv4 format.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Therefore, the expect output of the read_ipv4 function is the IP Address and your mask, like this:</p>
+
+<p><strong>192.168.1.30/255.255.255.0</strong></p>
+
+<p>but it did not work as expected, we had an unexpected behavior and nothing was read. Do you know why this happened?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// The header</span>
+</span><span class='line'><span class="k">namespace</span> <span class="n">Network</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">class</span> <span class="nc">IPConfig</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>                <span class="k">private</span><span class="o">:</span>
+</span><span class='line'>                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_ip_address</span><span class="p">;</span>
+</span><span class='line'>                        <span class="kt">char</span> <span class="o">*</span><span class="n">m_buffer_ip_address</span><span class="p">;</span>
+</span><span class='line'>                <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>                        <span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>                        <span class="o">~</span><span class="n">IPConfig</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="kt">char</span> <span class="o">*</span> <span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Constructor default. This will allocate memory blocks to</span>
+</span><span class='line'><span class="cm"> * IP Address target.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span> <span class="p">)</span>
+</span><span class='line'>                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">assert</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">s_size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">m_buffer_ip_address</span> <span class="o">=</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">)</span> <span class="n">malloc</span><span class="p">(</span> <span class="n">s_size</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">m_buffer_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">m_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Destructor. This will destroy allocation.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::~</span><span class="n">IPConfig</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">free</span><span class="p">(</span> <span class="n">m_buffer_ip_address</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Gets the configured IP Address.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">char</span> <span class="o">*</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">m_buffer_ip_address</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// The main part. Here we will go to test the Network IPConfig feature.</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span>
+</span><span class='line'><span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ip</span><span class="p">(</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">field</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">while</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span> <span class="n">ip</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">split_ip</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">field</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span> <span class="n">split_ip</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>
+</span><span class='line'><span class="n">read_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="n">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span><span class="p">(</span> <span class="s">&quot;192.168.1.30&quot;</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span> <span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="n">ipc</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">read_ipv4</span><span class="p">(</span> <span class="n">ipc</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid ipv4 format.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the main function, we create a Network::IPConfig type, configured with ip address 192.168.1.30 and, soon after,
+we validate if it&rsquo;s a valid IP Address format version 4. The IP address version 4, is separeted by 4 dots, if this
+match, the is_valid_ipv4 function will return true, otherwise false.</p>
+
+<p>So, after, we will read the IP Address sets by constructor. Therefore, the expect output of the read_ipv4 function
+is the IP Address 192.168.1.30, but, we have a unexpected behavior. Why did this happen?</p>
+
+<p>It happens, because the compiler</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-22T00:42:20-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-slash-c-plus-plus/'>c/c++</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2018/09/21/reading-parameters-from-function-c/" title="Previous Post: Reading parameters from function - C">&laquo; Reading parameters from function - C</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/09/30/shell-script-notifying-when-directory-change/" title="Next Post: Shell Script - Notifying when directory change">Shell Script - Notifying when directory change &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
+  
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
+
+
+  <b><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br></b>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
+  <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+  <a href="http://www.linkedin.com/in/diogo-pereira-pinto-dio"><i class="fa fa-linkedin fa-3x"></i></a>
+
+
+    
+  <a href="https://plus.google.com/115661938273408826648"<i class="fa fa-google-plus fa-3x"></i></a>
+
+
+    
+  <a href="https://github.com/di0"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/diogolion"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/115661938273408826648?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/di0">@di0</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'di0',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2018 - Diogo Pinto -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2018  Diogo Pinto -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'www-develdio-com';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/';
+        var disqus_url = 'http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
