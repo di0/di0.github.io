@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-10-08T01:16:04-03:00</updated>
+  <updated>2018-10-09T02:19:43-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -18,68 +18,50 @@
     <link href="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/"/>
     <updated>2018-09-30T04:23:46-03:00</updated>
     <id>http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change</id>
-    <content type="html"><![CDATA[<p>Once, I have been need monitory a directory that would notify me when your status modified. Was then that I did create
-the a script shell that help me in this job <!--more--></p>
+    <content type="html"><![CDATA[<p>One of these days, I needed to monitor a directory that constantly was modified. I had needed some way, get
+something that notified me when the structure(file system) from directory <!--more--> has been modified. So, I
+decided to write my own script, whose helped me with this task.</p>
 
-<p>To do it, I used the <strong>stat</strong> utilitary Linux, that display file or file system status.</p>
+<p>For it, I used the <strong>stat</strong> utility Linux, that display file or file system status.</p>
 
 <p>Above, I show you like this works:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">while</span> <span class="nb">true</span>
-</span><span class='line'><span class="k">do</span>
-</span><span class='line'>        <span class="nv">ATIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$ATIME&quot;</span> !<span class="o">=</span> <span class="s2">&quot;$LTIME&quot;</span> <span class="o">]]</span>
-</span><span class='line'>        <span class="k">then</span>
-</span><span class='line'>                <span class="nv">full_name</span><span class="o">=</span><span class="sb">`</span>/bin/ls <span class="p">|</span> head -1<span class="sb">`</span>
-</span><span class='line'>                <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="s2">&quot;$full_name&quot;</span><span class="k">)</span>
-</span><span class='line'>                <span class="nv">extension</span><span class="o">=</span><span class="s2">&quot;${name##*.}&quot;</span>
-</span><span class='line'>                <span class="nv">final_name</span><span class="o">=</span><span class="s2">&quot;${name%.*}&quot;</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$extensao&quot;</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span> <span class="o">]</span>
-</span><span class='line'>                <span class="k">then</span>
-</span><span class='line'>                        <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$final_name</span>.log <span class="o">]</span>
-</span><span class='line'>                        <span class="k">then</span>
-</span><span class='line'>                                touch <span class="nv">$final_name</span>.log
-</span><span class='line'>                                <span class="nb">echo</span> <span class="s2">&quot;Modified ATIME&quot;</span> &gt;&gt; <span class="nv">$final_name</span>.log
-</span><span class='line'>                        <span class="k">fi</span>
-</span><span class='line'>                <span class="k">fi</span>
-</span><span class='line'>                <span class="nv">LTIME</span><span class="o">=</span><span class="nv">$ATIME</span>
-</span><span class='line'>        <span class="k">fi</span>
-</span><span class='line'>        sleep 5
-</span><span class='line'><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+<span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
+
+<span class="k">while</span> <span class="nb">true</span>
+<span class="k">do</span>
+        <span class="nv">ATIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
+
+        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$ATIME&quot;</span> !<span class="o">=</span> <span class="s2">&quot;$LTIME&quot;</span> <span class="o">]]</span>
+        <span class="k">then</span>
+                <span class="nv">full_name</span><span class="o">=</span><span class="sb">`</span>/bin/ls <span class="p">|</span> head -1<span class="sb">`</span>
+                <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="s2">&quot;$full_name&quot;</span><span class="k">)</span>
+                <span class="nv">extension</span><span class="o">=</span><span class="s2">&quot;${name##*.}&quot;</span>
+                <span class="nv">final_name</span><span class="o">=</span><span class="s2">&quot;${name%.*}&quot;</span>
+
+                <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$extension&quot;</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span> <span class="o">]</span>
+                <span class="k">then</span>
+                        <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$final_name</span>.log <span class="o">]</span>
+                        <span class="k">then</span>
+                                touch <span class="nv">$final_name</span>.log
+                                <span class="nb">echo</span> <span class="s2">&quot;Modified ATIME&quot;</span> &gt;&gt; <span class="nv">$final_name</span>.log
+                        <span class="k">fi</span>
+                <span class="k">fi</span>
+                <span class="nv">LTIME</span><span class="o">=</span><span class="nv">$ATIME</span>
+        <span class="k">fi</span>
+        sleep 5
+<span class="k">done</span></code></pre></div>
+
+
+<p>So, the code above consists a script that verify if, a new file text was created in current directory.
+If it has been, then, it check if already exists a file name called <strong>final_name.log</strong>, so, a create a file</p>
+
+<p>First all, we get the initial current time and we hold it inside variable LTIME. It variable
+will be setting just once.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span></code></pre></div>
 
 
 
@@ -626,6 +608,11 @@ invoke the function through pointer, like any another function invocation:</p>
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">pointer_f</span><span class="p">(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
 
 
+<p>or, if we prefer, we may:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
 <p>With pointer function, we can work with <strong>call back</strong> techniques, allow us perform tasks complex of form flexible.</p>
 
 <h3>More about function pointer</h3>
@@ -799,11 +786,11 @@ time, is really so hard. Because of this, we can use the <strong>typedef</strong
 <h3>Returning pointer to function</h3>
 
 
-<p>Is possible also, returns pointer to function, according syntax above:</p>
+<p>It is possible also, returns pointer to function, according syntax above:</p>
 
 <div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">return_point_to_function</span><span class="p">()</span> <span class="p">)()</span>
 <span class="p">{</span>
-    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pnt_fn_ret_integer_type</span><span class="p">)()</span> <span class="o">=</span> <span class="n">some_function_that_return_int</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pnt_fn_ret_integer_type</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">some_function_that_return_int</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">pnt_fn_ret_integer_type</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
@@ -1130,6 +1117,71 @@ sighandler_t signal<span class="o">(</span>int signum, sighandler_t handler<span
 
 
 <p>For more details, type man signal.</p>
+
+<p>Another famous utility in C language is the <strong>qsort</strong> function, from <strong>stdlib.h</strong> library, that have the following declaration:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">qsort</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+            <span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">compar</span> <span class="p">)(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="p">));</span></code></pre></div>
+
+
+<p>The Linux manual page, describe the following:</p>
+
+<p><em>The qsort() function sorts an array with nmemb elements of size size. The base argument points to the start of the array.</em></p>
+
+<p><em>The contents of the array are sorted in ascending order according to a comparison function pointed to by compar, which is</em>
+<em>called with two arguments that point to the objects being compared.</em></p>
+
+<p><em>The comparison function must return an integer less than, equal to, or greater than zero if the first argument is considered</em>
+<em>to be respectively less than, equal to, or greater than the second. If two members compare as equal, their order in the</em>
+<em>sorted array is undefined.</em></p>
+
+<p>So, here we going see an example of how this works:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">desc_sort</span><span class="p">(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">v1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">)</span> <span class="n">v2</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[</span> <span class="mi">10</span> <span class="p">];</span>
+
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">qsort</span><span class="p">(</span> <span class="n">array</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span> <span class="kt">int</span> <span class="p">),</span> <span class="n">desc_sort</span> <span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">printf</span> <span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>the output will be:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">9
+8
+7
+6
+5
+4
+3
+2
+1</code></pre></div>
+
+
+<p>For more details, type man qsort.</p>
 ]]></content>
   </entry>
   
