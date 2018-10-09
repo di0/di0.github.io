@@ -9,8 +9,8 @@
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="One of these days, I needed to monitor a directory that constantly was modified. I had needed some way, get
-something that notified me when the &hellip;">
+  <meta name="description" content="One of these days, I was needed to monitor a directory that constantly was modified. I had needed some way, get
+something that could notify me when &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,13 +93,13 @@ something that notified me when the &hellip;">
   </header>
 
 
-<div class="entry-content"><p>One of these days, I needed to monitor a directory that constantly was modified. I had needed some way, get
-something that notified me when the structure(file system) from directory <!--more--> has been modified. So, I
+<div class="entry-content"><p>One of these days, I was needed to monitor a directory that constantly was modified. I had needed some way, get
+something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
 decided to write my own script, whose helped me with this task.</p>
 
-<p>For it, I used the <strong>stat</strong> utility Linux, that display file or file system status.</p>
+<p>For it, I used the Linux <strong>stat</strong> utility, whose return information about a file.</p>
 
-<p>Above, I show you like this works:</p>
+<p>Below, I show you like it works:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 
@@ -131,7 +131,8 @@ decided to write my own script, whose helped me with this task.</p>
 
 
 <p>So, the code above consists a script that verify if, a new file text was created in current directory.
-If it has been, then, it check if already exists a file name called <strong>final_name.log</strong>, so, a create a file</p>
+If it has been, then, it checks if already exists a file name called <strong>final_name.log</strong>, and case not
+exists, it will be create.</p>
 
 <p>First all, we get the initial current time and we hold it inside variable LTIME. It variable
 will be setting just once.</p>
