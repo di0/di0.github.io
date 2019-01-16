@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-10-09T02:51:47-03:00</updated>
+  <updated>2019-01-16T00:04:10-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -22,9 +22,10 @@
 something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
 decided to write my own script, whose helped me with this task.</p>
 
-<p>For it, I used the Linux <strong>stat</strong> utility, whose return information about a file.</p>
+<p>For it, was used the Linux <strong>stat</strong> utility, whose display the detailed status of a particular file or a file
+system.</p>
 
-<p>Below, I show you like it works:</p>
+<p>Below, is show you how it works:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 
@@ -55,12 +56,12 @@ decided to write my own script, whose helped me with this task.</p>
 <span class="k">done</span></code></pre></div>
 
 
-<p>So, the code above consists a script that verify if, a new file text was created in current directory.
-If it has been, then, it checks if already exists a file name called <strong>final_name.log</strong>, and case not
-exists, it will be create.</p>
+<p>So, the code above consists a script that checks if, a new text file was created in current directory.
+If it has been, then, it verifies if already exists a file name called <strong>final_name.log</strong>, and case
+it not exists, it will be created.</p>
 
-<p>First all, we get the initial current time and we hold it inside variable LTIME. It variable
-will be setting just once.</p>
+<p>In begin, the script get the initial current time across stat command and holds it inside variable
+LTIME. It variable later, will be used to compare with</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span></code></pre></div>
 
@@ -577,7 +578,7 @@ of operation system.<!--more-->
 Therefore, is possible have a pointer variable that pointer to the address to function stored on memory. The syntax to
 a pointer to function basically resembles this:</p>
 
-<p><span style="color:blue;font-weight:bold">type_return (*variable_name)( type data of one and/or more parameters or no parameter )</span></p>
+<p><span style="color:teal;font-weight:bold">type_return (*variable_name)( type data of one and/or more parameters or no parameter )</span></p>
 
 <p>For example:</p>
 
@@ -616,7 +617,7 @@ invoke the function through pointer, like any another function invocation:</p>
 
 <p>With pointer function, we can work with <strong>call back</strong> techniques, allow us perform tasks complex of form flexible.</p>
 
-<h3>More about function pointer</h3>
+<h3 style="color:navy;">More about function pointer</h3>
 
 
 <p>Now that we known how works function pointer, let&rsquo;s go learn more about this.</p>
@@ -784,7 +785,7 @@ time, is really so hard. Because of this, we can use the <strong>typedef</strong
 
 
 
-<h3>Returning pointer to function</h3>
+<h3 style="color:navy;">Returning pointer to function</h3>
 
 
 <p>It is possible also, returns pointer to function, according syntax above:</p>
@@ -796,7 +797,7 @@ time, is really so hard. Because of this, we can use the <strong>typedef</strong
 <span class="p">}</span></code></pre></div>
 
 
-<p>Is important emphasizes that, rather than we use int <strong>( *return_point_to_function )()</strong>, we use the
+<p>Is important emphasizes that, rather than we use &ldquo;int <strong>( *return_point_to_function )()</strong>&rdquo;, we use the
 <strong>parentheses</strong> after name <strong>return_point_to_function</strong>, because else, the compiler could to intepret
 it as a declaration of pointer to a function and not a function that returns a pointer to function.</p>
 
@@ -1090,7 +1091,7 @@ numbers with four operations mathematic:</p>
 
 
 
-<h3>Extra about function pointers</h3>
+<h3 style="color:navy;">Extra about function pointers</h3>
 
 
 <p>In C language, the library signal.h have a function called <strong>signal</strong>, that provides a simple interface for

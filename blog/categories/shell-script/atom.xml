@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell_script | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/shell-script/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2018-10-09T02:51:47-03:00</updated>
+  <updated>2019-01-16T00:04:10-02:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -22,9 +22,10 @@
 something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
 decided to write my own script, whose helped me with this task.</p>
 
-<p>For it, I used the Linux <strong>stat</strong> utility, whose return information about a file.</p>
+<p>For it, was used the Linux <strong>stat</strong> utility, whose display the detailed status of a particular file or a file
+system.</p>
 
-<p>Below, I show you like it works:</p>
+<p>Below, is show you how it works:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;/p&gt;
 
@@ -58,12 +59,12 @@ decided to write my own script, whose helped me with this task.</p>
 
 &lt;p&gt;done</code></pre></div></p>
 
-<p>So, the code above consists a script that verify if, a new file text was created in current directory.
-If it has been, then, it checks if already exists a file name called <strong>final_name.log</strong>, and case not
-exists, it will be create.</p>
+<p>So, the code above consists a script that checks if, a new text file was created in current directory.
+If it has been, then, it verifies if already exists a file name called <strong>final_name.log</strong>, and case
+it not exists, it will be created.</p>
 
-<p>First all, we get the initial current time and we hold it inside variable LTIME. It variable
-will be setting just once.</p>
+<p>In begin, the script get the initial current time across stat command and holds it inside variable
+LTIME. It variable later, will be used to compare with</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span>&lt;code&gt;stat -c %Z .&lt;/code&gt;</code></pre></div></p>
 ]]></content>

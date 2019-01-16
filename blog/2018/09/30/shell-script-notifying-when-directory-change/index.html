@@ -97,9 +97,10 @@ something that could notify me when &hellip;">
 something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
 decided to write my own script, whose helped me with this task.</p>
 
-<p>For it, I used the Linux <strong>stat</strong> utility, whose return information about a file.</p>
+<p>For it, was used the Linux <strong>stat</strong> utility, whose display the detailed status of a particular file or a file
+system.</p>
 
-<p>Below, I show you like it works:</p>
+<p>Below, is show you how it works:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 
@@ -130,12 +131,12 @@ decided to write my own script, whose helped me with this task.</p>
 <span class="k">done</span></code></pre></div>
 
 
-<p>So, the code above consists a script that verify if, a new file text was created in current directory.
-If it has been, then, it checks if already exists a file name called <strong>final_name.log</strong>, and case not
-exists, it will be create.</p>
+<p>So, the code above consists a script that checks if, a new text file was created in current directory.
+If it has been, then, it verifies if already exists a file name called <strong>final_name.log</strong>, and case
+it not exists, it will be created.</p>
 
-<p>First all, we get the initial current time and we hold it inside variable LTIME. It variable
-will be setting just once.</p>
+<p>In begin, the script get the initial current time across stat command and holds it inside variable
+LTIME. It variable later, will be used to compare with</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span></code></pre></div>
 
@@ -344,12 +345,12 @@ will be setting just once.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2018 - Diogo Pinto -
+  Copyright &copy; 2019 - Diogo Pinto -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 <p>
-<span>Copyright &copy; 2018  Diogo Pinto -</span>
+<span>Copyright &copy; 2019  Diogo Pinto -</span>
 <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
 </p>
 </footer>
