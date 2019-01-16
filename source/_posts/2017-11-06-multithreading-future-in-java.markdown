@@ -6,8 +6,11 @@ comments: true
 categories: [java]
 ---
 
-Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a <!--more--> interface Runnable, responsabilizando a quem vai
-utilizá-la, a implementação de um único método chamado run().
+When we need performing concurrent tasks in Java, we have available since the firsts versions, the Runnable interface. This interface have only method
+named **run**. That method must be implemented by <!--more--> participants that wants works with parallel tasks.
+
+Look the signature this method:
+
 ```java
 public interface Runnable
 {
@@ -24,20 +27,17 @@ armazenar o valor desejado após a execução de uma tarefa.
 Conforme exemplo abaixo:
 
 ``` java
-class Foo implements Runnable
-{
-        private String operation ;
+class Foo implements Runnable {
+
+	private String operation ;
  
-        public String getOperation()
-	{
-             return operation;
-        }
+	public String getOperation() {
+		return operation;
+	}
  
-        public void run()
-	{
-            // Stuff
-            operation = operation();
-        }
+	public void run() {
+		operation = operation();
+	}
 }
 ```
 
