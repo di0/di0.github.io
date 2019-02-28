@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-02-28T15:32:34-03:00</updated>
+  <updated>2019-02-28T15:43:12-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -52,6 +52,465 @@
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>git reset --hard refs/original/refs/heads/develop
 </span></code></pre></td></tr></table></div></figure>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Script - Notifying When Directory Change]]></title>
+    <link href="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/"/>
+    <updated>2018-09-30T04:23:46-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change</id>
+    <content type="html"><![CDATA[<p>One of these days, I was needed to monitor a directory that constantly was modified. I had needed some way, get
+something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
+decided to write my own script, whose helped me with this task.</p>
+
+<p>For it, was used the Linux <strong>stat</strong> utility, whose display the detailed status of a particular file or a file
+system.</p>
+
+<p>Below, is show you how it works:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+<span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
+
+<span class="k">while</span> <span class="nb">true</span>
+<span class="k">do</span>
+        <span class="nv">ATIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span>
+
+        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$ATIME&quot;</span> !<span class="o">=</span> <span class="s2">&quot;$LTIME&quot;</span> <span class="o">]]</span>
+        <span class="k">then</span>
+                <span class="nv">full_name</span><span class="o">=</span><span class="sb">`</span>/bin/ls <span class="p">|</span> head -1<span class="sb">`</span>
+                <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="s2">&quot;$full_name&quot;</span><span class="k">)</span>
+                <span class="nv">extension</span><span class="o">=</span><span class="s2">&quot;${name##*.}&quot;</span>
+                <span class="nv">final_name</span><span class="o">=</span><span class="s2">&quot;${name%.*}&quot;</span>
+
+                <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$extension&quot;</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span> <span class="o">]</span>
+                <span class="k">then</span>
+                        <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$final_name</span>.log <span class="o">]</span>
+                        <span class="k">then</span>
+                                touch <span class="nv">$final_name</span>.log
+                                <span class="nb">echo</span> <span class="s2">&quot;Modified ATIME&quot;</span> &gt;&gt; <span class="nv">$final_name</span>.log
+                        <span class="k">fi</span>
+                <span class="k">fi</span>
+                <span class="nv">LTIME</span><span class="o">=</span><span class="nv">$ATIME</span>
+        <span class="k">fi</span>
+        sleep 5
+<span class="k">done</span></code></pre></div>
+
+
+<p>So, the code above consists a script that checks if, a new text file was created in current directory.
+If it has been, then, it verifies if already exists a file name called <strong>final_name.log</strong>, and case
+it not exists, it will be created.</p>
+
+<p>In begin, the script get the initial current time across stat command and holds it inside variable
+LTIME. It variable later, will be used to compare with</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span><span class="sb">`</span>stat -c %Z .<span class="sb">`</span></code></pre></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shallow and Deep Copy in C++ Language]]></title>
+    <link href="http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/"/>
+    <updated>2018-09-22T00:42:20-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus</id>
+    <content type="html"><![CDATA[<p>When we create a new object in C++, the default constructor already do the process known as <strong>memberwise copy</strong> or
+commonly <strong>shallow copy</strong>. It happens, because C++ compiler<!--more--> do not known enough about the current class that
+is being evaluated in run time.</p>
+
+<p>For instance, consider the hypothetical example below:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">namespace</span> <span class="n">Network</span>
+<span class="p">{</span>
+        <span class="k">class</span> <span class="nc">IPConfig</span>
+        <span class="p">{</span>
+                <span class="k">private</span><span class="o">:</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_ip_address</span><span class="p">;</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_mask</span><span class="p">;</span>
+                <span class="k">public</span><span class="o">:</span>
+                        <span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">mask</span> <span class="p">);</span>
+
+                        <span class="kt">char</span> <span class="o">*</span> <span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">get_mask</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>And here is implementation of the one&rsquo;s own default constructor mentioned previously above:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mask</span> <span class="p">)</span>
+                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">),</span> <span class="n">m_mask</span><span class="p">(</span> <span class="n">mask</span> <span class="p">)</span> <span class="p">{}</span></code></pre></div>
+
+
+<p>How we can see above, we have an example code snippet that show a conventional code of a class that represent an
+Internet Protocol(IP), used in network communication layer. This class have a default constructor that configure
+the members variables with values given in your parameters.</p>
+
+<p>When we create a new object, like this:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span><span class="p">(</span> <span class="s">&quot;192.168.0.1&quot;</span><span class="p">,</span> <span class="s">&quot;255.255.0.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>and then we do like this:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">read_ipconfig</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">);</span></code></pre></div>
+
+
+<p>The compiler behind the curtains, will do something like it when we handle it on <strong>read_ipconfig</strong> function:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="o">&amp;</span> <span class="n">ipconfig</span> <span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">m_address</span> <span class="o">=</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">m_ip_address</span><span class="p">;</span>
+     <span class="n">m_mask</span> <span class="o">=</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">m_mask</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Look that the compiler created a new object, based from state another object of same type. Notice also that, the constructor
+default is not initialized again, therefore, object already has a initialized state. As we have not our own copy
+constructor, then the compiler use own way to performs member-wise copy, according shown above. Okay, so far we have not
+problem here, it is a default feature of own C++ compiler.</p>
+
+<p>However, the problem begins emerge when we work with allocation of memory blocks and we have a destructor in our class that
+deallocates eventual blocks of memory previously allocated, when our object is no more referenced on present scope.</p>
+
+<p>Let&rsquo;s go change the constructor previously shown above and implements it with allocate blocks, after we will deallocate the memory
+of block allocated:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mask</span> <span class="p">)</span>
+                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">),</span> <span class="n">m_mask</span><span class="p">(</span> <span class="n">mask</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+        <span class="n">assert</span><span class="p">(</span> <span class="n">m_mask</span> <span class="p">);</span>
+
+        <span class="kt">int</span> <span class="n">s_size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+        <span class="n">m_buffer_ip_address</span> <span class="o">=</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">)</span> <span class="n">malloc</span><span class="p">(</span> <span class="n">s_size</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+                <span class="n">m_buffer_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">m_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::~</span><span class="n">IPConfig</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="n">free</span><span class="p">(</span> <span class="n">m_buffer_ip_address</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Now, let us suppose that we have a non-member function that validate if the ip address given by parameter it&rsquo;s an
+Internet Protocol version 4 valid format:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">bool</span>
+<span class="nf">is_valid_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ip</span><span class="p">(</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">field</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span> <span class="n">ip</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span> <span class="p">)</span> <span class="p">)</span>
+                <span class="n">split_ip</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">field</span> <span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span> <span class="n">split_ip</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">)</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Without going into detail, for those that no known, the internet Protocol version 4 (IPv4), it&rsquo;s have the ip address format with
+quad-dotted representations( 32 bits ). Roughly, it&rsquo;s separated by four dots. <strong><em>eg: 200.201.3.33</em></strong></p>
+
+<p>After we validate and ensure that given ip address is an version 4 accept, we will create an another non-member function
+that simply reads and show the ip address, together with your mask set up:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span>
+<span class="nf">read_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_mask</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Finally, let go create the main function that will go call the non-member function that will validate the ip address
+and after, will read the value with mask concatenation:</p>
+
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span><span class="p">(</span> <span class="s">&quot;192.168.1.30&quot;</span><span class="p">,</span> <span class="s">&quot;255.255.255.0&quot;</span> <span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">)</span> <span class="p">)</span>
+                <span class="n">read_ipv4</span><span class="p">(</span> <span class="n">ipconfig</span> <span class="p">);</span>
+        <span class="k">else</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid ipv4 format.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Therefore, the expect output of the read_ipv4 function is the IP Address and your mask, like this:</p>
+
+<p><strong>192.168.1.30/255.255.255.0</strong></p>
+
+<p>but it did not work as expected, we had an unexpected behavior and nothing was read. Do you know why this happened?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// The header</span>
+</span><span class='line'><span class="k">namespace</span> <span class="n">Network</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">class</span> <span class="nc">IPConfig</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>                <span class="k">private</span><span class="o">:</span>
+</span><span class='line'>                        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">m_ip_address</span><span class="p">;</span>
+</span><span class='line'>                        <span class="kt">char</span> <span class="o">*</span><span class="n">m_buffer_ip_address</span><span class="p">;</span>
+</span><span class='line'>                <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>                        <span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>                        <span class="o">~</span><span class="n">IPConfig</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="kt">char</span> <span class="o">*</span> <span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Constructor default. This will allocate memory blocks to</span>
+</span><span class='line'><span class="cm"> * IP Address target.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">IPConfig</span><span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ip_address</span> <span class="p">)</span>
+</span><span class='line'>                <span class="o">:</span> <span class="n">m_ip_address</span><span class="p">(</span> <span class="n">ip_address</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">assert</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">s_size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">strlen</span><span class="p">(</span> <span class="n">m_ip_address</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">m_buffer_ip_address</span> <span class="o">=</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">)</span> <span class="n">malloc</span><span class="p">(</span> <span class="n">s_size</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s_size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">m_buffer_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">m_ip_address</span><span class="p">[</span> <span class="n">i</span> <span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Destructor. This will destroy allocation.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::~</span><span class="n">IPConfig</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">free</span><span class="p">(</span> <span class="n">m_buffer_ip_address</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Gets the configured IP Address.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">char</span> <span class="o">*</span>
+</span><span class='line'><span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span><span class="o">::</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">m_buffer_ip_address</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// The main part. Here we will go to test the Network IPConfig feature.</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span>
+</span><span class='line'><span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ip</span><span class="p">(</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">field</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">while</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span> <span class="n">ip</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">split_ip</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="n">field</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span> <span class="n">split_ip</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>
+</span><span class='line'><span class="n">read_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ipc</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="n">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipc</span><span class="p">(</span> <span class="s">&quot;192.168.1.30&quot;</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span> <span class="n">is_valid_ipv4</span><span class="p">(</span> <span class="n">ipc</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>                <span class="n">read_ipv4</span><span class="p">(</span> <span class="n">ipc</span> <span class="p">);</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid ipv4 format.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the main function, we create a Network::IPConfig type, configured with ip address 192.168.1.30 and, soon after,
+we validate if it&rsquo;s a valid IP Address format version 4. The IP address version 4, is separeted by 4 dots, if this
+match, the is_valid_ipv4 function will return true, otherwise false.</p>
+
+<p>So, after, we will read the IP Address sets by constructor. Therefore, the expect output of the read_ipv4 function
+is the IP Address 192.168.1.30, but, we have a unexpected behavior. Why did this happen?</p>
+
+<p>It happens, because the compiler</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reading Parameters From Function - C]]></title>
+    <link href="http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c/"/>
+    <updated>2018-09-21T23:00:41-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c</id>
+    <content type="html"><![CDATA[<p>In this post, I was write as we can get the parameters given to a function in language C, using
+stdarg library, that declares a type va_list and defines three macros for<!--more--> stepping
+through  a list of arguments whose number and types are not known to the called function.</p>
+
+<p>Below is show the declared functions in stdarg:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdarg.h&gt;</span>
+
+<span class="kt">void</span> <span class="nf">va_start</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">last</span> <span class="p">);</span>
+<span class="n">type</span> <span class="nf">va_arg</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">type</span> <span class="p">);</span>
+<span class="kt">void</span> <span class="nf">va_end</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span> <span class="p">);</span>
+<span class="kt">void</span> <span class="nf">va_copy</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">dest</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">src</span> <span class="p">);</span></code></pre></div>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdarg.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">read_names</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name_main</span><span class="p">,</span> <span class="p">...</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">va_start</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="n">name_main</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">char</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>        <span class="kt">char</span> <span class="o">*</span><span class="n">name2</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">fprintf</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;%s =&gt; %s and %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">name_main</span><span class="p">,</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">va_end</span><span class="p">(</span> <span class="n">args</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>        <span class="n">read_names</span><span class="p">(</span> <span class="s">&quot;Main name&quot;</span><span class="p">,</span> <span class="s">&quot;second name&quot;</span><span class="p">,</span> <span class="s">&quot;third name&quot;</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As shown above, we can see that use the function <strong>va_start</strong>, which is declared in stdarg.h header. This
+function is responsible to get a varying number of arguments of varying types.</p>
+
+<p>The <strong>var_start</strong> macro, initializes <strong>va_list</strong> for subsequent use by <strong>va_arg()</strong> and <strong>va_end()</strong>, and must be called
+first.</p>
 ]]></content>
   </entry>
   
@@ -116,8 +575,14 @@ can use a trick that do possible get such size. Look like on example below:<!--m
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>but, if you chance the type of array, you can have problems because the expression above,
-use int type. To avoid this, would be used this way:</p>
+<p>All right, the output will be <strong>99</strong>. Thus, if you change the array to char type, for example, you can have
+problems because the expression above use <strong>int</strong> type.</p>
+
+<p>As see above, we know that, the C language use the unary operator function <strong>sizeof</strong>, that compute the size of
+type(char, int, float, double&hellip;) in compile time. So, the <strong>int</strong> type has a different size of <strong>char</strong> type.
+Also, the result of expression can be different relative from machine architecture. eg: 32 bits or 64 bits.</p>
+
+<p>Then, to avoid this, we should use something like this way:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -140,83 +605,627 @@ use int type. To avoid this, would be used this way:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In example abouve, we get the first field of the array, what is sufficient to calculate
-the type of array.</p>
+<p>In example above, we get the first field of the array(<strong><em>sizeof(a[0])</em></strong>), instead to compute by type(<strong><em>sizeof(int)</em></strong>). It was
+sufficient to compute array size, independent of data type her. Notice also that, this became more generic expression.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[C - Pointer to Function With Function Within Another Function]]></title>
-    <link href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/"/>
+    <title type="html"><![CDATA[Pointer to Function With C/C++]]></title>
+    <link href="http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function/"/>
     <updated>2018-09-15T03:14:27-03:00</updated>
-    <id>http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another</id>
-    <content type="html"><![CDATA[<p>In this example, you can see as we can use pointer to a function that taken an inner
-function as parameter. <!--more--></p>
+    <id>http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function</id>
+    <content type="html"><![CDATA[<p>Like any entity stored in memory, a function also has your own address and other resources stored on dynamic memory
+of operation system.<!--more-->
+Therefore, is possible have a pointer variable that pointer to the address to function stored on memory. The syntax to
+a pointer to function basically resembles this:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="o">*</span>
-</span><span class='line'><span class="nf">function1</span><span class="p">(</span> <span class="kt">int</span> <span class="n">g</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span> <span class="mi">14</span> <span class="p">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">function2</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Pointer to function that return pointer to int type and that</span>
-</span><span class='line'>        <span class="c1">// taken as parameter a pointer to function that return a int and</span>
-</span><span class='line'>        <span class="c1">// have as parameter an int type.</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">p</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pp</span><span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Reference the function.</span>
-</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">function1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Desreference the function and reference the function on parameter.</span>
-</span><span class='line'>        <span class="c1">// Within function that p point, will be invoke the function function2.</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">(</span> <span class="n">function2</span> <span class="p">)</span> <span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><span style="color:teal;font-weight:bold">type_return (*variable_name)( type data of one and/or more parameters or no parameter )</span></p>
 
+<p>For example:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>In above example, we create a pointer that points to a function that has a type integer as parameter and return a type
+integer. Notice that, we use parentheses in the function declaration to alter precedence, which is greater than the asterisk(*), otherwise, without
+this, the compiler interprets the declaration as a <strong>function</strong> that will return an integer type and get an integer as parameter, look how:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span><span class="nf">pointer_f</span><span class="p">(</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>As previously described, we can use this pointer to a function that has an integer type parameter and also returns an integer type.
+See like it works:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">calculate_ip_broadcast</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">subnet</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bits</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span> <span class="n">remove_dots</span><span class="p">(</span> <span class="n">subnet</span> <span class="p">)</span> <span class="p">)</span> <span class="o">^</span> <span class="mh">0xffffffff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">bits</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">pointer_f</span> <span class="o">=</span> <span class="n">calculate_ip_broadcast</span><span class="p">;</span></code></pre></div>
+
+
+<p>Notice that <strong>pointer_f</strong> now, points to the address from <strong>calculate_ip_broadcast</strong> function. Once pointed to target function, we can
+invoke the function through pointer, like any another function invocation:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">pointer_f</span><span class="p">(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>or, if we prefer, we may:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>With pointer function, we can work with <strong>call back</strong> techniques, allow us perform tasks complex of form flexible.</p>
+
+<h3 style="color:navy;">More about function pointer</h3>
+
+
+<p>Now that we known how works function pointer, let&rsquo;s go learn more about this.</p>
+
+<p>In C language we can work with function inside another as parameter, hypothetically consider the following code sample:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">f_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ... something</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">f_calculate</span><span class="p">(</span> <span class="mh">0x00</span> <span class="p">);</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p_result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">calculate_form_one</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="mh">0xff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">exp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">calculate_form_two</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">exp</span> <span class="o">=</span> <span class="p">(</span> <span class="n">value</span> <span class="o">/</span> <span class="mh">0xff</span> <span class="p">)</span> <span class="o">*</span> <span class="mh">0xff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">exp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/*</span>
+<span class="cm">    * Let just passing function reference name, whose will invoke later.</span>
+<span class="cm">    */</span>
+
+    <span class="c1">// this way:</span>
+
+    <span class="kt">int</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">);</span>
+    <span class="n">fprint</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;Result: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// or</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">);</span>
+    <span class="n">fprint</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;Result: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">result</span> <span class="p">);</span>
+    
+<span class="p">}</span></code></pre></div>
+
+
+<p>We should not worry on details, just focus how it is possible and how we work with function inside another function as parameter.</p>
+
+<p>Therefore, the following code snippet below, shows us a pointer to a function that get an another function
+pointer as parameter:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Okay, that is really very obscure&hellip; this should to be explained:</p>
+
+<p><strong>pointer_f</strong> is the  pointer variable name that receive another function pointer called <strong>inside_pointer_f</strong> as parameter that
+receives an int and return int. The <strong>pointer_f</strong> pointer then, finally return a pointer to integer type.</p>
+
+<p>So, with the pointer <strong>pointer_f</strong> quoted previously, we are able to point to the function like it:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Look as this is possible:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">pointer_f</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span></code></pre></div>
+
+
+<p>Then, we invoke this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">some_calculate_function</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Above, we pass the function responsible by calculate, through function pointer. Notice that this becomes so much
+flexible, we need just give calculate responsible function, then, we call back as required:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">)</span> <span class="p">);</span>
+<span class="c1">// and so on...</span></code></pre></div>
+
+
+<p>The declaration <strong>int * ( <em>pointer_f )( int ( </em>inside_pointer_f )( int ) )</strong> can be often times a confuse syntax and declare this every
+time, is really so hard. Because of this, we can use the <strong>typedef</strong> reserved keyword, to define a type to hidden this complexity.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Now we can use this form:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">pointer_f</span> <span class="o">*</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="n">pointer_function</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Below, follows a complete example:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Function pointer that returns a pointer to integer type. This function has</span>
+<span class="cm"> * three parameters. One of them is a pointer to function that get two integers</span>
+<span class="cm"> * parameters and that return an integer type. Anothers two parameters are an</span>
+<span class="cm"> * integer types.</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">),</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span>
+
+<span class="kt">int</span> <span class="o">*</span>
+<span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">calculate</span><span class="p">(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">),</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">calculate</span><span class="p">(</span> <span class="n">valueX</span><span class="p">,</span> <span class="n">valueY</span> <span class="p">);</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p_result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">multiplication</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">*</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">subtraction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">-</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">division</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">/</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// References the function.</span>
+    <span class="n">pointer_f</span> <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span>
+
+    <span class="c1">// Now we can to dereferences the function and gives it another</span>
+    <span class="c1">// function as parameter that we desired to calculate.</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">multiplication</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">addition</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">subtraction</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">division</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>And, the expected output respectively are:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">25
+17
+3
+5</code></pre></div>
+
+
+
+
+<h3 style="color:navy;">Returning pointer to function</h3>
+
+
+<p>It is possible also, returns pointer to function, according syntax above:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">return_point_to_function</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pnt_fn_ret_integer_type</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">some_function_that_return_int</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">pnt_fn_ret_integer_type</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Is important emphasizes that, rather than we use &ldquo;int <strong>( *return_point_to_function )()</strong>&rdquo;, we use the
+<strong>parentheses</strong> after name <strong>return_point_to_function</strong>, because else, the compiler could to intepret
+it as a declaration of pointer to a function and not a function that returns a pointer to function.</p>
+
+<p>Let&rsquo;s go see a practice example. Let us suppose that we have this functions:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">get_number_of_users_actives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n_users_actives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_inactives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n_users_inactives</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>With our function that returns a pointer to function previously quoted, we could do something like it:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_users</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="c1">// or</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span>
+
+    <span class="k">return</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>As we can see, the function above returns a pointer to one of two function desired.</p>
+
+<p>To show this working, follows an example more detail what we can do:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="cp">#define ACTIVE 1</span>
+<span class="cp">#define INACTIVE 0</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_actives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n_users_actives</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">n_users_actives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_inactives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n_users_inactives</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">n_users_inactives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_users</span><span class="p">(</span> <span class="kt">int</span> <span class="n">is_active</span> <span class="p">)</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pointer_function</span><span class="p">)();</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">is_active</span> <span class="p">)</span>
+        <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users</span><span class="p">(</span> <span class="n">ACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users actives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_number_of_users</span><span class="p">(</span> <span class="n">INACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users inactives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>The output is:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Users actives: 10
+Users inactives: 50</code></pre></div>
+
+
+<p>Again, is advisable to use the <strong>typedef keyword</strong> to facilitate the use this complex syntax and becomes it
+more readability. For instance, see how would be with typedef:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_user</span> <span class="p">)();</span>
+<span class="k">typedef</span> <span class="n">get_number_of_user</span> <span class="n">POINT_TO_GET_NUMBER_USER</span><span class="p">;</span></code></pre></div>
+
+
+<p>So, we can change our function <strong>get_number_of_users</strong> to this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="nf">get_number_of_users</span><span class="p">(</span> <span class="kt">int</span> <span class="n">is_active</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="n">p_get_number</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">is_active</span> <span class="p">)</span>
+        <span class="n">p_get_number</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">p_get_number</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">p_get_number</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>and finally, in main function, would be:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="n">result</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span> <span class="n">ACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users actives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span> <span class="n">INACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users inactives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>Important!</strong><br><br>
+
+When we use typedef keyword to define a function pointer, we shouldn't use the parentheses as we had done previously
+in function pointer definition. Look:
+<br>
+<br>
+<strong>int * ( *point_f )();</strong><br>
+Above, was declared a function pointer that return a type integer pointer.
+<br>
+<br>
+<strong>int * ( *point_f() )() { ... }</strong><br>
+Above, was implemented a function called point_f that return a function pointer that return a type integer pointer.
+<br>
+<br>
+<strong>typedef int * ( *point_f )();</strong><br>
+Above, was declared with typedef keyword a function pointer that return a type integer pointer.
+<br>
+<br>
+Notice that, with typedef keyword, we do not use the parentheses after name, it because we do it when we create a function
+with using the typedef definition:<br><br>
+
+<strong>point_f</strong> do_something()<br>
+{<br>
+....<br>
+}<br><br>
+
+If we use parentheses in typedef keyword, we will get errors in compilation time.
+</p>
+
+
+<p>Now look this curious case:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">p_function</span><span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">addition</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">p_function</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Notice that, the <strong>calculator function</strong>, returns a function pointer that receives two integers types and returns a
+type integer. However, the <strong>signature</strong> from function tell us this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)();</span></code></pre></div>
+
+
+<p>This occurred because the compiler C, infers the parameters type from pointer function and <strong>allow</strong> us omits it, otherwise, we
+should do it this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>If by change we specific the parameters types in <strong>calculator</strong> function, we are obliged to put the two parameters and not just one:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">);</span> <span class="c1">// Error compile</span></code></pre></div>
+
+
+<p>The same occurs in declaration:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// We can use this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+
+    <span class="c1">// Or this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+
+    <span class="c1">// But we cannot this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Finally, the last example of how we can use function pointer. Here we show a function pointer that
+returns a pointer to array of function of the type integer.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">pointer_function_to_array_of_functions_int</span><span class="p">()</span> <span class="p">)();</span></code></pre></div>
+
+
+<p>As show above, we have a function that returns a function pointer to pointer, that points to an array
+of function that returns an integer type. With this function, we can returns something like this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">function_pointer_int</span><span class="p">[]</span> <span class="p">)()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">function_int_one</span><span class="p">,</span> <span class="n">function_int_two</span><span class="p">,</span> <span class="p">...</span> <span class="p">};</span></code></pre></div>
+
+
+<p>All right, this is more easier with an example. Let rewrites our code used previously that calculate two
+numbers with four operations mathematic:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">FUNCT_PNT</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span>
+
+<span class="kt">int</span>
+<span class="nf">multiplication</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">*</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">subtraction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">-</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">division</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">/</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">p_list_fn_operations</span><span class="p">[]</span> <span class="p">)()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">multiplication</span><span class="p">,</span> <span class="n">addition</span><span class="p">,</span> <span class="n">subtraction</span><span class="p">,</span> <span class="n">division</span> <span class="p">};</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">**</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">    * There&#39;s no need to use an address-of operator on array, like this:</span>
+<span class="cm">    * int ( **p_fn_operations )( int, int ) = &amp;p_list_fn_operations[ 0 ];</span>
+<span class="cm">    * since arrays decay into implicit pointers on the right-hand side of</span>
+<span class="cm">    * the assignment operator.</span>
+<span class="cm">    */</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">p_fn_operations</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">p_list_fn_operations</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_fn_operations</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>    
+    <span class="c1">// Arrays are implicitly convertible to pointers, so it would be</span>
+    <span class="c1">// the syntax below with double pointer:</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function_to_calculator</span> <span class="p">)()</span> <span class="p">)();</span>
+    <span class="n">pointer_function_to_calculator</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">list_of_operation</span> <span class="p">)();</span>
+
+    <span class="n">list_of_operation</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function_to_calculator</span> <span class="p">)();</span>
+
+    <span class="c1">// For each operations, we use an increment arithmetic to go through</span>
+    <span class="c1">// of array of pointer, searching by each of that operations.</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Multiplication = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Addition = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Subtraction = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Division = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">9</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>The output will be:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Multiplication</span> <span class="o">=</span> 36
+<span class="nv">Addition</span> <span class="o">=</span> 17
+<span class="nv">Subtraction</span> <span class="o">=</span> 6
+<span class="nv">Division</span> <span class="o">=</span> 9</code></pre></div>
+
+
+
+
+<h3 style="color:navy;">Extra about function pointers</h3>
+
+
+<p>In C language, the library signal.h have a function called <strong>signal</strong>, that provides a simple interface for
+establishing an action for a particular signal.</p>
+
+<p>The said function is the <strong>sighandler_t</strong> function, whose is a function pointer that points to a function
+that returns void. That function will go handlers the integer type argument givens, configuring your
+respective signal number. So, functions like this, are handles this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">handler</span> <span class="p">(</span><span class="kt">int</span> <span class="n">signum</span><span class="p">)</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span></code></pre></div>
+
+
+<p>And here, the signal function itself:</p>
+
+<p><strong>sighandler_t signal( int signum, sighandler_t action )</strong></p>
+
+<p>The signal function establishes action as the action for the signal signum.</p>
+
+<p>The first argument, <strong>signum</strong>, identifies the signal whose behavior we want to control, and should be a signal number
+The second argument, <strong>action</strong>, specifies the action( function ) that will be handlers the signal.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#include &lt;signal.h&gt;</span>
+typedef void <span class="o">(</span>*sighandler_t<span class="o">)(</span>int<span class="o">)</span><span class="p">;</span>
+sighandler_t signal<span class="o">(</span>int signum, sighandler_t handler<span class="o">)</span><span class="p">;</span></code></pre></div>
+
+
+<p>For more details, type man signal.</p>
+
+<p>Another famous utility in C language is the <strong>qsort</strong> function, from <strong>stdlib.h</strong> library, that have the following declaration:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">qsort</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+            <span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">compar</span> <span class="p">)(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="p">));</span></code></pre></div>
+
+
+<p>The Linux manual page, describe the following:</p>
+
+<p><em>The qsort() function sorts an array with nmemb elements of size size. The base argument points to the start of the array.</em></p>
+
+<p><em>The contents of the array are sorted in ascending order according to a comparison function pointed to by compar, which is</em>
+<em>called with two arguments that point to the objects being compared.</em></p>
+
+<p><em>The comparison function must return an integer less than, equal to, or greater than zero if the first argument is considered</em>
+<em>to be respectively less than, equal to, or greater than the second. If two members compare as equal, their order in the</em>
+<em>sorted array is undefined.</em></p>
+
+<p>So, here we going see an example of how this works:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">desc_sort</span><span class="p">(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">v1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">)</span> <span class="n">v2</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[</span> <span class="mi">10</span> <span class="p">];</span>
+
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">qsort</span><span class="p">(</span> <span class="n">array</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span> <span class="kt">int</span> <span class="p">),</span> <span class="n">desc_sort</span> <span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">printf</span> <span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>the output will be:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">9
+8
+7
+6
+5
+4
+3
+2
+1</code></pre></div>
+
+
+<p>For more details, type man qsort.</p>
 ]]></content>
   </entry>
   
@@ -292,7 +1301,7 @@ was saved on stack.</p>
     <content type="html"><![CDATA[<p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
 your network card device, you can disable it through least <!--more--> two ways:</p>
 
-<h4><u>Command line</u></h4>
+<h3 style="color: #d3d378;font-size 8px">Command line</h3>
 
 
 <p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
@@ -312,13 +1321,13 @@ sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pr
 
 
 
-<h4><u>File configuration(Debian based distro)</u></h4>
+<h3 style="color: #d3d378;font-size 8px">File configuration(Debian based distro)</h3>
 
 
 <p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
 The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
 
-<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
+<p>With super admin user, edit the file <span style="color:blue;font-weight:bold">/etc/sysctl.conf</span> and add the following lines:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
 net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1
@@ -580,8 +1589,10 @@ interactive way form:</p>
     <link href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/"/>
     <updated>2017-11-06T02:32:36-02:00</updated>
     <id>http://di0.github.io/blog/2017/11/06/multithreading-future-in-java</id>
-    <content type="html"><![CDATA[<p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a <!--more--> interface Runnable, responsabilizando a quem vai
-utilizá-la, a implementação de um único método chamado run().</p>
+    <content type="html"><![CDATA[<p>When we need performing concurrent tasks in Java, we have available since the firsts versions, the Runnable interface. This interface have only method
+named <strong>run</strong>. That method must be implemented by <!--more--> participants that wants works with parallel tasks.</p>
+
+<p>Look the signature this method:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -614,23 +1625,17 @@ armazenar o valor desejado após a execução de uma tarefa.</p>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span>
-</span><span class='line'>  <span class="o">{</span>
-</span><span class='line'>             <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
-</span><span class='line'>  <span class="o">{</span>
-</span><span class='line'>            <span class="c1">// Stuff</span>
-</span><span class='line'>            <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1057,64 +2062,6 @@ utilização do ActiveMQ:</p>
 </span><span class='line'>        <span class="nt">&lt;message-destination-link&gt;</span>jms/FooQueue<span class="nt">&lt;/message-destination-link&gt;</span>
 </span><span class='line'><span class="nt">&lt;/message-destination-ref&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git - Revert Specific Files]]></title>
-    <link href="http://di0.github.io/blog/2017/10/20/git-revert-specific-files/"/>
-    <updated>2017-10-20T22:12:50-02:00</updated>
-    <id>http://di0.github.io/blog/2017/10/20/git-revert-specific-files</id>
-    <content type="html"><![CDATA[<p>Assumindo hipoteticamente que o hash para qual deseja reverter um ou mais arquivos é <strong>cf762e4c187b</strong>.</p>
-
-<p>O comando abaixo irá reverter os arquivos foo1.txt e foo2.txt para o <!--more--> hash informado:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout cf762e4c187b -- dir/foo1.txt dir/foo2.txt
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SVN - Getting Revision Since the First Copy]]></title>
-    <link href="http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy/"/>
-    <updated>2016-11-01T23:27:11-02:00</updated>
-    <id>http://di0.github.io/blog/2016/11/01/svn-getting-revision-since-the-first-copy</id>
-    <content type="html"><![CDATA[<p>Para obter o primeiro commit de onde foi <!--more--> criada a branch:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>svn log --stop-on-copy
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Grep - Exclude Directories and Files From Recursive Searches]]></title>
-    <link href="http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches/"/>
-    <updated>2016-08-21T05:17:15-02:00</updated>
-    <id>http://di0.github.io/blog/2016/08/21/grep-exclude-directories-and-files-from-recursive-searches</id>
-    <content type="html"><![CDATA[<p>Simplesmente, usando o parâmetro <strong>--exclude-dir</strong> para excluir <!--more--> diretórios
-e/ou <strong>--exclude</strong> para excluir arquivos ou extensões de arquivos, tal como exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">=</span><span class="nb">test</span> --exclude-dir<span class="o">=</span>target <span class="se">\</span>
-</span><span class='line'>--exclude-dir<span class="o">=</span>bin --exclude<span class="o">=</span><span class="se">\*</span>.xml --exclude<span class="o">=</span><span class="se">\*</span>.svn <span class="s2">&quot;pesquisa&quot;</span> .
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ou ainda:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>grep -r <span class="o">[</span>Win<span class="o">]</span> --color --exclude-dir<span class="o">={</span><span class="nb">test</span>,target,bin<span class="o">}</span> <span class="se">\</span>
-</span><span class='line'>--exclude<span class="o">={</span>*.xml,*.svn<span class="o">}</span> <span class="s2">&quot;pesquisa&quot;</span> .
-</span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>

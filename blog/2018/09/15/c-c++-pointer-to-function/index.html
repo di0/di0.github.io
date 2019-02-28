@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Pointer to Function With C/C++ - Developer's Lab</title>
+  <meta name="author" content="Diogo Pinto">
+
+  
+  <meta name="description" content="Like any entity stored in memory, a function also has your own address and other resources stored on dynamic memory
+of operation system.
+Therefore, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Developer's Lab</a></h1>
+  
+  <div class="subtitle">
+    <h2>By Diogo Pinto - DiØ</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Pointer to Function With C/C++</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Like any entity stored in memory, a function also has your own address and other resources stored on dynamic memory
+of operation system.<!--more-->
+Therefore, is possible have a pointer variable that pointer to the address to function stored on memory. The syntax to
+a pointer to function basically resembles this:</p>
+
+<p><span style="color:teal;font-weight:bold">type_return (*variable_name)( type data of one and/or more parameters or no parameter )</span></p>
+
+<p>For example:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>In above example, we create a pointer that points to a function that has a type integer as parameter and return a type
+integer. Notice that, we use parentheses in the function declaration to alter precedence, which is greater than the asterisk(*), otherwise, without
+this, the compiler interprets the declaration as a <strong>function</strong> that will return an integer type and get an integer as parameter, look how:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span><span class="nf">pointer_f</span><span class="p">(</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>As previously described, we can use this pointer to a function that has an integer type parameter and also returns an integer type.
+See like it works:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">calculate_ip_broadcast</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">subnet</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bits</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span> <span class="n">remove_dots</span><span class="p">(</span> <span class="n">subnet</span> <span class="p">)</span> <span class="p">)</span> <span class="o">^</span> <span class="mh">0xffffffff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">bits</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">pointer_f</span> <span class="o">=</span> <span class="n">calculate_ip_broadcast</span><span class="p">;</span></code></pre></div>
+
+
+<p>Notice that <strong>pointer_f</strong> now, points to the address from <strong>calculate_ip_broadcast</strong> function. Once pointed to target function, we can
+invoke the function through pointer, like any another function invocation:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">pointer_f</span><span class="p">(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>or, if we prefer, we may:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="s">&quot;172.16.16.0&quot;</span> <span class="p">);</span></code></pre></div>
+
+
+<p>With pointer function, we can work with <strong>call back</strong> techniques, allow us perform tasks complex of form flexible.</p>
+
+<h3 style="color:navy;">More about function pointer</h3>
+
+
+<p>Now that we known how works function pointer, let&rsquo;s go learn more about this.</p>
+
+<p>In C language we can work with function inside another as parameter, hypothetically consider the following code sample:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">f_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ... something</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">f_calculate</span><span class="p">(</span> <span class="mh">0x00</span> <span class="p">);</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p_result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">calculate_form_one</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="mh">0xff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">exp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">calculate_form_two</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">exp</span> <span class="o">=</span> <span class="p">(</span> <span class="n">value</span> <span class="o">/</span> <span class="mh">0xff</span> <span class="p">)</span> <span class="o">*</span> <span class="mh">0xff</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">exp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/*</span>
+<span class="cm">    * Let just passing function reference name, whose will invoke later.</span>
+<span class="cm">    */</span>
+
+    <span class="c1">// this way:</span>
+
+    <span class="kt">int</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">);</span>
+    <span class="n">fprint</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;Result: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">result</span> <span class="p">);</span>
+
+    <span class="c1">// or</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">);</span>
+    <span class="n">fprint</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;Result: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">result</span> <span class="p">);</span>
+    
+<span class="p">}</span></code></pre></div>
+
+
+<p>We should not worry on details, just focus how it is possible and how we work with function inside another function as parameter.</p>
+
+<p>Therefore, the following code snippet below, shows us a pointer to a function that get an another function
+pointer as parameter:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Okay, that is really very obscure&hellip; this should to be explained:</p>
+
+<p><strong>pointer_f</strong> is the  pointer variable name that receive another function pointer called <strong>inside_pointer_f</strong> as parameter that
+receives an int and return int. The <strong>pointer_f</strong> pointer then, finally return a pointer to integer type.</p>
+
+<p>So, with the pointer <strong>pointer_f</strong> quoted previously, we are able to point to the function like it:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">value</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Look as this is possible:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">pointer_f</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span></code></pre></div>
+
+
+<p>Then, we invoke this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">some_calculate_function</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Above, we pass the function responsible by calculate, through function pointer. Notice that this becomes so much
+flexible, we need just give calculate responsible function, then, we call back as required:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_f</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">)</span> <span class="p">);</span>
+<span class="c1">// and so on...</span></code></pre></div>
+
+
+<p>The declaration <strong>int * ( <em>pointer_f )( int ( </em>inside_pointer_f )( int ) )</strong> can be often times a confuse syntax and declare this every
+time, is really so hard. Because of this, we can use the <strong>typedef</strong> reserved keyword, to define a type to hidden this complexity.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Now we can use this form:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">pointer_f</span> <span class="o">*</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="n">pointer_function</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">calculate_form_one</span> <span class="p">)</span> <span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">calculate_form_two</span> <span class="p">)</span> <span class="p">);</span></code></pre></div>
+
+
+<p>Below, follows a complete example:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Function pointer that returns a pointer to integer type. This function has</span>
+<span class="cm"> * three parameters. One of them is a pointer to function that get two integers</span>
+<span class="cm"> * parameters and that return an integer type. Anothers two parameters are an</span>
+<span class="cm"> * integer types.</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_f</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">inside_pointer_f</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">),</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span>
+
+<span class="kt">int</span> <span class="o">*</span>
+<span class="nf">on_calculate</span><span class="p">(</span> <span class="kt">int</span> <span class="n">calculate</span><span class="p">(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">),</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">calculate</span><span class="p">(</span> <span class="n">valueX</span><span class="p">,</span> <span class="n">valueY</span> <span class="p">);</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">p_result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">multiplication</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">*</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">subtraction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">-</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">division</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">/</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// References the function.</span>
+    <span class="n">pointer_f</span> <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">on_calculate</span><span class="p">;</span>
+
+    <span class="c1">// Now we can to dereferences the function and gives it another</span>
+    <span class="c1">// function as parameter that we desired to calculate.</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">multiplication</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">addition</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">subtraction</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pointer_function</span><span class="p">(</span> <span class="n">division</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>And, the expected output respectively are:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">25
+17
+3
+5</code></pre></div>
+
+
+
+
+<h3 style="color:navy;">Returning pointer to function</h3>
+
+
+<p>It is possible also, returns pointer to function, according syntax above:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">return_point_to_function</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pnt_fn_ret_integer_type</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">some_function_that_return_int</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">pnt_fn_ret_integer_type</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Is important emphasizes that, rather than we use &ldquo;int <strong>( *return_point_to_function )()</strong>&rdquo;, we use the
+<strong>parentheses</strong> after name <strong>return_point_to_function</strong>, because else, the compiler could to intepret
+it as a declaration of pointer to a function and not a function that returns a pointer to function.</p>
+
+<p>Let&rsquo;s go see a practice example. Let us suppose that we have this functions:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">get_number_of_users_actives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n_users_actives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_inactives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n_users_inactives</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>With our function that returns a pointer to function previously quoted, we could do something like it:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_users</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="c1">// or</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span>
+
+    <span class="k">return</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>As we can see, the function above returns a pointer to one of two function desired.</p>
+
+<p>To show this working, follows an example more detail what we can do:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="cp">#define ACTIVE 1</span>
+<span class="cp">#define INACTIVE 0</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_actives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n_users_actives</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">n_users_actives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">get_number_of_users_inactives</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n_users_inactives</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">n_users_inactives</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_users</span><span class="p">(</span> <span class="kt">int</span> <span class="n">is_active</span> <span class="p">)</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pointer_function</span><span class="p">)();</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">is_active</span> <span class="p">)</span>
+        <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">pointer_function</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">pointer_function</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">get_number_of_users</span><span class="p">(</span> <span class="n">ACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users actives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_number_of_users</span><span class="p">(</span> <span class="n">INACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users inactives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>The output is:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Users actives: 10
+Users inactives: 50</code></pre></div>
+
+
+<p>Again, is advisable to use the <strong>typedef keyword</strong> to facilitate the use this complex syntax and becomes it
+more readability. For instance, see how would be with typedef:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">get_number_of_user</span> <span class="p">)();</span>
+<span class="k">typedef</span> <span class="n">get_number_of_user</span> <span class="n">POINT_TO_GET_NUMBER_USER</span><span class="p">;</span></code></pre></div>
+
+
+<p>So, we can change our function <strong>get_number_of_users</strong> to this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="nf">get_number_of_users</span><span class="p">(</span> <span class="kt">int</span> <span class="n">is_active</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="n">p_get_number</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">is_active</span> <span class="p">)</span>
+        <span class="n">p_get_number</span> <span class="o">=</span> <span class="n">get_number_of_users_actives</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">p_get_number</span> <span class="o">=</span> <span class="n">get_number_of_users_inactives</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">p_get_number</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>and finally, in main function, would be:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">POINT_TO_GET_NUMBER_USER</span> <span class="n">result</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span> <span class="n">ACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users actives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span> <span class="n">INACTIVE</span> <span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Users inactives: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+
+
+<p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>Important!</strong><br><br>
+
+When we use typedef keyword to define a function pointer, we shouldn't use the parentheses as we had done previously
+in function pointer definition. Look:
+<br>
+<br>
+<strong>int * ( *point_f )();</strong><br>
+Above, was declared a function pointer that return a type integer pointer.
+<br>
+<br>
+<strong>int * ( *point_f() )() { ... }</strong><br>
+Above, was implemented a function called point_f that return a function pointer that return a type integer pointer.
+<br>
+<br>
+<strong>typedef int * ( *point_f )();</strong><br>
+Above, was declared with typedef keyword a function pointer that return a type integer pointer.
+<br>
+<br>
+Notice that, with typedef keyword, we do not use the parentheses after name, it because we do it when we create a function
+with using the typedef definition:<br><br>
+
+<strong>point_f</strong> do_something()<br>
+{<br>
+....<br>
+}<br><br>
+
+If we use parentheses in typedef keyword, we will get errors in compilation time.
+</p>
+
+
+<p>Now look this curious case:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">p_function</span><span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">addition</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">p_function</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Notice that, the <strong>calculator function</strong>, returns a function pointer that receives two integers types and returns a
+type integer. However, the <strong>signature</strong> from function tell us this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)();</span></code></pre></div>
+
+
+<p>This occurred because the compiler C, infers the parameters type from pointer function and <strong>allow</strong> us omits it, otherwise, we
+should do it this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span></code></pre></div>
+
+
+<p>If by change we specific the parameters types in <strong>calculator</strong> function, we are obliged to put the two parameters and not just one:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">);</span> <span class="c1">// Error compile</span></code></pre></div>
+
+
+<p>The same occurs in declaration:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span>
+<span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// We can use this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)()</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+
+    <span class="c1">// Or this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+
+    <span class="c1">// But we cannot this way</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">result</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>Finally, the last example of how we can use function pointer. Here we show a function pointer that
+returns a pointer to array of function of the type integer.</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">pointer_function_to_array_of_functions_int</span><span class="p">()</span> <span class="p">)();</span></code></pre></div>
+
+
+<p>As show above, we have a function that returns a function pointer to pointer, that points to an array
+of function that returns an integer type. With this function, we can returns something like this:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">function_pointer_int</span><span class="p">[]</span> <span class="p">)()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">function_int_one</span><span class="p">,</span> <span class="n">function_int_two</span><span class="p">,</span> <span class="p">...</span> <span class="p">};</span></code></pre></div>
+
+
+<p>All right, this is more easier with an example. Let rewrites our code used previously that calculate two
+numbers with four operations mathematic:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">FUNCT_PNT</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span>
+
+<span class="kt">int</span>
+<span class="nf">multiplication</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">*</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">addition</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">+</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">subtraction</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">-</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">division</span><span class="p">(</span> <span class="kt">int</span> <span class="n">valueX</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueY</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">valueX</span> <span class="o">/</span> <span class="n">valueY</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="p">(</span> <span class="o">*</span><span class="n">p_list_fn_operations</span><span class="p">[]</span> <span class="p">)()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">multiplication</span><span class="p">,</span> <span class="n">addition</span><span class="p">,</span> <span class="n">subtraction</span><span class="p">,</span> <span class="n">division</span> <span class="p">};</span>
+
+<span class="kt">int</span>
+<span class="p">(</span> <span class="o">**</span><span class="n">calculator</span><span class="p">()</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">    * There&#39;s no need to use an address-of operator on array, like this:</span>
+<span class="cm">    * int ( **p_fn_operations )( int, int ) = &amp;p_list_fn_operations[ 0 ];</span>
+<span class="cm">    * since arrays decay into implicit pointers on the right-hand side of</span>
+<span class="cm">    * the assignment operator.</span>
+<span class="cm">    */</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">p_fn_operations</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">)</span> <span class="o">=</span> <span class="n">p_list_fn_operations</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p_fn_operations</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>    
+    <span class="c1">// Arrays are implicitly convertible to pointers, so it would be</span>
+    <span class="c1">// the syntax below with double pointer:</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function_to_calculator</span> <span class="p">)()</span> <span class="p">)();</span>
+    <span class="n">pointer_function_to_calculator</span> <span class="o">=</span> <span class="n">calculator</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">(</span> <span class="o">**</span><span class="n">list_of_operation</span> <span class="p">)();</span>
+
+    <span class="n">list_of_operation</span> <span class="o">=</span> <span class="p">(</span> <span class="o">*</span><span class="n">pointer_function_to_calculator</span> <span class="p">)();</span>
+
+    <span class="c1">// For each operations, we use an increment arithmetic to go through</span>
+    <span class="c1">// of array of pointer, searching by each of that operations.</span>
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Multiplication = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Addition = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Subtraction = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span> <span class="p">)</span> <span class="p">);</span>
+    <span class="n">list_of_operation</span><span class="o">++</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;Division = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="o">*</span> <span class="n">list_of_operation</span> <span class="p">)(</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">9</span> <span class="p">)</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>The output will be:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Multiplication</span> <span class="o">=</span> 36
+<span class="nv">Addition</span> <span class="o">=</span> 17
+<span class="nv">Subtraction</span> <span class="o">=</span> 6
+<span class="nv">Division</span> <span class="o">=</span> 9</code></pre></div>
+
+
+
+
+<h3 style="color:navy;">Extra about function pointers</h3>
+
+
+<p>In C language, the library signal.h have a function called <strong>signal</strong>, that provides a simple interface for
+establishing an action for a particular signal.</p>
+
+<p>The said function is the <strong>sighandler_t</strong> function, whose is a function pointer that points to a function
+that returns void. That function will go handlers the integer type argument givens, configuring your
+respective signal number. So, functions like this, are handles this way:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">handler</span> <span class="p">(</span><span class="kt">int</span> <span class="n">signum</span><span class="p">)</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span></code></pre></div>
+
+
+<p>And here, the signal function itself:</p>
+
+<p><strong>sighandler_t signal( int signum, sighandler_t action )</strong></p>
+
+<p>The signal function establishes action as the action for the signal signum.</p>
+
+<p>The first argument, <strong>signum</strong>, identifies the signal whose behavior we want to control, and should be a signal number
+The second argument, <strong>action</strong>, specifies the action( function ) that will be handlers the signal.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#include &lt;signal.h&gt;</span>
+typedef void <span class="o">(</span>*sighandler_t<span class="o">)(</span>int<span class="o">)</span><span class="p">;</span>
+sighandler_t signal<span class="o">(</span>int signum, sighandler_t handler<span class="o">)</span><span class="p">;</span></code></pre></div>
+
+
+<p>For more details, type man signal.</p>
+
+<p>Another famous utility in C language is the <strong>qsort</strong> function, from <strong>stdlib.h</strong> library, that have the following declaration:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">qsort</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+            <span class="kt">int</span><span class="p">(</span> <span class="o">*</span><span class="n">compar</span> <span class="p">)(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="p">));</span></code></pre></div>
+
+
+<p>The Linux manual page, describe the following:</p>
+
+<p><em>The qsort() function sorts an array with nmemb elements of size size. The base argument points to the start of the array.</em></p>
+
+<p><em>The contents of the array are sorted in ascending order according to a comparison function pointed to by compar, which is</em>
+<em>called with two arguments that point to the objects being compared.</em></p>
+
+<p><em>The comparison function must return an integer less than, equal to, or greater than zero if the first argument is considered</em>
+<em>to be respectively less than, equal to, or greater than the second. If two members compare as equal, their order in the</em>
+<em>sorted array is undefined.</em></p>
+
+<p>So, here we going see an example of how this works:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">desc_sort</span><span class="p">(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">v1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">)</span> <span class="n">v2</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">first</span> <span class="o">==</span> <span class="n">second</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">array</span><span class="p">[</span> <span class="mi">10</span> <span class="p">];</span>
+
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">qsort</span><span class="p">(</span> <span class="n">array</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span> <span class="kt">int</span> <span class="p">),</span> <span class="n">desc_sort</span> <span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">printf</span> <span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+
+<p>the output will be:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">9
+8
+7
+6
+5
+4
+3
+2
+1</code></pre></div>
+
+
+<p>For more details, type man qsort.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-slash-c-plus-plus/'>c/c++</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2018/09/15/create-and-save-stash-list/" title="Previous Post: Creating and Saving Stash List With Git">&laquo; Creating and Saving Stash List With Git</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/09/15/get-size-of-array-with-c-language/" title="Next Post: Get size of array with C language">Get size of array with C language &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  <section>
+  <h1>About Me</h1>
+  <p>I'm Dio PP, a System Analyst, Software Developer and Unix black screen fan</p>
+  
+<img src="/images/DarthVaderDarkForce.jpg" alt="Profile picture" />
+
+
+  <b><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The force is strong with this one</p><br></b>
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/di0">here</a>.</p>
+  <p>Furthermore my resume can be found <a href="https://www.linkedin.com/in/diogo-pereira-pinto-7607a13a/">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+  <a href="http://www.linkedin.com/in/diogo-pereira-pinto-dio"><i class="fa fa-linkedin fa-3x"></i></a>
+
+
+    
+  <a href="https://plus.google.com/115661938273408826648"<i class="fa fa-google-plus fa-3x"></i></a>
+
+
+    
+  <a href="https://github.com/di0"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/diogolion"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+    
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/115661938273408826648?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/di0">@di0</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'di0',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2019 - Diogo Pinto -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2019  Diogo Pinto -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'www-develdio-com';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function/';
+        var disqus_url = 'http://di0.github.io/blog/2018/09/15/c-c++-pointer-to-function/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

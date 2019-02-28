@@ -5,28 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>C - Pointer to Function With Function Within Another Function - Developer's Lab</title>
+  <title>Reading Parameters From Function - C - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="In this example, you can see as we can use pointer to a function that taken an inner
-function as parameter. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;">
+  <meta name="description" content="In this post, I was write as we can get the parameters given to a function in language C, using
+stdarg library, that declares a type va_list and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -35,7 +19,7 @@ function as parameter. 1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -86,7 +70,7 @@ function as parameter. 1
   
   <header>
     
-      <h1 class="entry-title">C - Pointer to Function With Function Within Another Function</h1>
+      <h1 class="entry-title">Reading Parameters From Function - C</h1>
     
     
       <p class="meta">
@@ -102,15 +86,28 @@ function as parameter. 1
   
 
 
-<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-09-21T23:00:41-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>In this example, you can see as we can use pointer to a function that taken an inner
-function as parameter. <!--more--></p>
+<div class="entry-content"><p>In this post, I was write as we can get the parameters given to a function in language C, using
+stdarg library, that declares a type va_list and defines three macros for<!--more--> stepping
+through  a list of arguments whose number and types are not known to the called function.</p>
+
+<p>Below is show the declared functions in stdarg:</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdarg.h&gt;</span>
+
+<span class="kt">void</span> <span class="nf">va_start</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">last</span> <span class="p">);</span>
+<span class="n">type</span> <span class="nf">va_arg</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">type</span> <span class="p">);</span>
+<span class="kt">void</span> <span class="nf">va_end</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span> <span class="p">);</span>
+<span class="kt">void</span> <span class="nf">va_copy</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">dest</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">src</span> <span class="p">);</span></code></pre></div>
+
+
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -132,50 +129,34 @@ function as parameter. <!--more--></p>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdarg.h&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="o">*</span>
-</span><span class='line'><span class="nf">function1</span><span class="p">(</span> <span class="kt">int</span> <span class="n">g</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">read_names</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name_main</span><span class="p">,</span> <span class="p">...</span> <span class="p">)</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span> <span class="mi">14</span> <span class="p">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">va_start</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="n">name_main</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">char</span> <span class="o">*</span><span class="n">name1</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>        <span class="kt">char</span> <span class="o">*</span><span class="n">name2</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">fprintf</span><span class="p">(</span> <span class="n">stdout</span><span class="p">,</span> <span class="s">&quot;%s =&gt; %s and %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">name_main</span><span class="p">,</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">va_end</span><span class="p">(</span> <span class="n">args</span> <span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">function2</span><span class="p">(</span> <span class="kt">int</span> <span class="n">c</span> <span class="p">)</span>
+</span><span class='line'><span class="nf">main</span><span class="p">()</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span>
-</span><span class='line'><span class="nf">main</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Pointer to function that return pointer to int type and that</span>
-</span><span class='line'>        <span class="c1">// taken as parameter a pointer to function that return a int and</span>
-</span><span class='line'>        <span class="c1">// have as parameter an int type.</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">p</span> <span class="p">)(</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pp</span><span class="p">)(</span> <span class="kt">int</span> <span class="p">)</span> <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Reference the function.</span>
-</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">function1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Desreference the function and reference the function on parameter.</span>
-</span><span class='line'>        <span class="c1">// Within function that p point, will be invoke the function function2.</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">(</span> <span class="n">function2</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>        <span class="n">read_names</span><span class="p">(</span> <span class="s">&quot;Main name&quot;</span><span class="p">,</span> <span class="s">&quot;second name&quot;</span><span class="p">,</span> <span class="s">&quot;third name&quot;</span> <span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>As shown above, we can see that use the function <strong>va_start</strong>, which is declared in stdarg.h header. This
+function is responsible to get a varying number of arguments of varying types.</p>
+
+<p>The <strong>var_start</strong> macro, initializes <strong>va_list</strong> for subsequent use by <strong>va_arg()</strong> and <strong>va_end()</strong>, and must be called
+first.</p>
 </div>
 
 
@@ -198,7 +179,7 @@ function as parameter. <!--more--></p>
   
 
 
-<time datetime="2018-09-15T03:14:27-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-09-21T23:00:41-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -212,7 +193,7 @@ function as parameter. <!--more--></p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c/" >Tweet</a>
   
   
   
@@ -223,10 +204,10 @@ function as parameter. <!--more--></p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2018/09/15/create-and-save-stash-list/" title="Previous Post: Creating and Saving Stash List With Git">&laquo; Creating and Saving Stash List With Git</a>
+        <a class="basic-alignment left" href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/" title="Previous Post: Rename local and remote branch with git">&laquo; Rename local and remote branch with git</a>
       
       
-        <a class="basic-alignment right" href="/blog/2018/09/15/get-size-of-array-with-c-language/" title="Next Post: Get size of array with C language">Get size of array with C language &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/" title="Next Post: Shallow and Deep Copy in C++ Language">Shallow and Deep Copy in C++ Language &raquo;</a>
       
     </p>
   </footer>
@@ -282,19 +263,19 @@ function as parameter. <!--more--></p>
       </li>
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
@@ -321,26 +302,26 @@ function as parameter. <!--more--></p>
       </li>
     
       <li class="post">
+        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/">Rename Local and Remote Branch With Git</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>
@@ -397,8 +378,8 @@ function as parameter. <!--more--></p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/';
-        var disqus_url = 'http://di0.github.io/blog/2018/09/15/c-pointer-to-function-with-function-within-another/';
+        var disqus_identifier = 'http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c/';
+        var disqus_url = 'http://di0.github.io/blog/2018/09/21/reading-parameters-from-function-c/';
         var disqus_script = 'embed.js';
       
     (function () {

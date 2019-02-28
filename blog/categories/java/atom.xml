@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-02-28T15:32:34-03:00</updated>
+  <updated>2019-02-28T15:43:12-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -68,14 +68,16 @@ interactive way form:</p>
     <link href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/"/>
     <updated>2017-11-06T02:32:36-02:00</updated>
     <id>http://di0.github.io/blog/2017/11/06/multithreading-future-in-java</id>
-    <content type="html"><![CDATA[<p>Ao realizar tarefas concorrentes em Java, desde as primeiras versões, tem-se disponível a <!--more--> interface Runnable, responsabilizando a quem vai
-utilizá-la, a implementação de um único método chamado run().
-<code>java
-public interface Runnable
+    <content type="html"><![CDATA[<p>When we need performing concurrent tasks in Java, we have available since the firsts versions, the Runnable interface. This interface have only method
+named <strong>run</strong>. That method must be implemented by <!--more--> participants that wants works with parallel tasks.</p>
+
+<p>Look the signature this method:</p>
+
+<pre><code class="java">public interface Runnable
 {
     public void run();
 }
-</code></p>
+</code></pre>
 
 <p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
 lançar uma exceção.</p>
@@ -85,20 +87,17 @@ armazenar o valor desejado após a execução de uma tarefa.</p>
 
 <p>Conforme exemplo abaixo:</p>
 
-<pre><code class="java">class Foo implements Runnable
-{
-        private String operation ;
+<pre><code class="java">class Foo implements Runnable {
 
-        public String getOperation()
-    {
-             return operation;
-        }
+    private String operation ;
 
-        public void run()
-    {
-            // Stuff
-            operation = operation();
-        }
+    public String getOperation() {
+        return operation;
+    }
+
+    public void run() {
+        operation = operation();
+    }
 }
 </code></pre>
 

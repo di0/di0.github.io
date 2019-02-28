@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Shell_script | Developer's Lab]]></title>
+  <link href="http://di0.github.io/blog/categories/shell-script/atom.xml" rel="self"/>
+  <link href="http://di0.github.io/"/>
+  <updated>2019-02-28T15:43:12-03:00</updated>
+  <id>http://di0.github.io/</id>
+  <author>
+    <name><![CDATA[Diogo Pinto]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Script - Notifying When Directory Change]]></title>
+    <link href="http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change/"/>
+    <updated>2018-09-30T04:23:46-03:00</updated>
+    <id>http://di0.github.io/blog/2018/09/30/shell-script-notifying-when-directory-change</id>
+    <content type="html"><![CDATA[<p>One of these days, I was needed to monitor a directory that constantly was modified. I had needed some way, get
+something that could notify me when the structure(file system) from directory <!--more--> was modified. So, I
+decided to write my own script, whose helped me with this task.</p>
+
+<p>For it, was used the Linux <strong>stat</strong> utility, whose display the detailed status of a particular file or a file
+system.</p>
+
+<p>Below, is show you how it works:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;/p&gt;
+
+&lt;h1&gt;!/bin/bash&lt;/h1&gt;
+
+&lt;p&gt;LTIME<span class="o">=</span>&lt;code&gt;stat -c %Z .&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;while <span class="nb">true</span>
+<span class="k">do</span>
+        <span class="nv">ATIME</span><span class="o">=</span>&lt;code&gt;stat -c %Z .&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$ATIME&quot;</span> !<span class="o">=</span> <span class="s2">&quot;$LTIME&quot;</span> <span class="o">]]</span>
+    <span class="k">then</span>
+            <span class="nv">full_name</span><span class="o">=</span><span class="sb">`</span>/bin/ls <span class="p">|</span> head -1<span class="sb">`</span>
+            <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="s2">&quot;$full_name&quot;</span><span class="k">)</span>
+            <span class="nv">extension</span><span class="o">=</span><span class="s2">&quot;${name##*.}&quot;</span>
+            <span class="nv">final_name</span><span class="o">=</span><span class="s2">&quot;${name%.*}&quot;</span>
+
+            <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$extension&quot;</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span> <span class="o">]</span>
+            <span class="k">then</span>
+                    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$final_name</span>.log <span class="o">]</span>
+                    <span class="k">then</span>
+                            touch <span class="nv">$final_name</span>.log
+                            <span class="nb">echo</span> <span class="s2">&quot;Modified ATIME&quot;</span> <span class="p">&amp;</span>gt<span class="p">;&amp;</span>gt<span class="p">;</span> <span class="nv">$final_name</span>.log
+                    <span class="k">fi</span>
+            <span class="k">fi</span>
+            <span class="nv">LTIME</span><span class="o">=</span><span class="nv">$ATIME</span>
+    <span class="k">fi</span>
+    sleep 5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;done</code></pre></div></p>
+
+<p>So, the code above consists a script that checks if, a new text file was created in current directory.
+If it has been, then, it verifies if already exists a file name called <strong>final_name.log</strong>, and case
+it not exists, it will be created.</p>
+
+<p>In begin, the script get the initial current time across stat command and holds it inside variable
+LTIME. It variable later, will be used to compare with</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">LTIME</span><span class="o">=</span>&lt;code&gt;stat -c %Z .&lt;/code&gt;</code></pre></div></p>
+]]></content>
+  </entry>
+  
+</feed>
