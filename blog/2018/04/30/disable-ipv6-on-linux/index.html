@@ -96,7 +96,7 @@ your network card device, you &hellip;">
 <div class="entry-content"><p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
 your network card device, you can disable it through least <!--more--> two ways:</p>
 
-<h3 style="color: #d3d378;font-size 8px">Command line</h3>
+<h4><u>Command line</u></h4>
 
 
 <p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
@@ -116,13 +116,13 @@ sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pr
 
 
 
-<h3 style="color: #d3d378;font-size 8px">File configuration(Debian based distro)</h3>
+<h4><u>File configuration(Debian based distro)</u></h4>
 
 
 <p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
 The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
 
-<p>With super admin user, edit the file <span style="color:blue;font-weight:bold">/etc/sysctl.conf</span> and add the following lines:</p>
+<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
 net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1
@@ -180,7 +180,7 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
         <a class="basic-alignment left" href="/blog/2018/04/30/grep-command-show-only-file-name/" title="Previous Post: show only file name with grep command">&laquo; show only file name with grep command</a>
       
       
-        <a class="basic-alignment right" href="/blog/2018/09/15/create-and-save-stash-list/" title="Next Post: Creating and Saving Stash List With Git">Creating and Saving Stash List With Git &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2018/05/11/locking-user-account-linux/" title="Next Post: Locking user account Linux">Locking user account Linux &raquo;</a>
       
     </p>
   </footer>
@@ -232,15 +232,7 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -249,6 +241,14 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
@@ -271,15 +271,7 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -290,11 +282,19 @@ net.ipv6.conf.lo.disable_ipv6 <span class="o">=</span> 1</code></pre></div>
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
+      </li>
+    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>

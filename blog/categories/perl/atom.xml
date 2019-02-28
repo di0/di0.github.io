@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-01-16T00:04:10-02:00</updated>
+  <updated>2019-02-28T15:32:34-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -46,7 +46,7 @@ print "\n";
   <entry>
     <title type="html"><![CDATA[Creating Objects in Perl]]></title>
     <link href="http://di0.github.io/blog/2012/05/11/creating-objects-in-perl/"/>
-    <updated>2012-05-11T21:08:36-03:00</updated>
+    <updated>2012-05-11T22:08:36-02:00</updated>
     <id>http://di0.github.io/blog/2012/05/11/creating-objects-in-perl</id>
     <content type="html"><![CDATA[<p>É possível trabalhar com objetos em Perl, não muito semelhantes como encontrado linguagens como Java, C++ e outras, o conceito de orientação à objetos em Perl, são resumidamente <!--more --> representados por Hash e Bless.</p>
 

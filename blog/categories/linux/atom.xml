@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-01-16T00:04:10-02:00</updated>
+  <updated>2019-02-28T15:32:34-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -14,6 +14,31 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Locking User Account Linux]]></title>
+    <link href="http://di0.github.io/blog/2018/05/11/locking-user-account-linux/"/>
+    <updated>2018-05-11T12:48:04-03:00</updated>
+    <id>http://di0.github.io/blog/2018/05/11/locking-user-account-linux</id>
+    <content type="html"><![CDATA[<p>The following command will lock an user <!--more--> account:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd <span class="p">&amp;</span>ndash<span class="p">;</span>lock foo</code></pre></div></p>
+
+<p>or simply</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd -l foo</code></pre></div></p>
+
+<p>Remember that, you should run the above command as root account.</p>
+
+<p>If you want unlocking the account foo, just type the <strong>passwd</strong> command with <strong>-u</strong> or <strong>&ndash;unlock</strong> parameter, e.g:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd <span class="p">&amp;</span>ndash<span class="p">;</span>unlock foo</code></pre></div></p>
+
+<p>or simply</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd -u foo</code></pre></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Disable IPv6 on Linux]]></title>
     <link href="http://di0.github.io/blog/2018/04/30/disable-ipv6-on-linux/"/>
     <updated>2018-04-30T18:19:07-03:00</updated>
@@ -21,7 +46,7 @@
     <content type="html"><![CDATA[<p><strong>IPv6</strong> protocol is not always available in the local area network(lan), to avoid your DHCP connection configure IPv6 in
 your network card device, you can disable it through least <!--more--> two ways:</p>
 
-<h3 style="color: #d3d378;font-size 8px">Command line</h3>
+<h4><u>Command line</u></h4>
 
 
 <p><strong>sysctl</strong> command is an Linux command that configures kernel parameters at runtime. You can display all
@@ -37,13 +62,13 @@ sysctl -w sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>1<
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">sysctl -w net.ipv6.conf.all.disable_ipv6<span class="o">=</span>0
 sysctl -w net.ipv6.conf.default.disable_ipv6<span class="o">=</span>0</code></pre></div></p>
 
-<h3 style="color: #d3d378;font-size 8px">File configuration(Debian based distro)</h3>
+<h4><u>File configuration(Debian based distro)</u></h4>
 
 
 <p>Another way, is through of the file configuration located under directory <strong>/etc/</strong>.
 The file name is <strong>sysctl.conf</strong>, which is a simple file containing sysctl values to be read in and set by <strong>sysctl</strong>.</p>
 
-<p>With super admin user, edit the file <span style="color:blue;font-weight:bold">/etc/sysctl.conf</span> and add the following lines:</p>
+<p>With super admin user, edit the file /etc/sysctl.conf and add the following lines:</p>
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">net.ipv6.conf.all.disable_ipv6 <span class="o">=</span> 1
 net.ipv6.conf.default.disable_ipv6 <span class="o">=</span> 1
@@ -129,26 +154,6 @@ or
 <p>then output will looks like:</p>
 
 <p><img class="rigth" src="/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Remove Blank Lines With Vi(m)]]></title>
-    <link href="http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m/"/>
-    <updated>2018-04-06T16:37:27-03:00</updated>
-    <id>http://di0.github.io/blog/2018/04/06/remove-blank-lines-with-vi-m</id>
-    <content type="html"><![CDATA[<p>If you want delete blank lines using <em>VI(M)</em> editor, you can use the following match regex <strong>^$</strong> to perform it on the
-command mode option(Esc + Shift + :) . e.g: <!--more--></p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">:g/^<span class="nv">$/</span>d</code></pre></div></p>
-
-<p>The above mentioned entry, will specify the <em>VI(M)</em> editor, delete blank lines.</p>
-
-<ul> g -> will execute command on all lines that match with regex.</ul>
-
-
-<ul> d -> command order, delete that line.</ul>
-
 ]]></content>
   </entry>
   

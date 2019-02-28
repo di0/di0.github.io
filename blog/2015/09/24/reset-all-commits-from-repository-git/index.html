@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Projects - Developer's Lab</title>
+  <title>Reset All Commits From Repository Git - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Projects Eu tenho passado meu tempo escrevendo coisas em C++ e Java. Alguns desses projetos
-estao disponiveis no github. Aqui um link sobre isso: &hellip;">
+  <meta name="description" content="Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos: 1) Remover o .git do repositorio( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ estao disponiveis no github. Aqui um link sobre isso: &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/projects">
+  <link rel="canonical" href="http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -66,33 +65,15 @@ estao disponiveis no github. Aqui um link sobre isso: &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Projects</h1>
-    <p class="meta">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2018-09-22T00:34:00-03:00" pubdate data-updated="true"></time></p>
-  </header>
-  
-  <p>Eu tenho passado meu tempo escrevendo coisas em C++ e Java. Alguns desses projetos
-estao disponiveis no github. Aqui um link sobre isso:</p>
-
-  
-    <footer>
+    
+      <h1 class="entry-title">Reset All Commits From Repository Git</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
@@ -104,13 +85,76 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
   
 
 
-<time datetime="2018-09-22T00:34:00-03:00" pubdate data-updated="true"></time>
+<time datetime="2015-09-24T00:26:40-02:00" pubdate data-updated="true"></time>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes <!--more--> passos:</p>
+
+<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
+2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
+</span><span class='line'><span class="nv">$ </span>git init
+</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
+</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/projects/index.html" data-via="diogolion" data-counturl="http://di0.github.io/projects/index.html" >Tweet</a>
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-24T00:26:40-02:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/" >Tweet</a>
   
   
   
@@ -118,9 +162,16 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2015/09/23/error-server-certificate-verification-failed/" title="Previous Post: ERROR: SERVER CERTIFICATE VERIFICATION FAILED">&laquo; ERROR: SERVER CERTIFICATE VERIFICATION FAILED</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/02/24/avoid-ssh-connection-timeout/" title="Next Post: Prevent SSH connection time out">Prevent SSH connection time out &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
 
   <section>
@@ -169,15 +220,7 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -186,6 +229,14 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
@@ -208,15 +259,7 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -227,11 +270,19 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
+      </li>
+    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>
@@ -288,8 +339,8 @@ estao disponiveis no github. Aqui um link sobre isso:</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/projects/index.html';
-        var disqus_url = 'http://di0.github.io/projects/index.html';
+        var disqus_identifier = 'http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/';
+        var disqus_url = 'http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/';
         var disqus_script = 'embed.js';
       
     (function () {

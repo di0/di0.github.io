@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Shell_script - Developer's Lab</title>
+  <title>Splitting a Subdirectory Into a New Repository - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Category: shell_script">
+  <meta name="description" content="First you must to clone the repository target: 1
+git clone https://lognull.com/PocProjectX.git Filter the directory that will be send to another &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/categories/shell-script">
+  <link rel="canonical" href="http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -65,36 +66,126 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Shell_script</h1>
+    
+      <h1 class="entry-title">Splitting a Subdirectory Into a New Repository</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-02-28T15:21:58-03:00" pubdate data-updated="true"></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>First you must to clone the repository target: <!--more--></p>
 
-  
-  <h2>2018</h2>
-
-<article>
-  
-<h1><a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a></h1>
-<time datetime="2018-09-30T04:23:46-03:00" pubdate><span class='month'>Sep</span> <span class='day'>30</span> <span class='year'>2018</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/shell-script/'>shell_script</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone https://lognull.com/PocProjectX.git
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>Filter the directory that will be send to another repository</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git filter-branch --prune-empty --subdirectory-filter src/main/java/com/develdio/poc/robot/remote/ develop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add the new URL in current repository</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote <span class="nb">set</span>-url origin https://develdio.com/PocProjectXOnlyRemote.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update remote refs along with associated objects</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push origin develop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Undo the current changes and returns the original state:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git reset --hard refs/original/refs/heads/develop
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Diogo Pinto</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-02-28T15:21:58-03:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2018/09/17/rename-local-and-remote-branch-with-git/" title="Previous Post: Rename local and remote branch with git">&laquo; Rename local and remote branch with git</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -136,15 +227,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -153,6 +236,14 @@
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
@@ -175,15 +266,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -194,11 +277,19 @@
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
+      </li>
+    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>
@@ -254,7 +345,10 @@
       var disqus_shortname = 'www-develdio-com';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/';
+        var disqus_url = 'http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

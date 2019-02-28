@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Reset All Commits From Repository Git - Developer's Lab</title>
+  <title>Locking User Account Linux - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes passos: 1) Remover o .git do repositorio( &hellip;">
+  <meta name="description" content="The following command will lock an user account: passwd --lock foo or simply passwd -l foo Remember that, you should run the above command as root &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git">
+  <link rel="canonical" href="http://di0.github.io/blog/2018/05/11/locking-user-account-linux">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">Reset All Commits From Repository Git</h1>
+      <h1 class="entry-title">Locking User Account Linux</h1>
     
     
       <p class="meta">
@@ -85,38 +85,35 @@
   
 
 
-<time datetime="2015-09-23T23:26:40-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-05-11T12:48:04-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes <!--more--> passos:</p>
+<div class="entry-content"><p>The following command will lock an user <!--more--> account:</p>
 
-<p>1) Remover o .git do repositorio(local) que deseja resetar</br>
-2) Recriar o artefato do banco de dados git, seguindo os passos abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>Project
-</span><span class='line'><span class="nv">$ </span>git init
-</span><span class='line'>// crie alguns arquivos <span class="o">(</span> eu clonei <span class="k">do</span> SVN, em vez disso <span class="o">)</span>
-</span><span class='line'><span class="nv">$ </span>git add .
-</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd --lock foo</code></pre></div>
 
 
-<p>3) Realizar o push para o servidor remoto<strong>(troque a url pela url do repositorio alvo)</strong>, forçando a sobreescrita:</p>
+<p>or simply</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin &lt;url&gt;
-</span><span class='line'><span class="nv">$ </span>git push ‐‐force ‐‐set-upstream origin master
-</span></code></pre></td></tr></table></div></figure>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd -l foo</code></pre></div>
+
+
+<p>Remember that, you should run the above command as root account.</p>
+
+<p>If you want unlocking the account foo, just type the <strong>passwd</strong> command with <strong>-u</strong> or <strong>&ndash;unlock</strong> parameter, e.g:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd --unlock foo</code></pre></div>
+
+
+<p>or simply</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">passwd -u foo</code></pre></div>
+
+
 
 </div>
 
@@ -140,12 +137,12 @@
   
 
 
-<time datetime="2015-09-23T23:26:40-03:00" pubdate data-updated="true"></time>
+<time datetime="2018-05-11T12:48:04-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/git/'>git</a>
+    <a class='category' href='/blog/categories/linux/'>linux</a>
   
 </span>
 
@@ -154,7 +151,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/05/11/locking-user-account-linux/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/05/11/locking-user-account-linux/" >Tweet</a>
   
   
   
@@ -165,10 +162,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/09/23/error-server-certificate-verification-failed/" title="Previous Post: ERROR: SERVER CERTIFICATE VERIFICATION FAILED">&laquo; ERROR: SERVER CERTIFICATE VERIFICATION FAILED</a>
+        <a class="basic-alignment left" href="/blog/2018/04/30/disable-ipv6-on-linux/" title="Previous Post: Disable IPv6 on Linux">&laquo; Disable IPv6 on Linux</a>
       
       
-        <a class="basic-alignment right" href="/blog/2016/02/24/avoid-ssh-connection-timeout/" title="Next Post: Prevent SSH connection time out">Prevent SSH connection time out &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2018/09/15/create-and-save-stash-list/" title="Next Post: Creating and Saving Stash List With Git">Creating and Saving Stash List With Git &raquo;</a>
       
     </p>
   </footer>
@@ -220,15 +217,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -237,6 +226,14 @@
     
       <li class="post">
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
       </li>
     
   </ul>
@@ -259,15 +256,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2018/09/30/shell-script-notifying-when-directory-change/">Shell Script - Notifying When Directory Change</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/22/shallow-and-deep-copy-in-c-plus-plus/">Shallow and Deep Copy in C++ Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2018/09/21/reading-parameters-from-function-c/">Reading Parameters From Function - C</a>
+        <a href="/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/">Splitting a Subdirectory Into a New Repository</a>
       </li>
     
       <li class="post">
@@ -278,11 +267,19 @@
         <a href="/blog/2018/09/15/get-size-of-array-with-c-language/">Get Size of Array With C Language</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2018/09/15/c-pointer-to-function-with-function-within-another/">C - Pointer to Function With Function Within Another Function</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/09/15/create-and-save-stash-list/">Creating and Saving Stash List With Git</a>
+      </li>
+    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (4)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (8)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/shell-script/'>shell_script (1)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/c-slash-c-plus-plus/'>c/c++ (2)</a></li><li><a href='/blog/categories/freebsd/'>freebsd (1)</a></li><li><a href='/blog/categories/git/'>git (9)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/maven/'>maven (1)</a></li><li><a href='/blog/categories/mysql/'>mysql (2)</a></li><li><a href='/blog/categories/perl/'>perl (2)</a></li><li><a href='/blog/categories/php/'>php (2)</a></li><li><a href='/blog/categories/svn/'>svn (2)</a></li></ul>
 </section>
 
 <section>
@@ -339,8 +336,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/';
-        var disqus_url = 'http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/';
+        var disqus_identifier = 'http://di0.github.io/blog/2018/05/11/locking-user-account-linux/';
+        var disqus_url = 'http://di0.github.io/blog/2018/05/11/locking-user-account-linux/';
         var disqus_script = 'embed.js';
       
     (function () {

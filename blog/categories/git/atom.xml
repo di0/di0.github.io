@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-01-16T00:04:10-02:00</updated>
+  <updated>2019-02-28T15:32:34-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Splitting a Subdirectory Into a New Repository]]></title>
+    <link href="http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository/"/>
+    <updated>2019-02-28T15:21:58-03:00</updated>
+    <id>http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository</id>
+    <content type="html"><![CDATA[<p>First you must to clone the repository target: <!--more--></p>
+
+<pre><code class="bash">git clone https://lognull.com/PocProjectX.git
+</code></pre>
+
+<p>Filter the directory that will be send to another repository</p>
+
+<pre><code class="bash">git filter-branch --prune-empty --subdirectory-filter src/main/java/com/develdio/poc/robot/remote/ develop
+</code></pre>
+
+<p>Add the new URL in current repository</p>
+
+<pre><code class="bash">git remote set-url origin https://develdio.com/PocProjectXOnlyRemote.git
+</code></pre>
+
+<p>Update remote refs along with associated objects</p>
+
+<pre><code class="bash">git push origin develop
+</code></pre>
+
+<p>Undo the current changes and returns the original state:</p>
+
+<pre><code class="bash">git reset --hard refs/original/refs/heads/develop
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rename Local and Remote Branch With Git]]></title>
@@ -84,9 +116,9 @@ was saved on stack.</p>
   
   <entry>
     <title type="html"><![CDATA[Reset All Commits From Repository Git]]></title>
-    <link href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/"/>
-    <updated>2015-09-23T23:26:40-03:00</updated>
-    <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
+    <link href="http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/"/>
+    <updated>2015-09-24T00:26:40-02:00</updated>
+    <id>http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git</id>
     <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes <!--more--> passos:</p>
 
 <p>1) Remover o .git do repositorio(local) que deseja resetar</br>
@@ -103,35 +135,6 @@ $ git commit -m "Initial commit"
 
 <pre><code class="bash">$ git remote add origin &lt;url&gt;
 $ git push ‐‐force ‐‐set-upstream origin master
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ERROR: SERVER CERTIFICATE VERIFICATION FAILED]]></title>
-    <link href="http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed/"/>
-    <updated>2015-09-23T02:05:40-03:00</updated>
-    <id>http://di0.github.io/blog/2015/09/23/error-server-certificate-verification-failed</id>
-    <content type="html"><![CDATA[<!--more-->
-
-
-<p>No momento do clone:</p>
-
-<pre><code class="bash">git clone https://develdio.com/SourceCode.git
-</code></pre>
-
-<p>Foi obtido o seguinte erro:</p>
-
-<p><strong> Cloning into ‘SourceCode’… </strong></p>
-
-<p><strong> fatal: unable to access &lsquo;<a href="https://develdio.com/SourceCode.git/">https://develdio.com/SourceCode.git/</a>&rsquo;: server certificate verification failed. </strong>
-<strong> CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none </strong></p>
-
-<p>A falha ocorre devido o certificado não ser confiado.</p>
-
-<p>Para solucionar o problema através utilitário do git na linha de comando, basta executar:</p>
-
-<pre><code class="bash">git config --global http.sslverify false
 </code></pre>
 ]]></content>
   </entry>
