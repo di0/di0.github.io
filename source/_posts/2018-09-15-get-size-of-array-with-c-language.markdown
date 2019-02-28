@@ -21,8 +21,14 @@ main()
 }
 ```
 
-but, if you chance the type of array, you can have problems because the expression above,
-use int type. To avoid this, would be used this way:
+All right, the output will be **99**. Thus, if you change the array to char type, for example, you can have
+problems because the expression above use **int** type.
+
+As see above, we know that, the C language use the unary operator function **sizeof**, that compute the size of
+type(char, int, float, double...) in compile time. So, the **int** type has a different size of **char** type.
+Also, the result of expression can be different relative from machine architecture. eg: 32 bits or 64 bits.
+
+Then, to avoid this, we should use something like this way:
 
 ```c
 #include <stdio.h>
@@ -36,5 +42,5 @@ main()
 }
 ```
 
-In example abouve, we get the first field of the array, what is sufficient to calculate
-the type of array.
+In example above, we get the first field of the array(***sizeof(a[0])***), instead to compute by type(***sizeof(int)***). It was
+sufficient to compute array size, independent of data type her. Notice also that, this became more generic expression.
