@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-02-28T15:43:12-03:00</updated>
+  <updated>2019-02-28T15:53:11-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -20,28 +20,23 @@
     <id>http://di0.github.io/blog/2019/02/28/splitting-a-subdirectory-into-a-new-repository</id>
     <content type="html"><![CDATA[<p>First you must to clone the repository target: <!--more--></p>
 
-<pre><code class="bash">git clone https://lognull.com/PocProjectX.git
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://lognull.com/PocProjectX.git&quot;</span>&gt;https://lognull.com/PocProjectX.git&lt;/a&gt;</code></pre></div></p>
 
 <p>Filter the directory that will be send to another repository</p>
 
-<pre><code class="bash">git filter-branch --prune-empty --subdirectory-filter src/main/java/com/develdio/poc/robot/remote/ develop
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git filter-branch <span class="p">&amp;</span>ndash<span class="p">;</span>prune-empty <span class="p">&amp;</span>ndash<span class="p">;</span>subdirectory-filter src/main/java/com/develdio/poc/robot/remote/ develop</code></pre></div></p>
 
 <p>Add the new URL in current repository</p>
 
-<pre><code class="bash">git remote set-url origin https://develdio.com/PocProjectXOnlyRemote.git
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git remote <span class="nb">set</span>-url origin &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://develdio.com/PocProjectXOnlyRemote.git&quot;</span>&gt;https://develdio.com/PocProjectXOnlyRemote.git&lt;/a&gt;</code></pre></div></p>
 
 <p>Update remote refs along with associated objects</p>
 
-<pre><code class="bash">git push origin develop
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git push origin develop</code></pre></div></p>
 
 <p>Undo the current changes and returns the original state:</p>
 
-<pre><code class="bash">git reset --hard refs/original/refs/heads/develop
-</code></pre>
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">git reset <span class="p">&amp;</span>ndash<span class="p">;</span>hard refs/original/refs/heads/develop</code></pre></div></p>
 ]]></content>
   </entry>
   
