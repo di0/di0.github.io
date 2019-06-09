@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mysql | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-02-28T15:53:11-03:00</updated>
+  <updated>2019-06-09T10:50:41-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Show Column Name Bound With Unique Constraint]]></title>
+    <link href="http://di0.github.io/blog/2019/06/09/show-column-name-bound-with-unique-constraint/"/>
+    <updated>2019-06-09T10:34:38-03:00</updated>
+    <id>http://di0.github.io/blog/2019/06/09/show-column-name-bound-with-unique-constraint</id>
+    <content type="html"><![CDATA[<p>Here you can see, how we can get the column name bound with specific unique constraint name&hellip;<!--more-->For example:</p>
+
+<p><div class="highlight"><pre><code class="language-mysql" data-lang="mysql"><span class="k">select</span> <span class="n">k</span><span class="p">.</span><span class="n">COLUMN_NAME</span>
+    <span class="k">from</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">KEY_COLUMN_USAGE</span> <span class="n">k</span>
+    <span class="k">join</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">TABLE_CONSTRAINTS</span> <span class="n">tc</span> <span class="k">on</span> <span class="n">k</span><span class="p">.</span><span class="n">TABLE_SCHEMA</span> <span class="o">=</span> <span class="n">tc</span><span class="p">.</span><span class="n">TABLE_SCHEMA</span>
+    <span class="k">and</span> <span class="n">k</span><span class="p">.</span><span class="n">TABLE_SCHEMA</span> <span class="o">=</span> <span class="n">tc</span><span class="p">.</span><span class="n">TABLE_SCHEMA</span>
+    <span class="k">and</span> <span class="n">k</span><span class="p">.</span><span class="n">CONSTRAINT_NAME</span> <span class="o">=</span> <span class="n">tc</span><span class="p">.</span><span class="n">CONSTRAINT_NAME</span>
+    <span class="k">where</span> <span class="n">k</span><span class="p">.</span><span class="n">table_name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">table_name</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span>
+    <span class="k">and</span> <span class="n">constraint_type</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="k">UNIQUE</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;;</span></code></pre></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MySQL - Searching for Distinct Fields]]></title>
@@ -33,7 +50,7 @@ AND TABLE_SCHEMA='DATABASE_TARGET';
   <entry>
     <title type="html"><![CDATA[Searching for Table Name]]></title>
     <link href="http://di0.github.io/blog/2013/05/13/searching-for-table-name/"/>
-    <updated>2013-05-13T21:30:04-02:00</updated>
+    <updated>2013-05-13T20:30:04-03:00</updated>
     <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
     <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
 um simples <!--more--> <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>
