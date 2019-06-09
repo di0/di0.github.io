@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Show column name bound with Unique Constraint"
+title: "Getting column name bound with Unique Constraint"
 date: 2019-06-09 10:34:38 -0300
 comments: true
 categories: mysql
