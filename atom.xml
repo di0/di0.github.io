@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-06-09T10:50:41-03:00</updated>
+  <updated>2019-06-09T11:24:16-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Show Column Name Bound With Unique Constraint]]></title>
+    <title type="html"><![CDATA[Getting Column Name Bound With Unique Constraint]]></title>
     <link href="http://di0.github.io/blog/2019/06/09/show-column-name-bound-with-unique-constraint/"/>
     <updated>2019-06-09T10:34:38-03:00</updated>
     <id>http://di0.github.io/blog/2019/06/09/show-column-name-bound-with-unique-constraint</id>
