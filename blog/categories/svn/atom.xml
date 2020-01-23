@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Svn | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/svn/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-06-09T11:24:16-03:00</updated>
+  <updated>2020-01-22T21:24:58-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -28,7 +28,7 @@
   <entry>
     <title type="html"><![CDATA[Changing a Commit Message in SVN]]></title>
     <link href="http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn/"/>
-    <updated>2014-05-15T01:50:04-03:00</updated>
+    <updated>2014-05-15T02:50:04-02:00</updated>
     <id>http://di0.github.io/blog/2014/05/15/changing-a-commit-message-in-svn</id>
     <content type="html"><![CDATA[<p>Desde que esteja habilitado pelo administrador do servidor SVN, há ao menos duas maneiras de modificar as mensagens <!--more--> previamentes comitadas no SVN:</p>
 

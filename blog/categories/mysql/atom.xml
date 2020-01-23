@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mysql | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-06-09T11:24:16-03:00</updated>
+  <updated>2020-01-22T21:24:58-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -50,7 +50,7 @@ AND TABLE_SCHEMA='DATABASE_TARGET';
   <entry>
     <title type="html"><![CDATA[Searching for Table Name]]></title>
     <link href="http://di0.github.io/blog/2013/05/13/searching-for-table-name/"/>
-    <updated>2013-05-13T20:30:04-03:00</updated>
+    <updated>2013-05-13T21:30:04-02:00</updated>
     <id>http://di0.github.io/blog/2013/05/13/searching-for-table-name</id>
     <content type="html"><![CDATA[<p>No MySQL, tais informações metadatas, estão armazenadas na tabela <strong>database_name</strong>, portanto,
 um simples <!--more--> <strong>SHOW TABLES</strong> nessa tabela, filtrando pelo nome da tabela desejada. Segue:</p>

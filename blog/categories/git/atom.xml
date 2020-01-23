@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2019-06-09T11:24:16-03:00</updated>
+  <updated>2020-01-22T21:24:58-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -111,9 +111,9 @@ was saved on stack.</p>
   
   <entry>
     <title type="html"><![CDATA[Reset All Commits From Repository Git]]></title>
-    <link href="http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git/"/>
-    <updated>2015-09-23T23:26:40-03:00</updated>
-    <id>http://di0.github.io/blog/2015/09/23/reset-all-commits-from-repository-git</id>
+    <link href="http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git/"/>
+    <updated>2015-09-24T00:26:40-02:00</updated>
+    <id>http://di0.github.io/blog/2015/09/24/reset-all-commits-from-repository-git</id>
     <content type="html"><![CDATA[<p>Para remover todos os históricos de commits e iniciar novamente o commit inicial, são dados os seguintes <!--more--> passos:</p>
 
 <p>1) Remover o .git do repositorio(local) que deseja resetar</br>
