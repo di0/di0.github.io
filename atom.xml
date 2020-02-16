@@ -4,7 +4,7 @@
   <title><![CDATA[Developer's Lab]]></title>
   <link href="http://di0.github.io/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2020-01-24T02:05:03-03:00</updated>
+  <updated>2020-02-16T02:26:16-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PCI Bus Error]]></title>
+    <link href="http://di0.github.io/blog/2020/02/15/pci-bus-error/"/>
+    <updated>2020-02-15T19:37:37-03:00</updated>
+    <id>http://di0.github.io/blog/2020/02/15/pci-bus-error</id>
+    <content type="html"><![CDATA[<p>The CPU communicates with the PCIe bus controller through transaction layer packets (TLPs). The hardware detects when failure occurred, and the Linux kernel reports that as messages.
+The mentioned error <strong><em>pcieport XXXX:YY:ZZ.Z: AER: Corrected error received</em></strong>, is one of those cases&hellip; <!--more--></p>
+
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note about PCI-id</strong><br><br>
+The four first hexadecimal id xxxx represents the Vendor ID and the four last hexadecimal id, represents the Device ID. Actually there is also
+some sub-vendor-id, sub-vendor-id(to identify the computer/vendor implementation), pci function and class...(https://wiki.debian.org/HowToIdentifyADevice/PCI#references).
+</p>
+
+
+
+
+<h3 style="color:navy;">The lspci Tool</h3>
+
+
+<p>The lspci(list Peripheral Component Interconnect) utility, show us the devices connected to any pci compatible bus. e.g:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lspci -tv
+-<span class="o">[</span>0000:00<span class="o">]</span>-+-00.0  Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers
++-02.0  Intel Corporation HD Graphics 620
+  +-04.0  Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem
+     +-14.0  Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller
+       +-14.2  Intel Corporation Sunrise Point-LP Thermal subsystem
+          +-16.0  Intel Corporation Sunrise Point-LP CSME HECI <span class="c">#1</span>
+              +-17.0  Intel Corporation Sunrise Point-LP SATA Controller <span class="o">[</span>AHCI mode<span class="o">]</span>
+                 +-1c.0-<span class="o">[</span>01<span class="o">]</span>--
+                  +-1c.5-<span class="o">[</span>02<span class="o">]</span>----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                     +-1d.0-<span class="o">[</span>03<span class="o">]</span>----00.0  Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter
+                    +-1f.0  Intel Corporation Sunrise Point LPC Controller/eSPI Controller
+                       +-1f.2  Intel Corporation Sunrise Point-LP PMC
+                          +-1f.3  Intel Corporation Sunrise Point-LP HD Audio
+                         <span class="se">\-</span>1f.4  Intel Corporation Sunrise Point-LP SMBus</code></pre></div>
+
+
+<p>According output command above, we can get the same(even then, Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter) id device that
+causing the error of PCI Bus output log messages. i.e:</p>
+
+<p><strong><em>[ 5315.986588] pcieport 0000:00:1c.0: AER: Corrected error received: id=01d0</em></strong></p>
+
+<p>The workaround to solve that problem is adding such these kernel parameters:</p>
+
+<p><strong>pci=nomsi</strong>
+<br>
+<strong>pci=noaer</strong></p>
+
+<p>where <strong>nomsi</strong> meaning <strong>No Message Signaled Interrupts</strong> and <strong>noaer</strong> meaning <strong>No Advanced Error Reporting</strong>.</p>
+
+<p>In short, both disable and stop the messages from showing output. The following example, show us how to configure theses parameters.</p>
+
+<p>Edit the /etc/default/grub file and add pci=noaer and pci=nomsi to the line starting with the GRUB_CMDLINE_LINUX_DEFAULT:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;quiet splash reboot=efi,pci pci=nomsi,noaer pcie_aspm=off&quot;</span></code></pre></div>
+
+
+
+
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note:</strong><br><br>
+pci=nomsi and noaer, do not remove the error but just hide it into the error log. In this particular case, we add <mark>pcie_aspm=off</mark> option. This will increase the PCIe Active State
+Power Management consumption of machine as it disables the power savings. More details(https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/power_management_guide/aspm).
+</p>
+
+
+<p>So, update the grub with the new parameters:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>update grub</code></pre></div>
+
+
+<p>next, reboot the SO.</p>
+
+<p>If it do not works, keep the kernel&rsquo;s parameters setting previously and run the following command:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>grub-mkconfig -o /boot/grub/grub.cfg
+<span class="nv">$ </span>update-grub
+<span class="nv">$ </span>reboot</code></pre></div>
+
+
+<p>Remember yourself check logs files size in /var/log directory, such as messages.log file, kern.log file, and syslog file. Because the related error PCI generated
+logs, these files can become increase pretty bigger.</p>
+
+<p>You can fix them:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>df -h
+Filesystem  Size    Used    Available   Use%    Mounted on
+/dev/sda1        37G    37G     <span class="m">0</span>        100%        /var</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/kern.log
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/syslog
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/messages</code></pre></div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting Column Name Bound With Unique Constraint]]></title>
@@ -1593,265 +1694,6 @@ interactive way form:</p>
 
 
 <p>Where <strong>COLUMN_NAME_DESIRED</strong> is the name of the column to be searched and <strong>DATABASE_TARGET</strong> is the database where it must be searched.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MultiThreading - Future in Java]]></title>
-    <link href="http://di0.github.io/blog/2017/11/06/multithreading-future-in-java/"/>
-    <updated>2017-11-06T02:32:36-02:00</updated>
-    <id>http://di0.github.io/blog/2017/11/06/multithreading-future-in-java</id>
-    <content type="html"><![CDATA[<p>When we need performing concurrent tasks in Java, we have available since the firsts versions, the Runnable interface. This interface have only method
-named <strong>run</strong>. That method must be implemented by <!--more--> participants that wants works with parallel tasks.</p>
-
-<p>Look the signature this method:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Runnable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Como observado acima através de sua a assinatura, não há uma maneira de recuperar o valor de uma operação ou ainda, nem mesmo é possível
-lançar uma exceção.</p>
-
-<p>Para casos em que há tarefas que devolvem informações, será necessário o auxílio de um método ou uma propriedade compartilhada para recuperar
-armazenar o valor desejado após a execução de uma tarefa.</p>
-
-<p>Conforme exemplo abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">operation</span> <span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperation</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">operation</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">operation</span> <span class="o">=</span> <span class="n">operation</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Não há problema algum com o uso do exemplo acima, contudo, existe uma solução mais adequada e viável para esse caso, através da
-utilização da interface nomeada Callable.</p>
-
-<p>Callable é uma interface que foi disponibilizada na versão J2SE 5.0, ela oferece um método
-chamado call(). Através desse método, agora é possível recuperar valores retornados do tipo Object, ou mais
-especificamente, qualquer tipo devido à sua construção genericamente parametrizada.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>     <span class="n">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Pelo fato de não ser possível trabalhar com Callable com auxílio da classe Thread, a qual implementa apenas
-Runnable, é usado ao invés disso, o suporte da interface ExecutorService para executar objetos do tipo Callable.</p>
-
-<p>Através de ExecutorService, é utilizada o método submit, que aceita como parâmetro um Callable e retorna uma
-interface Future, responsável por disponibilizar resultados através de operações assíncronas, a assinatura do
-método submit é descrito abaixo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Future</span> <span class="nf">submit</span><span class="o">(</span> <span class="n">Callable</span> <span class="n">task</span> <span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Quando uma tarefa é executada através de Callable, sendo ela “submitada”, pelo método submit(), é retornado a
-interface Future e, através dela, é usado o método get, para recuperar os valores processados.</p>
-
-<p>O método get é mutuamente excluído, até que a tarefa termine, semântica idêntica ao Join da classe Thread.</p>
-
-<p>Uma demonstração do uso de Callable é exibido no código seguinte. Esse teste se baseia em um processo se
-dividir em duas linhas de execuções, e realizar a incrementação do valor e exibi-lo logo em seguida. Por exemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">class</span> <span class="nc">Foo</span> <span class="kd">implements</span> <span class="n">Callable</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">()</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>                <span class="k">try</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">value</span><span class="o">++;</span>
-</span><span class='line'>                        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">600</span><span class="o">);</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>                <span class="k">catch</span> <span class="o">(</span> <span class="n">InterruptedException</span> <span class="n">e</span> <span class="o">)</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="c1">// stuff</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>                <span class="n">ExecutorService</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span> <span class="mi">1</span> <span class="o">);</span>
-</span><span class='line'>                <span class="n">Callable</span> <span class="n">c1</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Foo</span><span class="o">();</span>
-</span><span class='line'>                <span class="n">Callable</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">c1</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">for</span> <span class="o">(</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">count</span><span class="o">++</span> <span class="o">)</span>
-</span><span class='line'>                <span class="o">{</span>
-</span><span class='line'>                        <span class="n">Future</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c1</span> <span class="o">);</span>
-</span><span class='line'>                        <span class="n">Future</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span> <span class="n">c2</span> <span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i1</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c1 reference&quot;</span> <span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>                        <span class="n">Integer</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-</span><span class='line'>                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i2</span> <span class="o">+</span> <span class="s">&quot; -&gt; Executed by c2 reference&quot;</span><span class="o">);</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">s</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>No trecho de código acima, na linhas 25 é utilizado o método estático newFixedThreadPool(), da classe Executors. Esse método
-cria uma espécie de mina de Threads, e diz a quantidade de tarefas que serão executadas a um
-determinado momento. O argumento 1, diz que apenas uma Thread executará por vez.</p>
-
-<p>Na linha 26, a variável c1 referencia um objeto que tem Callable a serem executados e na linha seguinte, uma outra
-variável(c2) referencia a mesma instância, para que seja possível demonstrar duas linhas de execuções, atuando na mesma tarefa.</p>
-
-<p>No loop, as duas threads serão “submitadas” e executadas e seus valores recuperadas pelo método get() da
-interface Future e, no fim do loop, o serviço executor é finalizado com método shutdown(), o resultado da operação será:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">1</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">3</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">5</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">7</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">9</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>De acordo o que foi passado para o método Executors.newFixedThreadPool( 1 ), apenas uma linha foi
-executada por tarefa. Caso o parâmetro seja alterado para 2, a saída será algo como:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">2</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">2</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">4</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">4</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">6</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">6</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">8</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">8</span> -&gt; Executed by c2 reference
-</span><span class='line'><span class="m">10</span> -&gt; Executed by c1 reference
-</span><span class='line'><span class="m">10</span> -&gt; Executed by c2 reference
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   

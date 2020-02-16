@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Show Only File Name With Grep Command - Developer's Lab</title>
+  <title>PCI Bus Error - Developer's Lab</title>
   <meta name="author" content="Diogo Pinto">
 
   
-  <meta name="description" content="With grep and cut delimiter command we can get only file name where the occurrence of the input match. Below an
-example: 1
-grep -Rn &quot;foo&quot &hellip;">
+  <meta name="description" content="The CPU communicates with the PCIe bus controller through transaction layer packets (TLPs). The hardware detects when failure occurred, and the Linux &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ grep -Rn &quot;foo&quot &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name">
+  <link rel="canonical" href="http://di0.github.io/blog/2020/02/15/pci-bus-error">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Developer's Lab" type="application/atom+xml">
@@ -71,7 +69,7 @@ grep -Rn &quot;foo&quot &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Show Only File Name With Grep Command</h1>
+      <h1 class="entry-title">PCI Bus Error</h1>
     
     
       <p class="meta">
@@ -87,24 +85,106 @@ grep -Rn &quot;foo&quot &hellip;">
   
 
 
-<time datetime="2018-04-30T00:48:26-03:00" pubdate data-updated="true"></time>
+<time datetime="2020-02-15T19:37:37-03:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>With <strong>grep</strong> and <strong>cut</strong> delimiter command we can get only file name where the occurrence of the input match. Below an<!--more-->
-example:</p>
+<div class="entry-content"><p>The CPU communicates with the PCIe bus controller through transaction layer packets (TLPs). The hardware detects when failure occurred, and the Linux kernel reports that as messages.
+The mentioned error <strong><em>pcieport XXXX:YY:ZZ.Z: AER: Corrected error received</em></strong>, is one of those cases&hellip; <!--more--></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>grep -Rn <span class="s2">&quot;foo&quot;</span> * <span class="p">|</span> cut -f1 -d:
-</span></code></pre></td></tr></table></div></figure>
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note about PCI-id</strong><br><br>
+The four first hexadecimal id xxxx represents the Vendor ID and the four last hexadecimal id, represents the Device ID. Actually there is also
+some sub-vendor-id, sub-vendor-id(to identify the computer/vendor implementation), pci function and class...(https://wiki.debian.org/HowToIdentifyADevice/PCI#references).
+</p>
 
 
-<p><strong>output</strong></p>
 
-<p><img class="rigth" src="/images/output_grep_cut.jpeg" width="1800" height="1800" title="'output grep'" ></p>
+
+<h3 style="color:navy;">The lspci Tool</h3>
+
+
+<p>The lspci(list Peripheral Component Interconnect) utility, show us the devices connected to any pci compatible bus. e.g:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lspci -tv
+-<span class="o">[</span>0000:00<span class="o">]</span>-+-00.0  Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers
++-02.0  Intel Corporation HD Graphics 620
+  +-04.0  Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem
+     +-14.0  Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller
+       +-14.2  Intel Corporation Sunrise Point-LP Thermal subsystem
+          +-16.0  Intel Corporation Sunrise Point-LP CSME HECI <span class="c">#1</span>
+              +-17.0  Intel Corporation Sunrise Point-LP SATA Controller <span class="o">[</span>AHCI mode<span class="o">]</span>
+                 +-1c.0-<span class="o">[</span>01<span class="o">]</span>--
+                  +-1c.5-<span class="o">[</span>02<span class="o">]</span>----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                     +-1d.0-<span class="o">[</span>03<span class="o">]</span>----00.0  Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter
+                    +-1f.0  Intel Corporation Sunrise Point LPC Controller/eSPI Controller
+                       +-1f.2  Intel Corporation Sunrise Point-LP PMC
+                          +-1f.3  Intel Corporation Sunrise Point-LP HD Audio
+                         <span class="se">\-</span>1f.4  Intel Corporation Sunrise Point-LP SMBus</code></pre></div>
+
+
+<p>According output command above, we can get the same(even then, Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter) id device that
+causing the error of PCI Bus output log messages. i.e:</p>
+
+<p><strong><em>[ 5315.986588] pcieport 0000:00:1c.0: AER: Corrected error received: id=01d0</em></strong></p>
+
+<p>The workaround to solve that problem is adding such these kernel parameters:</p>
+
+<p><strong>pci=nomsi</strong>
+<br>
+<strong>pci=noaer</strong></p>
+
+<p>where <strong>nomsi</strong> meaning <strong>No Message Signaled Interrupts</strong> and <strong>noaer</strong> meaning <strong>No Advanced Error Reporting</strong>.</p>
+
+<p>In short, both disable and stop the messages from showing output. The following example, show us how to configure theses parameters.</p>
+
+<p>Edit the /etc/default/grub file and add pci=noaer and pci=nomsi to the line starting with the GRUB_CMDLINE_LINUX_DEFAULT:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;quiet splash reboot=efi,pci pci=nomsi,noaer pcie_aspm=off&quot;</span></code></pre></div>
+
+
+
+
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note:</strong><br><br>
+pci=nomsi and noaer, do not remove the error but just hide it into the error log. In this particular case, we add <mark>pcie_aspm=off</mark> option. This will increase the PCIe Active State
+Power Management consumption of machine as it disables the power savings. More details(https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/power_management_guide/aspm).
+</p>
+
+
+<p>So, update the grub with the new parameters:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>update grub</code></pre></div>
+
+
+<p>next, reboot the SO.</p>
+
+<p>If it do not works, keep the kernel&rsquo;s parameters setting previously and run the following command:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>grub-mkconfig -o /boot/grub/grub.cfg
+<span class="nv">$ </span>update-grub
+<span class="nv">$ </span>reboot</code></pre></div>
+
+
+<p>Remember yourself check logs files size in /var/log directory, such as messages.log file, kern.log file, and syslog file. Because the related error PCI generated
+logs, these files can become increase pretty bigger.</p>
+
+<p>You can fix them:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>df -h
+Filesystem  Size    Used    Available   Use%    Mounted on
+/dev/sda1        37G    37G     <span class="m">0</span>        100%        /var</code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/kern.log
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/syslog
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/messages</code></pre></div>
+
+
+
 </div>
 
 
@@ -127,7 +207,7 @@ example:</p>
   
 
 
-<time datetime="2018-04-30T00:48:26-03:00" pubdate data-updated="true"></time>
+<time datetime="2020-02-15T19:37:37-03:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -141,7 +221,7 @@ example:</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://di0.github.io/blog/2020/02/15/pci-bus-error/" data-via="diogolion" data-counturl="http://di0.github.io/blog/2020/02/15/pci-bus-error/" >Tweet</a>
   
   
   
@@ -152,10 +232,8 @@ example:</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2018/04/28/replace-with-stream-editor-aka-sed/" title="Previous Post: Replace With Stream Editor(AKA Sed)">&laquo; Replace With Stream Editor(AKA Sed)</a>
+        <a class="basic-alignment left" href="/blog/2019/06/09/show-column-name-bound-with-unique-constraint/" title="Previous Post: Getting column name bound with Unique Constraint">&laquo; Getting column name bound with Unique Constraint</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2018/04/30/disable-ipv6-on-linux/" title="Next Post: Disable IPv6 on Linux">Disable IPv6 on Linux &raquo;</a>
       
     </p>
   </footer>
@@ -326,8 +404,8 @@ example:</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/';
-        var disqus_url = 'http://di0.github.io/blog/2018/04/30/grep-command-show-only-file-name/';
+        var disqus_identifier = 'http://di0.github.io/blog/2020/02/15/pci-bus-error/';
+        var disqus_url = 'http://di0.github.io/blog/2020/02/15/pci-bus-error/';
         var disqus_script = 'embed.js';
       
     (function () {

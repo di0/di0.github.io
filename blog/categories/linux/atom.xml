@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2020-01-24T02:05:03-03:00</updated>
+  <updated>2020-02-16T02:26:16-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PCI Bus Error]]></title>
+    <link href="http://di0.github.io/blog/2020/02/15/pci-bus-error/"/>
+    <updated>2020-02-15T19:37:37-03:00</updated>
+    <id>http://di0.github.io/blog/2020/02/15/pci-bus-error</id>
+    <content type="html"><![CDATA[<p>The CPU communicates with the PCIe bus controller through transaction layer packets (TLPs). The hardware detects when failure occurred, and the Linux kernel reports that as messages.
+The mentioned error <strong><em>pcieport XXXX:YY:ZZ.Z: AER: Corrected error received</em></strong>, is one of those cases&hellip; <!--more--></p>
+
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note about PCI-id</strong><br><br>
+The four first hexadecimal id xxxx represents the Vendor ID and the four last hexadecimal id, represents the Device ID. Actually there is also
+some sub-vendor-id, sub-vendor-id(to identify the computer/vendor implementation), pci function and class...(https://wiki.debian.org/HowToIdentifyADevice/PCI#references).
+</p>
+
+
+
+
+<h3 style="color:navy;">The lspci Tool</h3>
+
+
+<p>The lspci(list Peripheral Component Interconnect) utility, show us the devices connected to any pci compatible bus. e.g:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lspci -tv
+-<span class="o">[</span>0000:00<span class="o">]</span>-+-00.0  Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers
++-02.0  Intel Corporation HD Graphics 620
+  +-04.0  Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem
+     +-14.0  Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller
+       +-14.2  Intel Corporation Sunrise Point-LP Thermal subsystem
+          +-16.0  Intel Corporation Sunrise Point-LP CSME HECI <span class="c">#1</span>
+              +-17.0  Intel Corporation Sunrise Point-LP SATA Controller <span class="o">[</span>AHCI mode<span class="o">]</span>
+                 +-1c.0-<span class="o">[</span>01<span class="o">]</span><span class="p">&amp;</span>ndash<span class="p">;</span>
+                  +-1c.5-<span class="o">[</span>02<span class="o">]</span><span class="p">&amp;</span>mdash<span class="p">;</span>-00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                     +-1d.0-<span class="o">[</span>03<span class="o">]</span><span class="p">&amp;</span>mdash<span class="p">;</span>-00.0  Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter
+                    +-1f.0  Intel Corporation Sunrise Point LPC Controller/eSPI Controller
+                       +-1f.2  Intel Corporation Sunrise Point-LP PMC
+                          +-1f.3  Intel Corporation Sunrise Point-LP HD Audio
+                         -1f.4  Intel Corporation Sunrise Point-LP SMBus</code></pre></div></p>
+
+<p>According output command above, we can get the same(even then, Realtek Semiconductor Co., Ltd. RTL8723BE PCIe Wireless Network Adapter) id device that
+causing the error of PCI Bus output log messages. i.e:</p>
+
+<p><strong><em>[ 5315.986588] pcieport 0000:00:1c.0: AER: Corrected error received: id=01d0</em></strong></p>
+
+<p>The workaround to solve that problem is adding such these kernel parameters:</p>
+
+<p><strong>pci=nomsi</strong>
+<br>
+<strong>pci=noaer</strong></p>
+
+<p>where <strong>nomsi</strong> meaning <strong>No Message Signaled Interrupts</strong> and <strong>noaer</strong> meaning <strong>No Advanced Error Reporting</strong>.</p>
+
+<p>In short, both disable and stop the messages from showing output. The following example, show us how to configure theses parameters.</p>
+
+<p>Edit the /etc/default/grub file and add pci=noaer and pci=nomsi to the line starting with the GRUB_CMDLINE_LINUX_DEFAULT:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="p">&amp;</span>ldquo<span class="p">;</span>quiet splash <span class="nv">reboot</span><span class="o">=</span>efi,pci <span class="nv">pci</span><span class="o">=</span>nomsi,noaer <span class="nv">pcie_aspm</span><span class="o">=</span>off<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
+
+<p style="border:3px; border-style:solid; border-color:#eead2d; padding: 1em;"><strong>Note:</strong><br><br>
+pci=nomsi and noaer, do not remove the error but just hide it into the error log. In this particular case, we add <mark>pcie_aspm=off</mark> option. This will increase the PCIe Active State
+Power Management consumption of machine as it disables the power savings. More details(https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/power_management_guide/aspm).
+</p>
+
+
+<p>So, update the grub with the new parameters:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>update grub</code></pre></div></p>
+
+<p>next, reboot the SO.</p>
+
+<p>If it do not works, keep the kernel&rsquo;s parameters setting previously and run the following command:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>grub-mkconfig -o /boot/grub/grub.cfg
+<span class="nv">$ </span>update-grub
+<span class="nv">$ </span>reboot</code></pre></div></p>
+
+<p>Remember yourself check logs files size in /var/log directory, such as messages.log file, kern.log file, and syslog file. Because the related error PCI generated
+logs, these files can become increase pretty bigger.</p>
+
+<p>You can fix them:</p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>df -h
+Filesystem  Size    Used    Available   Use%    Mounted on
+/dev/sda1        37G    37G     <span class="m">0</span>           100%        /var</code></pre></div></p>
+
+<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="p">&amp;</span>ldquo<span class="p">;&amp;</span>rdquo<span class="p">;</span> &gt; /var/log/kern.log
+<span class="nv">$ </span><span class="nb">echo</span> <span class="p">&amp;</span>ldquo<span class="p">;&amp;</span>rdquo<span class="p">;</span> &gt; /var/log/syslog
+<span class="nv">$ </span><span class="nb">echo</span> <span class="p">&amp;</span>ldquo<span class="p">;&amp;</span>rdquo<span class="p">;</span> &gt; /var/log/messages</code></pre></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Locking User Account Linux]]></title>
@@ -113,47 +202,6 @@ example:</p>
 <li> <strong> <em>replacement</em> </strong> = matched replacement it with.</li>
 <li> <strong> <em>g</em> </strong> = global(replace all occurrence, instead of first occurrence).</li>
 <li> <strong> <em>some_file</em> </strong> = some target file.</li></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Flush Contents of a Memcached Server]]></title>
-    <link href="http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached/"/>
-    <updated>2018-04-25T22:12:26-03:00</updated>
-    <id>http://di0.github.io/blog/2018/04/25/flush-contents-of-a-memcached</id>
-    <content type="html"><![CDATA[<p>The two ways following examples, show us how flush old data from memcached server through
-command line. We use netcat and <!--more--> telnet command to perform this job.</p>
-
-<h4><u>Using netcat Command</u></h4>
-
-
-<p><strong>netcat</strong> command is a simple unix utility which reads and writes data across network connections, using
-TCP or UDP protocol. Below you can see how such commands works:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> nc localhost 11211
-or
-<span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> netcat localhost 11211</code></pre></div></p>
-
-<p><em>another form way:</em></p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">nc 192.168.1.10 11211<span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;&amp;</span>ldquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
-
-<p><em>with alias setting:</em></p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">alias </span><span class="nv">flush_mem_cache_server</span><span class="o">=</span><span class="p">&amp;</span>ldquo<span class="p">;</span><span class="nb">echo</span> <span class="p">&amp;</span>lsquo<span class="p">;</span>flush_all<span class="p">&amp;</span>rsquo<span class="p">;</span> <span class="p">|</span> netcat 127.0.0.1 11211<span class="p">&amp;</span>rdquo<span class="p">;</span></code></pre></div></p>
-
-<p>Now, just you run the alias <strong>flush_mem_cache_server</strong> in your bash shell.</p>
-
-<h4><u>Using telnet Command</u></h4>
-
-
-<p>We can as well use the telnet protocol via default port(11211) from memcached server, typing <strong>flush_all</strong>. For example:</p>
-
-<p><div class="highlight"><pre><code class="language-bash" data-lang="bash">telnet 192.168.1.10 11211</code></pre></div></p>
-
-<p>then output will looks like:</p>
-
-<p><img class="rigth" src="/images/output_telnet_memcached.jpeg" width="1800" height="1800" title="&lsquo;output perl group&rsquo;" ></p>
 ]]></content>
   </entry>
   
