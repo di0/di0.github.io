@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Php | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2020-02-16T02:26:16-03:00</updated>
+  <updated>2022-12-14T10:06:54-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -113,6 +113,8 @@ esse comportamento, não é possível(devido aos construtores protegidos) criar 
 <pre><code class="php">$database = new DatabaseLoader();
 $file = new FileLoader();
 </code></pre>
+
+
 
 <pre><code class="bash">PHP Fatal error: Call to protected DatabaseLoader::__construct() from invalid context ...
 PHP Fatal error: Call to protected FileLoader::__construct() from invalid context ...

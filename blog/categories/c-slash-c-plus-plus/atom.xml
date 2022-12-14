@@ -4,7 +4,7 @@
   <title><![CDATA[Category: C/c++ | Developer's Lab]]></title>
   <link href="http://di0.github.io/blog/categories/c-slash-c-plus-plus/atom.xml" rel="self"/>
   <link href="http://di0.github.io/"/>
-  <updated>2020-02-16T02:26:16-03:00</updated>
+  <updated>2022-12-14T10:06:54-03:00</updated>
   <id>http://di0.github.io/</id>
   <author>
     <name><![CDATA[Diogo Pinto]]></name>
@@ -103,7 +103,7 @@ Internet Protocol version 4 valid format:</p>
 <span class="nf">is_valid_ipv4</span><span class="p">(</span> <span class="k">const</span> <span class="n">Network</span><span class="o">::</span><span class="n">IPConfig</span> <span class="n">ipconfig</span> <span class="p">)</span>
 <span class="p">{</span>
         <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ip</span><span class="p">(</span> <span class="n">ipconfig</span><span class="p">.</span><span class="n">get_ip_address</span><span class="p">()</span> <span class="p">);</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">split_ip</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">field</span><span class="p">;</span>
     <span class="k">while</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span> <span class="n">ip</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span> <span class="p">)</span> <span class="p">)</span>
@@ -261,7 +261,7 @@ through  a list of arguments whose number and types are not known to the called 
 
 <p><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdarg</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdarg</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">va_start</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">last</span> <span class="p">);</span>
 <span class="n">type</span> <span class="nf">va_arg</span><span class="p">(</span> <span class="kt">va_list</span> <span class="n">ap</span><span class="p">,</span> <span class="n">type</span> <span class="p">);</span>
@@ -481,7 +481,7 @@ time, is really so hard. Because of this, we can use the <strong>typedef</strong
 
 <p><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;</span>
  <span class="o">*</span> <span class="n">Function</span> <span class="n">pointer</span> <span class="n">that</span> <span class="n">returns</span> <span class="n">a</span> <span class="n">pointer</span> <span class="n">to</span> <span class="n">integer</span> <span class="n">type</span><span class="p">.</span> <span class="n">This</span> <span class="n">function</span> <span class="n">has</span>
@@ -596,7 +596,7 @@ it as a declaration of pointer to a function and not a function that returns a p
 
 <p><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">define</span> <span class="n">ACTIVE</span> <span class="mi">1</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
@@ -773,9 +773,9 @@ numbers with four operations mathematic:</p>
 
 <p><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdlib</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdlib</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span> <span class="p">(</span> <span class="o">*</span><span class="n">FUNCT_PNT</span> <span class="p">)(</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
@@ -875,7 +875,7 @@ The second argument, <strong>action</strong>, specifies the action( function ) t
 
 <p><div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;/p&gt;
 
-&lt;h1&gt;include <span class="p">&amp;</span>lt<span class="p">;</span>signal.h&gt;&lt;/h1&gt;
+&lt;h1&gt;include &lt;signal.h&gt;&lt;/h1&gt;
 
 &lt;p&gt;typedef void <span class="o">(</span>*sighandler_t<span class="o">)(</span>int<span class="o">)</span><span class="p">;</span>
 sighandler_t signal<span class="o">(</span>int signum, sighandler_t handler<span class="o">)</span><span class="p">;</span></code></pre></div></p>
@@ -902,9 +902,9 @@ sighandler_t signal<span class="o">(</span>int signum, sighandler_t handler<span
 
 <p><div class="highlight"><pre><code class="language-c" data-lang="c"><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">stdlib</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdlib</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
 
 <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">desc_sort</span><span class="p">(</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">v2</span> <span class="p">)</span>
 <span class="p">{</span>
