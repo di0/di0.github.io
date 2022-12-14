@@ -15,21 +15,30 @@ footer: true
   p, li { color: rgb(66, 66, 66); font-size: 16px; }
 </style>
 
-I am a Software Engineering, Systems Analyst and Programmer.
+I am a Software Engineering, Systems Analyst and Programmer. My first experience began as Network Administrator and Information Security. Over time, I was becoming an enthusiastic lover Linux Operating System and wanted to know how it worked. For this reason, I decided learn C and C++ language programming.
 
-## Software & Programming Expertise
+Because my appreciation for the Linux programming, I also became an Android developer.
 
-- **Kotlin**
-    + Android
-      + creting
-    <br>
+<h3 style="color:navy;">Software & Programming Expertise</h3>
+
 - **C/C++**
     + Bulding features with integration in PFSense.
     + Creating tools with Asterisk System integration.
-    <br>
+    <br><br>
+
+- **Kotlin**
+    + Lambda Receiver.
+    + Coroutines.
+    + Singleton Pattern mechanism.
+    + Delegates and Lazy initialization.
+    + Android
+      + Framework Koin dependency injection.
+      + Async Server and Client Ktor Framework.
+    <br><br>
 - **Perl**
-    + Creating scripts that connect with servers.
-    
+    + SSH modules that connects with servers and execute commands. 
+    <br><br>
+
 - **PHP**
 
 - **Java**
@@ -38,19 +47,17 @@ I am a Software Engineering, Systems Analyst and Programmer.
 
 - **Groovy**
 
-## Operational System Known
+<h3 style="color:navy;">Operational System Known</h3>
 
 - **Linux**
     + Compiling Kernel.
     + Multiples command line knowleged.
-    
+    <br><br>
+
 - **Android**
 
-## My interests##
+<h3 style="color:navy;">My interests</h3>
 
-    *software development and network security. I am currently
-working as a computer programmer professional.
-
-Happy that one that teaches that knows and learn that teaches.
+Proof of Concept | Test Driven Development | Oriented Object Programming | Aspect Oriented Programming and Functional Programming | Parallel and Concurrent Programming | Discrete Mathematics | Regular Expressions | Developing Custom Gradle Plugins | Android Security Features ...
 
 See more at the my Linkedin page -> [Linkedin](https://www.linkedin.com/in/diogo-pereira-pinto-dio/)
